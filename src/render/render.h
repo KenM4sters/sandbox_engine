@@ -9,7 +9,7 @@ namespace sandbox_render {
             URenderer() : window_(nullptr) {}
             ~URenderer() {}
 
-            virtual void init(sandbox_window::SWindow *window) {
+            virtual void init(sandbox_window::UWindow *window) {
                 window_ = window;
             }
             virtual void PreRender() = 0;
@@ -18,6 +18,6 @@ namespace sandbox_render {
 
 
         protected:
-            sandbox_window::SWindow *window_;
+            sandbox_window::UWindow *window_;
    };
 }

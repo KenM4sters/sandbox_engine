@@ -5,9 +5,10 @@
 
 namespace sandbox_render {
     class SRenderer : public URenderer {
-        void init(sandbox_window::SWindow *window) override;
-        void PreRender() override;
-        void PostRender() override;
-        void Terminate() override;
+        public:
+            void init(sandbox_window::UWindow *window) override;
+            void PreRender() override;
+            void PostRender() override;
+            void Terminate() override;
     };
 }

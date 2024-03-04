@@ -7,11 +7,16 @@ void sandbox_window::SWindow::HandleKeyInput(int key, int scancode, int action, 
 }
 void sandbox_window::SWindow::HandleWindowResize(int w, int h) {}
 
-void sandbox_window::SWindow::init(int w, int h, std::string& t) {
+void sandbox_window::SWindow::init(int w, int h, const std::string& t) {
 
     height_ = h;
     width_ = w;
     title_ = t;
 
+    renderer_->init(this);
+
 }
-void sandbox_window::SWindow::render() {}
+void sandbox_window::SWindow::render() {
+    renderer_->PreRender();
+    renderer_->PostRender();
+}

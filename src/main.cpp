@@ -1,6 +1,7 @@
-#include <iostream>
+#include "./app/app.h"
 
 int main() {
-    std::cout << "Hello World \n";
+    auto app = std::make_unique<sandbox_app::App>("sandbox_engine");
+    app->loop();
     return 0;
 }
