@@ -42,6 +42,6 @@ void SWindow::init(int w, int h, const std::string& t) {
 }
 void SWindow::render() {
     renderer_->PreRender();
-    
+    renderer_->SceneRender();
     renderer_->PostRender();
 }

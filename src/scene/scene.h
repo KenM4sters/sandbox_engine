@@ -6,7 +6,9 @@ class Scene  {
     public:
         Scene();
         ~Scene();
+        void Init();
         void Render();
     private:
         std::unique_ptr<SShaderResource> shader_res_;
+        unsigned int VAO_, VBO_;
 };

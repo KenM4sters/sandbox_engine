@@ -42,6 +42,8 @@ void SContext::init(UWindow *window) {
         std::cout << "FAILED to initialize GLAD" << std::endl;
     }
 
+    // *IMPORTANT - must be called after glad has been loaded
+    scene_->Init();
 }
 
 void SContext::PreRender() {

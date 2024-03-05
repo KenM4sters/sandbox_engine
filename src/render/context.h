@@ -6,7 +6,7 @@
 
 class UContext {
     public:
-        UContext() : window_(nullptr) {}
+        UContext() : window_(nullptr), scene_(nullptr) {}
 
         virtual void init(UWindow *window) = 0;
         virtual void PreRender() = 0;
