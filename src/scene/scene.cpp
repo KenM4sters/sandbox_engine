@@ -9,6 +9,10 @@ Scene::~Scene() {
 
 }
 
+void Scene::AddMesh(Mesh* mesh, std::string& name) {
+    mesh_repo_[name] = mesh;
+}
+
 void Scene::Init() {
     float vertices[] = {
         -0.5f, -0.5f, 0.0f, // left  
