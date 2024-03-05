@@ -1,7 +1,7 @@
 #pragma once
 #include "../utils/includes.h"
 #include "../resources/s_shader_resource.h"
-// Scene class which is respnsible for creating and rendering our main scene
+// Scene class which is responsible for creating and rendering our main scene
 class Scene  {
     public:
         Scene();

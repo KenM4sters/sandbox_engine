@@ -47,7 +47,6 @@ void SContext::init(UWindow *window) {
 }
 
 void SContext::PreRender() {
-    glViewport(0, 0, window_->width_, window_->height_);
     glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }

@@ -29,7 +29,8 @@ void SWindow::HandleKeyInput(int key, int scancode, int action, int mods) {
 }
 
 void SWindow::HandleWindowResize(int w, int h) {
-
+    glViewport(0, 0, w, h);
+    std::cout<<"window resized"<<std::endl;
 }
 
 void SWindow::init(int w, int h, const std::string& t) {
