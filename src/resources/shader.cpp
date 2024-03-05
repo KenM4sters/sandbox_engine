@@ -2,102 +2,102 @@
 
 Shader& Shader::Use()
 {
-    glUseProgram(this->ID);
+    glUseProgram(this->ID_);
     return *this;
 }
 
-void Shader::Compile(const char* vertexSource, const char* fragmentSource, const char* geometrySource)
+void Shader::Compile(const char* vertex_source, const char* fragment_source, const char* geometry_source)
 {
-    unsigned int sVertex, sFragment, gShader;
+    unsigned int s_vertex, s_fragment, g_shader;
 
     // vertex Shader
-    sVertex = glCreateShader(GL_VERTEX_SHADER);
-    glShaderSource(sVertex, 1, &vertexSource, NULL);
-    glCompileShader(sVertex);
-    checkCompileErrors(sVertex, "VERTEX");
+    s_vertex = glCreateShader(GL_VERTEX_SHADER);
+    glShaderSource(s_vertex, 1, &vertex_source, NULL);
+    glCompileShader(s_vertex);
+    checkCompileErrors(s_vertex, "VERTEX");
 
     // fragment Shader
-    sFragment = glCreateShader(GL_FRAGMENT_SHADER);
-    glShaderSource(sFragment, 1, &fragmentSource, NULL);
-    glCompileShader(sFragment);
-    checkCompileErrors(sFragment, "FRAGMENT");
+    s_fragment = glCreateShader(GL_FRAGMENT_SHADER);
+    glShaderSource(s_fragment, 1, &fragment_source, NULL);
+    glCompileShader(s_fragment);
+    checkCompileErrors(s_fragment, "FRAGMENT");
 
     // if geometry shader source code is given, also compile geometry shader
-    if (geometrySource != nullptr)
+    if (geometry_source != nullptr)
     {
-        gShader = glCreateShader(GL_GEOMETRY_SHADER);
-        glShaderSource(gShader, 1, &geometrySource, NULL);
-        glCompileShader(gShader);
-        checkCompileErrors(gShader, "GEOMETRY");
+        g_shader = glCreateShader(GL_GEOMETRY_SHADER);
+        glShaderSource(g_shader, 1, &geometry_source, NULL);
+        glCompileShader(g_shader);
+        checkCompileErrors(g_shader, "GEOMETRY");
     }
     // shader program
-    this->ID = glCreateProgram();
-    glAttachShader(this->ID, sVertex);
-    glAttachShader(this->ID, sFragment);
-    if (geometrySource != nullptr)
-        glAttachShader(this->ID, gShader);
-    glLinkProgram(this->ID);
-    checkCompileErrors(this->ID, "PROGRAM");
+    this->ID_ = glCreateProgram();
+    glAttachShader(this->ID_, s_vertex);
+    glAttachShader(this->ID_, s_fragment);
+    if (geometry_source != nullptr)
+        glAttachShader(this->ID_, g_shader);
+    glLinkProgram(this->ID_);
+    checkCompileErrors(this->ID_, "PROGRAM");
     // shaders can be deleted now, since we've already linked them to our shaderProgram
-    glDeleteShader(sVertex);
-    glDeleteShader(sFragment);
-    if (geometrySource != nullptr)
-        glDeleteShader(gShader);
+    glDeleteShader(s_vertex);
+    glDeleteShader(s_fragment);
+    if (geometry_source != nullptr)
+        glDeleteShader(g_shader);
 }
 
-void Shader::setFloat(const char *name, float value, bool useShader)
+void Shader::setFloat(const char *name, float value, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform1f(glGetUniformLocation(this->ID, name), value);
+    glUniform1f(glGetUniformLocation(this->ID_, name), value);
 }
-void Shader::setInteger(const char *name, int value, bool useShader)
+void Shader::setInteger(const char *name, int value, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform1i(glGetUniformLocation(this->ID, name), value);
+    glUniform1i(glGetUniformLocation(this->ID_, name), value);
 }
-void Shader::setVector2f(const char *name, float x, float y, bool useShader)
+void Shader::setVector2f(const char *name, float x, float y, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform2f(glGetUniformLocation(this->ID, name), x, y);
+    glUniform2f(glGetUniformLocation(this->ID_, name), x, y);
 }
-void Shader::setVector2f(const char *name, const glm::vec2 &value, bool useShader)
+void Shader::setVector2f(const char *name, const glm::vec2 &value, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform2f(glGetUniformLocation(this->ID, name), value.x, value.y);
+    glUniform2f(glGetUniformLocation(this->ID_, name), value.x, value.y);
 }
-void Shader::setVector3f(const char *name, float x, float y, float z, bool useShader)
+void Shader::setVector3f(const char *name, float x, float y, float z, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform3f(glGetUniformLocation(this->ID, name), x, y, z);
+    glUniform3f(glGetUniformLocation(this->ID_, name), x, y, z);
 }
-void Shader::setVector3f(const char *name, const glm::vec3 &value, bool useShader)
+void Shader::setVector3f(const char *name, const glm::vec3 &value, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform3f(glGetUniformLocation(this->ID, name), value.x, value.y, value.z);
+    glUniform3f(glGetUniformLocation(this->ID_, name), value.x, value.y, value.z);
 }
-void Shader::setVector4f(const char *name, float x, float y, float z, float w, bool useShader)
+void Shader::setVector4f(const char *name, float x, float y, float z, float w, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform4f(glGetUniformLocation(this->ID, name), x, y, z, w);
+    glUniform4f(glGetUniformLocation(this->ID_, name), x, y, z, w);
 }
-void Shader::setVector4f(const char *name, const glm::vec4 &value, bool useShader)
+void Shader::setVector4f(const char *name, const glm::vec4 &value, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniform4f(glGetUniformLocation(this->ID, name), value.x, value.y, value.z, value.w);
+    glUniform4f(glGetUniformLocation(this->ID_, name), value.x, value.y, value.z, value.w);
 }
-void Shader::setMat4(const char *name, const glm::mat4 &matrix, bool useShader)
+void Shader::setMat4(const char *name, const glm::mat4 &matrix, bool bUseShader)
 {
-    if (useShader)
+    if (bUseShader)
         this->Use();
-    glUniformMatrix4fv(glGetUniformLocation(this->ID, name), 1, false, glm::value_ptr(matrix));
+    glUniformMatrix4fv(glGetUniformLocation(this->ID_, name), 1, false, glm::value_ptr(matrix));
 }
 
 
