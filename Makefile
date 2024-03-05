@@ -6,7 +6,7 @@ VERSION=-std=c++17
 BUILD_DIR = bin
 C_FILES = ./src/*.cpp
 
-APP_INCLUDES:= -I$(GLFW_PATH) -framework Cocoa -framework OpenGL -framework IOkit -I$(GLM_PATH) -I$(GLAD_PATH) -I./src/*.h
+APP_INCLUDES:= -I$(GLFW_PATH) -framework Cocoa -framework OpenGL -framework IOkit -I$(GLM_PATH) -I$(GLAD_PATH) -I./src/utils/*.h -I./src/*.h
 APP_LINKERS:= -L./deps/lib -lglfw3
 
 build:
