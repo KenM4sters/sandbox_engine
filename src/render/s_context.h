@@ -1,8 +1,8 @@
 #pragma once
-#include "render.h"
+#include "context.h"
 
 // Header for rendering
-class SRenderer : public URenderer {
+class SContext : public UContext {
     public:
         void init(UWindow *window) override;
         void PreRender() override;

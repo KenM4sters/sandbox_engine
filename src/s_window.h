@@ -1,12 +1,12 @@
 #pragma once
 #include "window.h"
-#include "s_render.h"
+#include "render/s_context.h"
 
 // Header for window
 class SWindow : public UWindow {
     public:
         SWindow() : bIsRunning_(true), window_(nullptr) {
-            renderer_ = std::make_unique<SRenderer>();
+            renderer_ = std::make_unique<SContext>();
         }
 
         void* GetNativeWindow() override { return window_;}
@@ -22,6 +22,6 @@ class SWindow : public UWindow {
 
     private:
         GLFWwindow* window_;
-        std::unique_ptr<SRenderer> renderer_;
+        std::unique_ptr<SContext> renderer_;
         bool bIsRunning_;
 };

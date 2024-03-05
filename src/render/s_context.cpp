@@ -1,4 +1,4 @@
-#include "s_render.h"
+#include "s_context.h"
 
 
 // Implementation for rendering
@@ -13,7 +13,7 @@ static void on_window_resize_callback(GLFWwindow* window, int width, int height)
     p_window->HandleWindowResize(width, height);
 }
 
-void SRenderer::init(UWindow *window) {
+void SContext::init(UWindow *window) {
     window_ = window;
 
     glfwInit();
@@ -28,7 +28,7 @@ void SRenderer::init(UWindow *window) {
 
     if(gl_window == nullptr) {
         std::cout << "FAILED to create GLFW window!" << std::endl;
-        SRenderer::Terminate();
+        SContext::Terminate();
     }
 
     glfwSetWindowUserPointer(gl_window, window);
@@ -43,18 +43,18 @@ void SRenderer::init(UWindow *window) {
 
 }
 
-void SRenderer::PreRender() {
+void SContext::PreRender() {
     glViewport(0, 0, window_->width_, window_->height_);
-    glClearColor(0.2f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
 }
 
-void SRenderer::PostRender() {
+void SContext::PostRender() {
     glfwPollEvents();
     glfwSwapBuffers(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
 }
 
-void SRenderer::Terminate() {
+void SContext::Terminate() {
     std::cout << "Terminating Window" << std::endl;
     glfwDestroyWindow(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
     glfwTerminate();

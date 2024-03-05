@@ -1,11 +1,11 @@
 #pragma once
-#include "window.h"
+#include "../window.h"
 
 // Base class for rendering 
 
-class URenderer {
+class UContext {
     public:
-        URenderer() : window_(nullptr) {}
+        UContext() : window_(nullptr) {}
 
         virtual void init(UWindow *window) = 0;
         virtual void PreRender() = 0;
