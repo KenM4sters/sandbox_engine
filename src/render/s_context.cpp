@@ -15,6 +15,7 @@ static void on_window_resize_callback(GLFWwindow* window, int width, int height)
 
 void SContext::init(UWindow *window) {
     window_ = window;
+    scene_ = std::make_unique<Scene>();
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -47,6 +48,10 @@ void SContext::PreRender() {
     glViewport(0, 0, window_->width_, window_->height_);
     glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT);
+}
+
+void SContext::SceneRender() {
+    scene_->Render();
 }
 
 void SContext::PostRender() {
