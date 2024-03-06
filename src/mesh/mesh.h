@@ -15,7 +15,7 @@ class Mesh {
         
         unsigned int VAO_, VBO_;
         glm::vec3 scale{1.0f, 1.0f, 1.0f};
-        glm::vec3 position{0.0f, 0.0f, -5.0f};
+        glm::vec3 position{0.0f, 0.0f, -2.0f};
 
     private:
         Material* material_;
