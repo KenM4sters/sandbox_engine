@@ -49,6 +49,12 @@ void SContext::ProcessInput(GLFWwindow* window, float delta_time) {
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
         window_->camera_->ProcessKeyboard(RIGHT, delta_time);
     }
+    if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
+        window_->camera_->ProcessKeyboard(UP, delta_time);
+    }
+    if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
+        window_->camera_->ProcessKeyboard(DOWN, delta_time);
+    }
 }
 
 void SContext::init(UWindow *window) {
@@ -87,7 +93,7 @@ void SContext::init(UWindow *window) {
 }
 
 void SContext::PreRender() {
-    glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
+    glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
