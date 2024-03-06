@@ -14,7 +14,7 @@ void Scene::AddMesh(Mesh* mesh, std::string name) {
 void Scene::Init() {
     // Shader
     auto shader = shader_res_->AddResource("src/shaders/quad.vert", "src/shaders/quad.frag", nullptr, "test");
-    // Test
+    // Cube
     Material* material = new Material(shader, std::string("test"));
     UBufferGeometry* geo = new UBufferGeometry(SANDBOX_CUBE);
     Mesh* mesh = new Mesh(material, geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
@@ -22,6 +22,8 @@ void Scene::Init() {
     AddMesh(mesh, "test");
     // Use the appropriate shader program for the currently bound vertex array;
     shader->Use();
+    // Set initial transformations
+    mesh->SetPosition(glm::vec3(0.0f, 0.0f, -40.0f));
 }
 
 void Scene::Render(float &delta_time) {
@@ -29,22 +31,9 @@ void Scene::Render(float &delta_time) {
     // using the appropriate shader program, and calling the appropraite draw call
     for(const auto& mesh : mesh_repo_) {
         auto geo = mesh.second->GetGeometry();
-
-        glm::mat4 projection = glm::mat4(1.0f); 
-        glm::mat4 view = glm::mat4(1.0f);
-        glm::mat4 model = glm::mat4(1.0f); 
- 
-        float angle = 20.0f;
-        projection = glm::perspective(glm::radians(camera_->zoom_), (float)scr_width_ / (float)scr_height_, 0.1f, 100.0f);
-        view = camera_->GetViewMatrix();
-        model = glm::translate(model, mesh.second->GetPosition());
-        model = glm::rotate(model, (float)glfwGetTime(), glm::vec3(1.0f, 0.3f, 0.5f));
         
-        auto mat = mesh.second->GetMaterial(); 
-        auto shader_mat = mat->GetShaderMaterial();
-        shader_mat->setMat4("projection", projection);
-        shader_mat->setMat4("view", view);
-        shader_mat->setMat4("model", model);
+        mesh.second->SetRotation((float)glfwGetTime(), glm::vec3(0.0f, 1.0f, 0.0f));
+        mesh.second->UpdateTransforms();
 
         glBindVertexArray(mesh.second->VAO_);
         glDrawArrays(GL_TRIANGLES, 0, geo->vert_count_);

@@ -19,15 +19,15 @@ class Mesh {
                 InitGeometry();
                 InitTransforms();
             }
-            
+
         ~Mesh() {}
         void InitGeometry();
         void InitTransforms();
+
         Material* GetMaterial() {return material_;}
         Material* SetMaterial(Material* material) {material_ = material; return material_;}
         UBufferGeometry* GetGeometry() {return geometry_;}
         UBufferGeometry* SetGeometry(UBufferGeometry* geometry) {geometry_ = geometry; return geometry_;}
-
         glm::vec3 GetPosition() {return position_;}
         glm::vec3 GetScale() {return scale_;}
         std::pair<float, glm::vec3> GetRotation() {return rotation_;}
@@ -52,8 +52,8 @@ class Mesh {
 
     private:
         glm::vec3 scale_{1.0f, 1.0f, 1.0f};
-        glm::vec3 position_{0.0f, 0.0f, -2.0f};
-        std::pair<float, glm::vec3> rotation_;
+        glm::vec3 position_{0.0f, 0.0f, 0.0f};
+        std::pair<float, glm::vec3> rotation_{0, glm::vec3(0.0f, 1.0f, 0.0f)};
 
         Camera* camera_;
         Material* material_;
