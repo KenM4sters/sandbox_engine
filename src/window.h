@@ -1,11 +1,11 @@
 #pragma once
 #include "utils/includes.h"
+#include "camera/camera.h"
 
 // Base class for window
 
 class UWindow {
     public:
-        UWindow() {}
         virtual void* GetNativeWindow() = 0;
         virtual void SetNativeWindow(void* window) = 0;
 
@@ -14,4 +14,15 @@ class UWindow {
 
         int width_, height_;
         std::string title_;
+
+        // Camera related variables
+        Camera* camera_ = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+        // Current values of the mouse position
+        float mouse_pos_x_;
+        float mouse_pos_y_;
+        // Previous values of the mouse position
+        float prev_mouse_pos_x_;
+        float prev_mouse_pos_y_;
+        // Returns true when the mouse first enters the window
+        bool bMouseIn_{true};
 };

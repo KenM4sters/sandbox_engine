@@ -1,6 +1,6 @@
 #include "scene.h"
 
-Scene::Scene(unsigned int w, unsigned int h) : scr_width_(w), scr_height_(h)  {
+Scene::Scene(unsigned int w, unsigned int h, Camera* camera) : scr_width_(w), scr_height_(h), camera_(camera)  {
     shader_res_ = std::make_unique<SShaderResource>();
     std::cout << "Shader res created!" << std::endl;
 }
@@ -14,9 +14,6 @@ void Scene::AddMesh(Mesh* mesh, std::string name) {
 }
 
 void Scene::Init() {
-
-    // Camera
-    camera_ = std::make_unique<Camera>(glm::vec3(0.0f, 0.0f, 3.0f));
 
     // Shader
     auto shader = shader_res_->AddResource("src/shaders/quad.vert", "src/shaders/quad.frag", nullptr, "test");

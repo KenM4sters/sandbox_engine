@@ -6,15 +6,14 @@
 // Scene class which is responsible for creating and rendering our main scene
 class Scene  {
     public:
-        Scene(unsigned int w, unsigned int h);
+        Scene(unsigned int w, unsigned int h, Camera* camera);
         ~Scene();
         void Init();
         void AddMesh(Mesh* mesh, std::string name);
         void Render(float &delta_time);
         
-        std::unique_ptr<Camera> camera_;
     private:
-        
+        Camera* camera_;
         std::unique_ptr<SShaderResource> shader_res_;
         std::unordered_map<std::string, Mesh*> mesh_repo_;
         unsigned int VAO_, VBO_;

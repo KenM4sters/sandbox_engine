@@ -12,6 +12,20 @@ static void on_key_callback(GLFWwindow* window, int key, int scancode, int actio
 
 static void on_mouse_move_callback(GLFWwindow* window, double pos_x, double pos_y) {
     auto p_window = static_cast<UWindow*>(glfwGetWindowUserPointer(window));
+
+    p_window->mouse_pos_x_ = static_cast<float>(pos_x);
+    p_window->mouse_pos_y_ = static_cast<float>(pos_y);
+
+    if(p_window->bMouseIn_) {
+        p_window->prev_mouse_pos_x_ = p_window->mouse_pos_x_;
+        p_window->prev_mouse_pos_y_ = p_window->mouse_pos_y_;
+        p_window->bMouseIn_ = false;
+    }
+    float x_offset = p_window->mouse_pos_x_ - p_window->prev_mouse_pos_x_;
+    float y_offset = p_window->prev_mouse_pos_y_ - p_window->mouse_pos_y_ ; // Inverted since up vector is (0, 1, 0)
+    p_window->prev_mouse_pos_x_ = p_window->mouse_pos_x_;
+    p_window->prev_mouse_pos_y_ = p_window->mouse_pos_y_;
+    p_window->camera_->ProcessMouseMovement(x_offset, y_offset);
 }
 
 static void on_window_resize_callback(GLFWwindow* window, int width, int height) {
@@ -24,27 +38,22 @@ static void on_window_resize_callback(GLFWwindow* window, int width, int height)
 // of the press, which is important for our camera. 
 void SContext::ProcessInput(GLFWwindow* window, float delta_time) {
     if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-        scene_->camera_->ProcessKeyboard(FORWARD, delta_time);
+       window_->camera_->ProcessKeyboard(FORWARD, delta_time);
     }
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        scene_->camera_->ProcessKeyboard(LEFT, delta_time);
+        window_->camera_->ProcessKeyboard(LEFT, delta_time);
     }
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        scene_->camera_->ProcessKeyboard(BACKWARD, delta_time);
+        window_->camera_->ProcessKeyboard(BACKWARD, delta_time);
     }
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        scene_->camera_->ProcessKeyboard(RIGHT, delta_time);
+        window_->camera_->ProcessKeyboard(RIGHT, delta_time);
     }
 }
 
 void SContext::init(UWindow *window) {
     window_ = window;
-    scene_ = std::make_unique<Scene>(window_->width_, window_->height_);
-
-    // Initially set the mouse position to the center of the window
-    prev_mouse_pos_x_ = window->width_ / 2.0f;
-    prev_mouse_pos_y_ = window->height_ / 2.0f;
-    bMouseIn_ = false;
+    scene_ = std::make_unique<Scene>(window_->width_, window_->height_, window->camera_);
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

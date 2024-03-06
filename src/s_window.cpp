@@ -37,6 +37,9 @@ void SWindow::init(int w, int h, const std::string& t) {
     width_ = w;
     title_ = t;
 
+    prev_mouse_pos_x_ = width_ / 2.0f;
+    prev_mouse_pos_y_ = height_ / 2.0f;
+
     renderer_->init(this);
 
 }

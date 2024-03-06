@@ -14,17 +14,6 @@ class UContext {
         virtual void PostRender() = 0;
         virtual void Terminate() = 0;
         virtual void ProcessInput(GLFWwindow* window, float delta_time) = 0;
-
-        // Current values of the mouse position
-        float mouse_pos_x_;
-        float mouse_pos_y_;
-
-        // Previous values of the mouse position
-        float prev_mouse_pos_x_;
-        float prev_mouse_pos_y_;
-
-        // Returns true when the mouse first enters the window
-        bool bMouseIn_;
         
     protected:
         UWindow *window_;
