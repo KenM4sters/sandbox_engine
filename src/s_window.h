@@ -24,4 +24,6 @@ class SWindow : public UWindow {
         GLFWwindow* window_;
         std::unique_ptr<SContext> renderer_;
         bool bIsRunning_;
+        float delta_time_{0};
+        float last_frame{0};
 };

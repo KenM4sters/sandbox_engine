@@ -3,6 +3,8 @@
 
 // Implementation for rendering
 
+// Callback function for keyboard input, which is only called when a key is pressed, rather than 
+// on each frame the button is held for. 
 static void on_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
     auto p_window = static_cast<UWindow*>(glfwGetWindowUserPointer(window));
     p_window->HandleKeyInput(key, scancode, action, mods);
@@ -11,6 +13,24 @@ static void on_key_callback(GLFWwindow* window, int key, int scancode, int actio
 static void on_window_resize_callback(GLFWwindow* window, int width, int height) {
     auto p_window = static_cast<UWindow*>(glfwGetWindowUserPointer(window));
     p_window->HandleWindowResize(width, height);
+}
+
+// Processes keyboard input for the camera - key presses here will be handled on a per-frame
+// basis, meaning that if you hold the key down, the funciton will be called every frame for the duration
+// of the press, which is important for our camera. 
+void SContext::ProcessInput(GLFWwindow* window, float delta_time) {
+    if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
+        scene_->camera_->ProcessKeyboard(FORWARD, delta_time);
+    }
+    if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
+        scene_->camera_->ProcessKeyboard(LEFT, delta_time);
+    }
+    if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
+        scene_->camera_->ProcessKeyboard(BACKWARD, delta_time);
+    }
+    if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
+        scene_->camera_->ProcessKeyboard(RIGHT, delta_time);
+    }
 }
 
 void SContext::init(UWindow *window) {
@@ -52,8 +72,8 @@ void SContext::PreRender() {
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
-void SContext::SceneRender() {
-    scene_->Render();
+void SContext::SceneRender(float delta_time) {
+    scene_->Render(delta_time);
 }
 
 void SContext::PostRender() {

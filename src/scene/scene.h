@@ -10,11 +10,12 @@ class Scene  {
         ~Scene();
         void Init();
         void AddMesh(Mesh* mesh, std::string name);
-        void Render();
+        void Render(float &delta_time);
+        
+        std::unique_ptr<Camera> camera_;
     private:
         std::unique_ptr<SShaderResource> shader_res_;
         std::unordered_map<std::string, Mesh*> mesh_repo_;
         unsigned int VAO_, VBO_;
         unsigned int scr_width_, scr_height_;
-        std::unique_ptr<Camera> camera_;
 };

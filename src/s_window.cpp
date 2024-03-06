@@ -41,7 +41,12 @@ void SWindow::init(int w, int h, const std::string& t) {
 
 }
 void SWindow::render() {
+    auto current_frame = static_cast<float>(glfwGetTime());
+    delta_time_ = current_frame - last_frame;
+    last_frame = current_frame;
+
     renderer_->PreRender();
-    renderer_->SceneRender();
+    renderer_->SceneRender(delta_time_);
     renderer_->PostRender();
+    renderer_->ProcessInput(window_, delta_time_);
 }
