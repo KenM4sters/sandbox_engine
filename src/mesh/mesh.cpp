@@ -1,7 +1,7 @@
 #include "mesh.h"
 #include "../utils/logging.h"
 
-void Mesh::Init() {
+void Mesh::InitGeometry() {
     glGenVertexArrays(1, &VAO_);
     glGenBuffers(1, &VBO_);
     glBindVertexArray(VAO_);
@@ -15,5 +15,8 @@ void Mesh::Init() {
     
     // Logging
     Logger::LogGeometry(geometry_->type_, geometry_->stride_, geometry_->vert_count_, geometry_->offset_);
+}
 
+void Mesh::InitTransforms() {
+    
 }
