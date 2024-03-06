@@ -18,5 +18,13 @@ void Mesh::InitGeometry() {
 }
 
 void Mesh::InitTransforms() {
-    
+    transform_.projection = glm::perspective(camera_->zoom_, scr_wdith_ / scr_height_, 0.1f, 100.0f);
+
+    transform_.model = glm::translate(transform_.model, position_);
+    transform_.model = glm::scale(transform_.model, scale_);
+    transform_.model = glm::rotate(transform_.model, rotation_.first, rotation_.second);
+}
+
+void Mesh::UpdateTransforms() {
+
 }

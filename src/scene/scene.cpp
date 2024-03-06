@@ -17,7 +17,7 @@ void Scene::Init() {
     // Test
     Material* material = new Material(shader, std::string("test"));
     UBufferGeometry* geo = new UBufferGeometry(SANDBOX_CUBE);
-    Mesh* mesh = new Mesh(material, geo, camera_);
+    Mesh* mesh = new Mesh(material, geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
     // Add to the scene 
     AddMesh(mesh, "test");
     // Use the appropriate shader program for the currently bound vertex array;
