@@ -16,11 +16,14 @@
 
 class UBufferGeometry {
     public:
-        // type must be one of SANDBOX_TRIANGLE, SANDBOX_SQUARE, SANDBOX_CUBE
+        // type = SANDBOX_TRIANGLE || SANDBOX_SQUARE || SANDBOX_CUBE
         UBufferGeometry(unsigned int type = SANDBOX_TRIANGLE) : type_(type) {
             initGeometry();
         }
-    protected:
+        unsigned int type_, stride_, vert_count_;
+        std::vector<float> vertices = SANDBOX_TRIANGLE_VERTICES;
+        void* offset_;
+    private:
         void initGeometry() {
             switch(type_) {
                 case SANDBOX_TRIANGLE:  
@@ -43,7 +46,4 @@ class UBufferGeometry {
                     break;
             }
         }
-        unsigned int type_, stride_, vert_count_;
-        std::vector<float> vertices = SANDBOX_TRIANGLE_VERTICES;
-        void* offset_;
 };

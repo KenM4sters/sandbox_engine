@@ -37,6 +37,8 @@ void Scene::Init() {
     // Shader
     auto shader = shader_res_->AddResource("src/shaders/quad.vert", "src/shaders/quad.frag", nullptr, "test");
     shader.Use();
+
+    Material* material = new Material(&shader, std::string("test"));
 }
 
 void Scene::Render() {
