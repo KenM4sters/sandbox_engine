@@ -8,7 +8,9 @@ class Scene  {
     public:
         Scene(unsigned int w, unsigned int h, Camera* camera);
         ~Scene();
+        // Initializes all game objects (meshes) 
         void Init();
+        // Adds mesh to an unordered_map of meshes that is traversed in the Render()
         void AddMesh(Mesh* mesh, std::string name);
         void Render(float &delta_time);
         
