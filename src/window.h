@@ -5,6 +5,7 @@
 
 class UWindow {
     public:
+        UWindow() {}
         virtual void* GetNativeWindow() = 0;
         virtual void SetNativeWindow(void* window) = 0;
 

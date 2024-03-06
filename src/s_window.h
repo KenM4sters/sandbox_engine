@@ -8,7 +8,6 @@ class SWindow : public UWindow {
         SWindow() : bIsRunning_(true), window_(nullptr) {
             renderer_ = std::make_unique<SContext>();
         }
-
         void* GetNativeWindow() override { return window_;}
         void SetNativeWindow(void* window) override {window_ = static_cast<GLFWwindow*>(window);}
 

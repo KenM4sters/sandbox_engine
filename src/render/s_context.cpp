@@ -10,6 +10,10 @@ static void on_key_callback(GLFWwindow* window, int key, int scancode, int actio
     p_window->HandleKeyInput(key, scancode, action, mods);
 }
 
+static void on_mouse_move_callback(GLFWwindow* window, double pos_x, double pos_y) {
+    auto p_window = static_cast<UWindow*>(glfwGetWindowUserPointer(window));
+}
+
 static void on_window_resize_callback(GLFWwindow* window, int width, int height) {
     auto p_window = static_cast<UWindow*>(glfwGetWindowUserPointer(window));
     p_window->HandleWindowResize(width, height);
@@ -37,6 +41,11 @@ void SContext::init(UWindow *window) {
     window_ = window;
     scene_ = std::make_unique<Scene>(window_->width_, window_->height_);
 
+    // Initially set the mouse position to the center of the window
+    prev_mouse_pos_x_ = window->width_ / 2.0f;
+    prev_mouse_pos_y_ = window->height_ / 2.0f;
+    bMouseIn_ = false;
+
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
     glfwWindowHint(GLFW_CONTEXT_VERSION_MINOR, 3);
@@ -54,6 +63,7 @@ void SContext::init(UWindow *window) {
 
     glfwSetWindowUserPointer(gl_window, window);
     glfwSetKeyCallback(gl_window, on_key_callback);
+    glfwSetCursorPosCallback(gl_window, on_mouse_move_callback);
     glfwSetFramebufferSizeCallback(gl_window, on_window_resize_callback);
     glfwMakeContextCurrent(gl_window);
 

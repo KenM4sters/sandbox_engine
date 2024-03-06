@@ -14,6 +14,7 @@ class Scene  {
         
         std::unique_ptr<Camera> camera_;
     private:
+        
         std::unique_ptr<SShaderResource> shader_res_;
         std::unordered_map<std::string, Mesh*> mesh_repo_;
         unsigned int VAO_, VBO_;
