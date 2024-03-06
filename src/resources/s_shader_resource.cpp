@@ -1,8 +1,8 @@
 #include "s_shader_resource.h"
 
-Shader SShaderResource::AddResource(const char* v_shader_file, const char* f_shader_file, const char* g_shader_file, std::string name) {
+Shader* SShaderResource::AddResource(const char* v_shader_file, const char* f_shader_file, const char* g_shader_file, std::string name) {
     res_[name] = LoadShaderFromFile(v_shader_file, f_shader_file, g_shader_file);
-    return res_[name];
+    return &res_[name];
 }
 
 Shader SShaderResource::GetResource(std::string name) {

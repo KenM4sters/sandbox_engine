@@ -15,7 +15,7 @@ static void on_window_resize_callback(GLFWwindow* window, int width, int height)
 
 void SContext::init(UWindow *window) {
     window_ = window;
-    scene_ = std::make_unique<Scene>();
+    scene_ = std::make_unique<Scene>(window_->width_, window_->height_);
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -41,6 +41,7 @@ void SContext::init(UWindow *window) {
     {
         std::cout << "FAILED to initialize GLAD" << std::endl;
     }
+    glEnable(GL_DEPTH_TEST);
 
     // *IMPORTANT - must be called after glad has been loaded
     scene_->Init();
@@ -48,7 +49,7 @@ void SContext::init(UWindow *window) {
 
 void SContext::PreRender() {
     glClearColor(0.1f, 0.3f, 0.3f, 1.0f);
-    glClear(GL_COLOR_BUFFER_BIT);
+    glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
 
 void SContext::SceneRender() {

@@ -6,7 +6,7 @@
 template <typename T>
 class UResource {
     public:
-        virtual T AddResource(const char* v_shader_file, const char* f_shader_file, const char* g_shader_file, std::string name) = 0;
+        virtual T* AddResource(const char* v_shader_file, const char* f_shader_file, const char* g_shader_file, std::string name) = 0;
         virtual T GetResource(std::string name) = 0;
         virtual void DeleteResource(std::string res_name) = 0;
 
