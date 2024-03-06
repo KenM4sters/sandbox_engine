@@ -8,7 +8,7 @@ class Scene  {
         Scene();
         ~Scene();
         void Init();
-        void AddMesh(Mesh* mesh, std::string& name);
+        void AddMesh(Mesh* mesh, std::string name);
         void Render();
     private:
         std::unique_ptr<SShaderResource> shader_res_;

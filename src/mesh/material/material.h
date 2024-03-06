@@ -1,3 +1,4 @@
+#pragma once
 #include "../../resources/shader.h"
 #include "../../resources/s_shader_resource.h"
 #include "../../utils/includes.h"

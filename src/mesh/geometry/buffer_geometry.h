@@ -1,3 +1,4 @@
+#pragma once
 #define SANDBOX_TRIANGLE                  0
 #define SANDBOX_SQUARE                    1
 #define SANDBOX_CUBE                      3

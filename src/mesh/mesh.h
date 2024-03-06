@@ -1,3 +1,4 @@
+#pragma once
 #include "material/material.h"
 #include "geometry/buffer_geometry.h"
 #include "../utils/includes.h"
@@ -11,9 +12,9 @@ class Mesh {
         Material* SetMaterial(Material* material) {material_ = material; return material_;}
         UBufferGeometry* GetGeometry() {return geometry_;}
         UBufferGeometry* SetGeometry(UBufferGeometry* geometry) {geometry_ = geometry; return geometry_;}
+        unsigned int VAO_, VBO_;
 
     private:
-        unsigned int VAO_, VBO_;
         Material* material_;
         UBufferGeometry* geometry_;
         glm::vec3 scale{1.0f, 1.0f, 1.0f};
