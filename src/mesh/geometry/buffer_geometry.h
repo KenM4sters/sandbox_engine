@@ -53,7 +53,8 @@ class BufferAtrribute {
     public:
         BufferAtrribute(std::vector<float> vertices, unsigned int count)
              : vertices_(vertices), count_(count) {}
-            
+        
+        // Returns the vertices and count of a buffer attribute as a pair.
         std::pair<std::vector<float>, unsigned int> GetData() const {
             return std::pair<std::vector<float>, unsigned int>(vertices_, count_);
         }
@@ -71,8 +72,9 @@ class UBufferGeometry {
         }
         void AddBufferAttribute(std::string name, unsigned int loc, BufferAtrribute* attribute) {
             attributes_[name] = std::pair<BufferAtrribute*, unsigned int>(attribute, loc);
-            std::cout << "SUCCESS::AddedBufferAttribute " << name << std::endl;
         }
+
+        // Returns the address of the buffer attributes map.
         const std::unordered_map<std::string, std::pair<BufferAtrribute*, unsigned int>>* GetAttributes() {
             return &attributes_;
         }

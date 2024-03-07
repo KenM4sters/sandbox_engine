@@ -43,11 +43,16 @@ void Scene::Init() {
     Material* floor_mat = new Material(floor_shader, std::string("floor"));
     floor_mat->SetColor(glm::vec3(0.5f, 0.5f, 0.5f));
     UBufferGeometry* floor_geo = new UBufferGeometry(SANDBOX_SQUARE);
+    
+    floor_geo->AddBufferAttribute("test2", 1, new BufferAtrribute({1.0f, 1.0f, 1.0f}, 3));
+
     Mesh* floor_mesh = new Mesh(floor_mat, floor_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
     AddMesh(floor_mesh, "floor");
     floor_mesh->SetPosition(glm::vec3(0.0f, -1.0f, 0.0f));
     floor_mesh->SetScale(50.0f);
     floor_mesh->SetRotation(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    
+    floor_mesh->UpdateGeometry();
 
 }
 

@@ -1,13 +1,14 @@
 #include "mesh.h"
 #include "../utils/logging.h"
+#define _DEBUG
 
 void Mesh::InitGeometry() {
     glGenVertexArrays(1, &VAO_);
-    std::cout << "init mesh" << std::endl;
     UpdateGeometry();
 }
 
 void Mesh::UpdateGeometry() {
+    // Only a single vertex array is needed and must be bound before binding any additional vertex buffers.
     glBindVertexArray(VAO_);
     auto attributes_map = geometry_->GetAttributes();
     for(const auto& attrib : *attributes_map) {
@@ -19,7 +20,13 @@ void Mesh::UpdateGeometry() {
         glVertexAttribPointer(attrib.second.second, buffer_data.second, GL_FLOAT, GL_FALSE, buffer_data.second * sizeof(float), (void*)0);
         glEnableVertexAttribArray(attrib.second.second);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
+
+        #ifdef _DEBUG
+        Logger::LogAttributes(material_->GetShaderMaterialName(), geometry_->type_, 
+            buffer_data.first.size() * sizeof(float), buffer_data.second * sizeof(float), 0);
+        #endif
     }
+
 }
 
 void Mesh::InitTransforms() {
@@ -33,11 +40,17 @@ void Mesh::InitTransforms() {
 void Mesh::UpdateTransforms() {
     transform_.view = camera_->GetViewMatrix();
 
+    // model matrix needs to be reset to the identity matrix on each frame, since we don't want to stack transformations.
     transform_.model = glm::mat4(1.0f);
+
+    // Order matters here and is dependant on the particular use case - neither is right nor wrong,
+    // but in our case we want to rotate around their new positions, as opposed to their starting ones.
     transform_.model = glm::translate(transform_.model, position_);
     transform_.model = glm::scale(transform_.model, scale_);
     transform_.model = glm::rotate(transform_.model, rotation_.first, rotation_.second);
 
+    // Make sure the right shader is being used, which is simple in our case since we have a getter
+    // method for the shader material. 
     material_->GetShaderMaterial()->Use();
     material_->GetShaderMaterial()->setMat4("projection", transform_.projection);
     material_->GetShaderMaterial()->setMat4("view", transform_.view);
