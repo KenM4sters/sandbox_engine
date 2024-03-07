@@ -11,10 +11,26 @@ void Mesh::InitGeometry() {
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, geometry_->stride_, geometry_->offset_);
     glEnableVertexAttribArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
+
     glBindVertexArray(0);
     
     // Logging
     Logger::LogGeometry(geometry_->type_, geometry_->stride_, geometry_->vert_count_, geometry_->offset_);
+}
+
+void Mesh::UpdateGeometry() {
+    glBindVertexArray(VAO_);
+    auto attributes_map = geometry_->GetAttributes();
+    for(const auto& attrib : *attributes_map) {
+        const auto buffer_data = attrib.second.first->GetData();
+        unsigned int vbo;
+        glGenBuffers(1, &vbo);
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data.first)*sizeof(float), buffer_data.first.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(attrib.second.second, buffer_data.second, GL_FLOAT, GL_FALSE, geometry_->stride_, (void*)0);
+        glEnableVertexAttribArray(attrib.second.second);
+        glBindBuffer(GL_ARRAY_BUFFER, 0);
+    }
 }
 
 void Mesh::InitTransforms() {

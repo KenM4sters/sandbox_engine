@@ -23,6 +23,8 @@ class Mesh {
         ~Mesh() {}
         void InitGeometry();
         void InitTransforms();
+        // must be called at least once after either a single or multiple Geometry::AddAttribute() calls.
+        void UpdateGeometry();
 
         Material* GetMaterial() {return material_;}
         Material* SetMaterial(Material* material) {material_ = material; return material_;}
