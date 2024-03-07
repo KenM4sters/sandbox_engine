@@ -54,7 +54,13 @@ void Mesh::UpdateUniforms(Mesh* light_mesh, glm::vec3& camera_position) {
     material_->GetShaderMaterial()->setMat4("projection", transform_.projection);
     material_->GetShaderMaterial()->setMat4("view", transform_.view);
     material_->GetShaderMaterial()->setMat4("model", transform_.model);
-    material_->GetShaderMaterial()->setVector3f("light_pos", *light_mesh->GetPosition());
-    material_->GetShaderMaterial()->setVector3f("light_color", light_mesh->material_->GetColor());
     material_->GetShaderMaterial()->setVector3f("camera_pos", camera_position);
+    material_->GetShaderMaterial()->setVector3f("light.position", *light_mesh->GetPosition());
+    material_->GetShaderMaterial()->setVector3f("light.ambient", light_mesh->material_->GetColor());
+    material_->GetShaderMaterial()->setVector3f("light.diffuse", {0.8f, 0.8f, 0.8f});
+    material_->GetShaderMaterial()->setVector3f("light.specular", {1.0f, 1.0f, 1.0f});
+    material_->GetShaderMaterial()->setVector3f("material.ambient", {0.1f, 0.5f, 0.3f});
+    material_->GetShaderMaterial()->setVector3f("material.diffuse", {1.0f, 0.5f, 0.2f});
+    material_->GetShaderMaterial()->setVector3f("material.specular", {0.5f, 0.5f, 0.5f});
+    material_->GetShaderMaterial()->setFloat("material.shininess", 32.0f); 
 }
