@@ -9,14 +9,16 @@ class Material {
             shader_->Use();
             shader_->setVector3f("uColor", color_);
         }
-        Shader* SetShaderMaterial(Shader* shader); // takes in a name and searches the resource shader for that key
         Shader* GetShaderMaterial() { return shader_; }
         std::string GetShaderMaterialName() const { return name_;}
+        glm::vec3 GetColor() const { return color_; }
+        Shader* SetShaderMaterial(Shader* shader); // takes in a name and searches the resource shader for that key
         void SetColor(glm::vec3 color) { 
             color_ = color; 
             shader_->Use();
             shader_->setVector3f("uColor", color_);
         }
+
     private:
         Shader* shader_;
         std::string name_;

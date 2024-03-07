@@ -29,7 +29,7 @@ void Mesh::UpdateGeometry() {
 
 }
 
-void Mesh::InitTransforms() {
+void Mesh::InitUniforms() {
     transform_.projection = glm::perspective(camera_->zoom_, scr_wdith_ / scr_height_, 0.1f, 100.0f);
     transform_.view = camera_->GetViewMatrix();
     transform_.model = glm::translate(transform_.model, position_);
@@ -37,9 +37,8 @@ void Mesh::InitTransforms() {
     transform_.model = glm::rotate(transform_.model, rotation_.first, rotation_.second);
 }
 
-void Mesh::UpdateTransforms() {
+void Mesh::UpdateUniforms(Mesh* light_mesh, glm::vec3& camera_position) {
     transform_.view = camera_->GetViewMatrix();
-
     // model matrix needs to be reset to the identity matrix on each frame, since we don't want to stack transformations.
     transform_.model = glm::mat4(1.0f);
 
@@ -55,4 +54,7 @@ void Mesh::UpdateTransforms() {
     material_->GetShaderMaterial()->setMat4("projection", transform_.projection);
     material_->GetShaderMaterial()->setMat4("view", transform_.view);
     material_->GetShaderMaterial()->setMat4("model", transform_.model);
+    material_->GetShaderMaterial()->setVector3f("light_pos", *light_mesh->GetPosition());
+    material_->GetShaderMaterial()->setVector3f("light_color", light_mesh->material_->GetColor());
+    material_->GetShaderMaterial()->setVector3f("camera_pos", camera_position);
 }

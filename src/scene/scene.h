@@ -12,6 +12,7 @@ class Scene  {
         void Init();
         // Adds mesh to an unordered_map of meshes that is traversed in the Render()
         void AddMesh(Mesh* mesh, std::string name);
+        std::unordered_map<std::string, Mesh*>* GetMeshRepo() {return &mesh_repo_;}
         void Render(float &delta_time);
         
     private:
