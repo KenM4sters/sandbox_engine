@@ -48,6 +48,7 @@ void Scene::Init() {
     floor_mesh->SetPosition(glm::vec3(0.0f, -1.0f, 0.0f));
     floor_mesh->SetScale(50.0f);
     floor_mesh->SetRotation(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
+    floor_mesh->UpdateGeometry();
 
 }
 
