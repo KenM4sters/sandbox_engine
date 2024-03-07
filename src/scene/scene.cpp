@@ -19,40 +19,39 @@ void Scene::AddMesh(Mesh* mesh, std::string name) {
 }
 
 void Scene::Init() {
-    auto cube_1_shader= shader_res_->AddResource("src/shaders/cube_1.vert", "src/shaders/cube_1.frag", nullptr, "cube1");
-    auto cube_2_shader = shader_res_->AddResource("src/shaders/cube_2.vert", "src/shaders/cube_2.frag", nullptr, "cube2");
+    auto cube_shader= shader_res_->AddResource("src/shaders/cube_1.vert", "src/shaders/cube_1.frag", nullptr, "cube1");
+    auto light_cube_shader = shader_res_->AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "cube2");
     auto floor_shader = shader_res_->AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor");
 
-    // Cube 1
-    Material* cube_1_mat = new Material(cube_1_shader, std::string("cube1"));
-    cube_1_mat->SetColor(glm::vec3(0.3f, 0.9f, 1.0f));
-    UBufferGeometry* cube_1_geo = new UBufferGeometry(SANDBOX_CUBE);
-    Mesh* mesh = new Mesh(cube_1_mat, cube_1_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
+    // Cubes
+    Material* cube_mat = new Material(cube_shader, std::string("cube1"));
+    UBufferGeometry* cube_geo = new UBufferGeometry(SANDBOX_CUBE);
+    cube_geo->AddBufferAttribute("normals", 1, new BufferAtrribute(std::vector<float>(SANDBOX_CUBE_NORMALS), 3));
+    Mesh* mesh = new Mesh(cube_mat, cube_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
+    cube_mat->SetColor(glm::vec3(0.3f, 0.9f, 1.0f));
     AddMesh(mesh, "cube1");
     mesh->SetPosition(glm::vec3(5.0f, 0.0f, -10.0f));
+    mesh->UpdateGeometry();
 
-    // Cube 2
-    Material* cube_2_mat = new Material(cube_2_shader, std::string("cube2"));
-    cube_2_mat->SetColor(glm::vec3(0.9f, 0.1f, 0.0f));
-    UBufferGeometry* cube_2_geo = new UBufferGeometry(SANDBOX_CUBE);
-    Mesh* mesh_2 = new Mesh(cube_2_mat, cube_2_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
+    // Light Cube
+    Material* light_cube_mat = new Material(light_cube_shader, std::string("cube2"));
+    UBufferGeometry* light_cube_geo = new UBufferGeometry(SANDBOX_CUBE);
+    Mesh* mesh_2 = new Mesh(light_cube_mat, light_cube_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
+    light_cube_mat->SetColor(glm::vec3(0.9f, 0.1f, 0.0f));
     AddMesh(mesh_2, "cube2");
-    mesh_2->SetPosition(glm::vec3(-5.0f, 0.0f, -10.0f));
+    mesh_2->SetPosition(glm::vec3(0.0f, 5.0f, -5.0f));
 
     // Floor
     Material* floor_mat = new Material(floor_shader, std::string("floor"));
-    floor_mat->SetColor(glm::vec3(0.5f, 0.5f, 0.5f));
     UBufferGeometry* floor_geo = new UBufferGeometry(SANDBOX_SQUARE);
-    
-    floor_geo->AddBufferAttribute("test2", 1, new BufferAtrribute({1.0f, 1.0f, 1.0f}, 3));
-
+    floor_mat->SetColor(glm::vec3(0.5f, 0.5f, 0.5f));
+    floor_geo->AddBufferAttribute("test2", 1, new BufferAtrribute({1.0f, 1.0f, 1.0f}, 3));    
     Mesh* floor_mesh = new Mesh(floor_mat, floor_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
     AddMesh(floor_mesh, "floor");
     floor_mesh->SetPosition(glm::vec3(0.0f, -1.0f, 0.0f));
     floor_mesh->SetScale(50.0f);
     floor_mesh->SetRotation(glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f));
-    
-    floor_mesh->UpdateGeometry();
+    floor_mesh->UpdateGeometry(); 
 
 }
 
