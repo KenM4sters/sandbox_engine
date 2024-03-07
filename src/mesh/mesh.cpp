@@ -3,19 +3,8 @@
 
 void Mesh::InitGeometry() {
     glGenVertexArrays(1, &VAO_);
-    glGenBuffers(1, &VBO_);
-    glBindVertexArray(VAO_);
-    glBindBuffer(GL_ARRAY_BUFFER, VBO_);
-
-    glBufferData(GL_ARRAY_BUFFER, geometry_->vert_count_ * 12, geometry_->vertices.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, geometry_->stride_, geometry_->offset_);
-    glEnableVertexAttribArray(0);
-    glBindBuffer(GL_ARRAY_BUFFER, 0);
-
-    glBindVertexArray(0);
-    
-    // Logging
-    Logger::LogGeometry(geometry_->type_, geometry_->stride_, geometry_->vert_count_, geometry_->offset_);
+    std::cout << "init mesh" << std::endl;
+    UpdateGeometry();
 }
 
 void Mesh::UpdateGeometry() {
@@ -26,8 +15,8 @@ void Mesh::UpdateGeometry() {
         unsigned int vbo;
         glGenBuffers(1, &vbo);
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
-        glBufferData(GL_ARRAY_BUFFER, sizeof(buffer_data.first)*sizeof(float), buffer_data.first.data(), GL_STATIC_DRAW);
-        glVertexAttribPointer(attrib.second.second, buffer_data.second, GL_FLOAT, GL_FALSE, geometry_->stride_, (void*)0);
+        glBufferData(GL_ARRAY_BUFFER, buffer_data.first.size() * sizeof(float), buffer_data.first.data(), GL_STATIC_DRAW);
+        glVertexAttribPointer(attrib.second.second, buffer_data.second, GL_FLOAT, GL_FALSE, buffer_data.second * sizeof(float), (void*)0);
         glEnableVertexAttribArray(attrib.second.second);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
     }
