@@ -2,7 +2,7 @@
 
 // Implementation for main app
 App::App(const std::string& app_name) {
-    window_ = std::make_unique<SWindow>();
+    window_ = std::make_unique<SWindow>(false);
     window_->init(800, 600, app_name);
 }
 

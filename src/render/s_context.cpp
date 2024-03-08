@@ -92,10 +92,6 @@ void SContext::Init(UWindow *window) {
     scene_->Init();
 }
 
-void SContext::InitPostProcessing() {
-    
-}
-
 void SContext::PreRender() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
@@ -108,6 +104,10 @@ void SContext::SceneRender(float delta_time) {
 void SContext::PostRender() {
     glfwPollEvents();
     glfwSwapBuffers(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
+}
+
+void SContext::RenderWithPostProcessing(Shader* shader, std::shared_ptr<PostProcessing> post_processing) {
+    
 }
 
 void SContext::Terminate() {
