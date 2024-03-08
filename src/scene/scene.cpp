@@ -2,7 +2,9 @@
 
 Scene::Scene(unsigned int w, unsigned int h, Camera* camera) : scr_width_(w), scr_height_(h), camera_(camera)  {
     shader_res_ = std::make_unique<SShaderResource>();
-    std::cout << "Shader res created!" << std::endl;
+    std::cout << "Shader resource created!" << std::endl;
+    texture_res_ = std::make_unique<STextureResource>();
+    std::cout << "Texture resource created!" << std::endl;
 }
 
 // Destructor traverses the scene and deletes all geometries, materials and meshes
