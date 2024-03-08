@@ -25,6 +25,10 @@ void Scene::Init() {
     auto light_cube_shader = shader_res_->AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube");
     auto floor_shader = shader_res_->AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor");
 
+    auto metal_albedo_tex = texture_res_->AddResource("assets/textures/metal/albedo.jpg", "metal_albedo", true);
+    
+
+
     // Cubes
     Material* cube_mat = new Material(cube_shader, std::string("cube"));
     UBufferGeometry* cube_geo = new UBufferGeometry(SANDBOX_CUBE);
