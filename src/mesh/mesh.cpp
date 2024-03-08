@@ -60,7 +60,7 @@ void Mesh::UpdateUniforms(Mesh* light_mesh, glm::vec3& camera_position) {
     material_->GetShaderMaterial()->setVector3f("light.diffuse", {0.8f, 0.8f, 0.8f});
     material_->GetShaderMaterial()->setVector3f("light.specular", {1.0f, 1.0f, 1.0f});
     material_->GetShaderMaterial()->setVector3f("material.ambient", {0.1f, 0.5f, 0.3f});
-    material_->GetShaderMaterial()->setVector3f("material.diffuse", {1.0f, 0.5f, 0.2f});
+    material_->GetShaderMaterial()->setInteger("material.diffuse", 0);
     material_->GetShaderMaterial()->setVector3f("material.specular", {0.5f, 0.5f, 0.5f});
     material_->GetShaderMaterial()->setFloat("material.shininess", 32.0f); 
 }

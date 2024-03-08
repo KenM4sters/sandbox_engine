@@ -18,7 +18,7 @@ void STextureResource::DeleteResource(std::string res_name) {
 
 void STextureResource::ClearAllResources() {
     for(const auto& tex : res_) {
-        glDeleteTextures(GL_TEXTURE_3D, &tex.second.ID_);
+        glDeleteTextures(GL_TEXTURE_2D, &tex.second.ID_);
     }
 }
 
@@ -30,7 +30,8 @@ Texture2D STextureResource::GenerateTextureDataFromUrl(const char* image_url, bo
     }
     int width, height, nr_channels;
     unsigned char* data = stbi_load(image_url, &width, &height, &nr_channels, 0);
-    if(data == nullptr) throw std::runtime_error("ERROR: Failed to load texture data form image path");
+    if(data == nullptr) 
+        throw std::runtime_error("ERROR: Failed to load texture data form image path");
     texture.Generate(width, height, data);
     stbi_image_free(data);
     return texture;

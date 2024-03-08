@@ -24,15 +24,17 @@ void Scene::Init() {
     auto cube_shader = shader_res_->AddResource("src/shaders/cube.vert", "src/shaders/cube.frag", nullptr, "cube");
     auto light_cube_shader = shader_res_->AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube");
     auto floor_shader = shader_res_->AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor");
-
+    auto container_diffuse_tex = texture_res_->AddResource("assets/textures/container/container2.png", "container_diffuse", true);
     auto metal_albedo_tex = texture_res_->AddResource("assets/textures/metal/albedo.jpg", "metal_albedo", true);
-    
+
+    cube_shader->Use();
 
 
     // Cubes
     Material* cube_mat = new Material(cube_shader, std::string("cube"));
     UBufferGeometry* cube_geo = new UBufferGeometry(SANDBOX_CUBE);
-    cube_geo->AddBufferAttribute("normals", 1, new BufferAtrribute(std::vector<float>(SANDBOX_CUBE_NORMALS), 3));
+    cube_geo->AddBufferAttribute("aNormal", 1, new BufferAtrribute(std::vector<float>(SANDBOX_CUBE_NORMAL_COORDS), 3));
+    cube_geo->AddBufferAttribute("aTex_coord", 2, new BufferAtrribute(std::vector<float>(SANDBOX_CUBE_TEX_COORDS), 2));
     Mesh* mesh = new Mesh(cube_mat, cube_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
     cube_mat->SetColor(glm::vec3(0.3f, 0.9f, 1.0f));
     AddMesh(mesh, "cube");
@@ -51,7 +53,8 @@ void Scene::Init() {
     // Floor
     Material* floor_mat = new Material(floor_shader, std::string("floor"));
     UBufferGeometry* floor_geo = new UBufferGeometry(SANDBOX_SQUARE);
-    cube_geo->AddBufferAttribute("normals", 1, new BufferAtrribute(std::vector<float>(SANDBOX_CUBE_NORMALS), 3));
+    floor_geo->AddBufferAttribute("normals", 1, new BufferAtrribute(std::vector<float>(SANDBOX_SQUARE_NORMAL_COORDS), 3));
+    floor_geo->AddBufferAttribute("aTex_coord", 2, new BufferAtrribute(std::vector<float>(SANDBOX_SQUARE_TEX_COORDS), 2));
     floor_mat->SetColor(glm::vec3(0.6f, 0.6f, 0.6f)); 
     Mesh* floor_mesh = new Mesh(floor_mat, floor_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
     AddMesh(floor_mesh, "floor");
@@ -70,6 +73,7 @@ void Scene::Render(float &delta_time) {
         mesh.second->GetMaterial()->GetShaderMaterial()->Use();
         // Used for lighting - meshes need to know light sources are to calculate diffuse lighting
         mesh.second->UpdateUniforms(mesh_repo_["light_cube"]->GetMesh(), camera_->position_);
+        texture_res_->GetResource("container_diffuse").Bind();
         glBindVertexArray(mesh.second->VAO_);
         glDrawArrays(GL_TRIANGLES, 0, geo->vert_count_);
         glBindVertexArray(0);
