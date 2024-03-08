@@ -8,7 +8,8 @@ class UContext {
     public:
         UContext() : window_(nullptr) {scene_ = nullptr;}
 
-        virtual void init(UWindow *window) = 0;
+        virtual void Init(UWindow *window) = 0;
+        virtual void InitPostProcessing() = 0;
         virtual void PreRender() = 0;
         virtual void SceneRender(float delta_time) = 0;
         virtual void PostRender() = 0;
@@ -18,4 +19,5 @@ class UContext {
     protected:
         UWindow *window_;
         std::unique_ptr<Scene> scene_;
+        bool bPostProcessingEnabled;
 };

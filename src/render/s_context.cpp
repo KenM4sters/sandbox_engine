@@ -57,7 +57,7 @@ void SContext::ProcessInput(GLFWwindow* window, float delta_time) {
     }
 }
 
-void SContext::init(UWindow *window) {
+void SContext::Init(UWindow *window) {
     window_ = window;
     scene_ = std::make_unique<Scene>(window_->width_, window_->height_, window->camera_);
 
@@ -90,6 +90,10 @@ void SContext::init(UWindow *window) {
 
     // *IMPORTANT - must be called after glad has been loaded
     scene_->Init();
+}
+
+void SContext::InitPostProcessing() {
+    
 }
 
 void SContext::PreRender() {

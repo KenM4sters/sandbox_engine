@@ -21,11 +21,14 @@ void Scene::AddMesh(Mesh* mesh, std::string name) {
 }
 
 void Scene::Init() {
+    // Shaders
     auto cube_shader = shader_res_->AddResource("src/shaders/cube.vert", "src/shaders/cube.frag", nullptr, "cube");
     auto light_cube_shader = shader_res_->AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube");
     auto floor_shader = shader_res_->AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor");
-    auto container_diffuse_tex = texture_res_->AddResource("assets/textures/container/container2.png", "container_diffuse", true);
+    // Textures
     auto metal_albedo_tex = texture_res_->AddResource("assets/textures/metal/albedo.jpg", "metal_albedo", true);
+    auto mario_tex = texture_res_->AddResource("assets/textures/misc/super-mario-world.jpg", "mario", true);
+    auto sonic_tex = texture_res_->AddResource("assets/textures/misc/sonic.jpeg", "sonic", true);
     cube_shader->Use();
 
 
@@ -72,7 +75,11 @@ void Scene::Render(float &delta_time) {
         mesh.second->GetMaterial()->GetShaderMaterial()->Use();
         // Used for lighting - meshes need to know light sources are to calculate diffuse lighting
         mesh.second->UpdateUniforms(mesh_repo_["light_cube"]->GetMesh(), camera_->position_);
-        texture_res_->GetResource("container_diffuse").Bind();
+        if(mesh.first == "cube") {
+            texture_res_->GetResource("mario").Bind();
+        } else if(mesh.first == "floor") {
+            texture_res_->GetResource("sonic").Bind();
+        }
         glBindVertexArray(mesh.second->VAO_);
         glDrawArrays(GL_TRIANGLES, 0, geo->vert_count_);
         glBindVertexArray(0);
