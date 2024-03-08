@@ -4,7 +4,7 @@ PostProcessing::PostProcessing(unsigned int width, unsigned int height, Shader* 
     width_(width), height_(height), shader_(shader) {
         glGenFramebuffers(1, &FBO_);
         glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
-        tex_.Generate(width_, height_, nullptr);
+        tex_.Generate(width_, height_, NULL);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_.ID_, 0);
 
         glGenRenderbuffers(1, &RBO_);

@@ -13,7 +13,7 @@ class UContext {
         virtual void PreRender() = 0;
         virtual void SceneRender(float delta_time) = 0;
         virtual void PostRender() = 0;
-        virtual void RenderWithPostProcessing(Shader* shader, std::shared_ptr<PostProcessing> post_processing) = 0;
+        virtual void RenderWithPostProcessing(Shader* shader, std::unique_ptr<PostProcessing> post_processing, float delta_time) = 0;
         virtual void Terminate() = 0;
         virtual void ProcessInput(GLFWwindow* window, float delta_time) = 0;
         

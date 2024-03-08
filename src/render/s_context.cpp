@@ -106,8 +106,12 @@ void SContext::PostRender() {
     glfwSwapBuffers(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
 }
 
-void SContext::RenderWithPostProcessing(Shader* shader, std::shared_ptr<PostProcessing> post_processing) {
-    
+void SContext::RenderWithPostProcessing(Shader* shader, std::unique_ptr<PostProcessing> post_processing, float delta_time) {
+    post_processing->BeginRender();
+    SceneRender(delta_time);
+    post_processing->EndRender();
+    post_processing->RenderQuad();
+    PostRender();
 }
 
 void SContext::Terminate() {

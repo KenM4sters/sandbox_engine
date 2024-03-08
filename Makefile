@@ -2,7 +2,7 @@ include .env
 
 CC=clang++
 APP_NAME = app
-VERSION=-std=c++17 -fsanitize=address -g
+VERSION=-std=c++17 -fsanitize=address 
 BUILD_DIR = bin
 C_FILES = ./src/*.cpp ./src/render/*.cpp ./src/scene/*.cpp ./src/resources/*.cpp ./src/mesh/*.cpp ./src/mesh/material/*.cpp  ./src/camera/*.cpp
 HEADER_FILES = -I./src/utils/*.h -I./src/*.h -I./src/render/*.h -I./src/scene/*.h -I./src/resources/*.h -I./src/mesh/*.h -I./src/mesh/geometry/*.h -I./src/mesh/material/*.h  -I./src/camera/*.h

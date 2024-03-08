@@ -22,7 +22,7 @@ class SWindow : public UWindow {
         GLFWwindow* window_;
         Shader* post_processing_shader_; 
         std::unique_ptr<SContext> renderer_;
-        std::shared_ptr<PostProcessing> post_processing_;
+        std::unique_ptr<PostProcessing> post_processing_;
         bool bPostProcessingEnabled;
         bool bIsRunning_;
         float delta_time_{0};
