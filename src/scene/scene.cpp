@@ -26,7 +26,6 @@ void Scene::Init() {
     auto floor_shader = shader_res_->AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor");
     auto container_diffuse_tex = texture_res_->AddResource("assets/textures/container/container2.png", "container_diffuse", true);
     auto metal_albedo_tex = texture_res_->AddResource("assets/textures/metal/albedo.jpg", "metal_albedo", true);
-
     cube_shader->Use();
 
 

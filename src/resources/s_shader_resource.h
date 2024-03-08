@@ -4,7 +4,7 @@
 
 class SShaderResource : public UResource<Shader> {
     public:
-        Shader* AddResource(const char* v_shader_file, const char* f_shader_file, const char* g_shader_file, std::string name) override;
+        Shader* AddResource(const char* v_shader_file, const char* f_shader_file, const char* g_shader_file, std::string name);
         Shader GetResource(std::string name) override;
         void DeleteResource(std::string res_name) override;
         void ClearAllResources() override;

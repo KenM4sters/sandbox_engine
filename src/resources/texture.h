@@ -23,8 +23,7 @@ class Texture2D
 public:
     unsigned int ID_; // ID_ is used as a key for each texture data in the Resources' texture map. 
     unsigned int width_, height_; // In px.
-    unsigned int internal_format_;
-    unsigned int image_format_; 
+    unsigned int format_; 
     unsigned int wrap_s_; // Not necessary.
     unsigned int wrap_t_; // Not necessary.
     unsigned int filter_min_; 

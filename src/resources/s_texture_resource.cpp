@@ -24,15 +24,21 @@ void STextureResource::ClearAllResources() {
 
 Texture2D STextureResource::GenerateTextureDataFromUrl(const char* image_url, bool bIs_alpha) {
     Texture2D texture;
-    if(bIs_alpha) {
-        texture.internal_format_ = GL_RGBA;
-        texture.image_format_ = GL_RGBA;
-    }
+    // if(bIs_alpha) {
+    //     texture.internal_format_ = GL_RGBA;
+    //     texture.image_format_ = GL_RGBA;
+    // }
     int width, height, nr_channels;
     unsigned char* data = stbi_load(image_url, &width, &height, &nr_channels, 0);
     if(data == nullptr) 
         throw std::runtime_error("ERROR: Failed to load texture data form image path");
+    if (nr_channels == 1)
+        texture.format_ = GL_RED;
+    else if (nr_channels == 3)
+        texture.format_ = GL_RGB;
+    else if (nr_channels == 4)
+        texture.format_ = GL_RGBA;
     texture.Generate(width, height, data);
-    stbi_image_free(data);
+    // stbi_image_free(data);
     return texture;
 }
