@@ -57,9 +57,16 @@ void SContext::ProcessInput(GLFWwindow* window, float delta_time) {
     }
 }
 
+SContext::SContext(bool bPostProcessing) {
+    bPostProcessingEnabled = bPostProcessing;
+}
+
 void SContext::Init(UWindow *window) {
     window_ = window;
     scene_ = std::make_unique<Scene>(window_->width_, window_->height_, window->camera_);
+    fbo_shader_res_ = std::make_unique<SShaderResource>();
+    fbo_shader_ = fbo_shader_res_->AddResource("src/shaders/post_processing.vert", "src/shaders/post_processing.frag", nullptr, "fbo_quad");
+    post_processing_ = std::make_unique<PostProcessing>(window_->width_, window_->height_, fbo_shader_);
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -106,12 +113,24 @@ void SContext::PostRender() {
     glfwSwapBuffers(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
 }
 
+void SContext::RenderWithoutPostProcessing(float delta_time) {
+    PreRender();
+    SceneRender(delta_time);
+    PostRender();
+}
+
 void SContext::RenderWithPostProcessing(Shader* shader, std::unique_ptr<PostProcessing> post_processing, float delta_time) {
     post_processing->BeginRender();
     SceneRender(delta_time);
     post_processing->EndRender();
     post_processing->RenderQuad();
     PostRender();
+}
+
+void SContext::Render(float delta_time) {
+    bPostProcessingEnabled == true ? 
+        RenderWithPostProcessing(fbo_shader_ , std::move(post_processing_), delta_time) 
+        : RenderWithoutPostProcessing(delta_time);
 }
 
 void SContext::Terminate() {

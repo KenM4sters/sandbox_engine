@@ -5,7 +5,7 @@
 // Header for window
 class SWindow : public UWindow {
     public:
-        SWindow(bool bPostProcess);
+        SWindow();
         ~SWindow() {}
         void* GetNativeWindow() override { return window_;}
         void SetNativeWindow(void* window) override {window_ = static_cast<GLFWwindow*>(window);}
@@ -20,10 +20,7 @@ class SWindow : public UWindow {
 
     private:
         GLFWwindow* window_;
-        Shader* post_processing_shader_; 
         std::unique_ptr<SContext> renderer_;
-        std::unique_ptr<PostProcessing> post_processing_;
-        bool bPostProcessingEnabled;
         bool bIsRunning_;
         float delta_time_{0};
         float last_frame{0};
