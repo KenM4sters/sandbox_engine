@@ -6,7 +6,11 @@ PostProcessing::PostProcessing(unsigned int width, unsigned int height, SShaderR
         shader_->Use();
         glGenFramebuffers(1, &FBO_);
         glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
-        tex_.Generate(width_, height_, NULL);
+        glGenTextures(1, &tex_.ID_);
+        glBindTexture(GL_TEXTURE_2D, tex_.ID_);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+        glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_.ID_, 0);
 
         glGenRenderbuffers(1, &RBO_);
@@ -36,9 +40,9 @@ void PostProcessing::InitQuad() {
     };
     glGenVertexArrays(1, &VAO_);
     glGenBuffers(1, &VBO);
+    glBindVertexArray(VAO_);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-    glBindVertexArray(VAO_);
     glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)(0));
     glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)(2 * sizeof(float)));
     glEnableVertexAttribArray(0);
@@ -49,18 +53,17 @@ void PostProcessing::InitQuad() {
 }
 
 void PostProcessing::BeginRender() {
-    glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
+    // glBindFramebuffer(GL_FRAMEBUFFER, 0);
+    // glEnable(GL_DEPTH_TEST);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
-    glEnable(GL_DEPTH_TEST);
 }
 
 void PostProcessing::RenderQuad() {
     shader_->Use();
     glBindVertexArray(VAO_);
-    glActiveTexture(tex_.ID_);
-    tex_.Bind();
-
+    // glActiveTexture(tex_.ID_);
+    // glBindTexture(GL_TEXTURE_2D, tex_.ID_);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 }
@@ -68,4 +71,6 @@ void PostProcessing::RenderQuad() {
 void PostProcessing::EndRender() {
     glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glDisable(GL_DEPTH_TEST);
+    glClearColor(1.0f, 1.0f, 1.0f, 1.0f);
+    glClear(GL_COLOR_BUFFER_BIT);
 }

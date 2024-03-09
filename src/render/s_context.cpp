@@ -120,8 +120,8 @@ void SContext::RenderWithoutPostProcessing(float delta_time) {
 
 void SContext::RenderWithPostProcessing(Shader* shader, PostProcessing* post_processing, float delta_time) {
     post_processing->BeginRender();
-    SceneRender(delta_time);
-    post_processing->EndRender();
+    // SceneRender(delta_time);
+    // post_processing->EndRender();
     post_processing->RenderQuad();
     PostRender();
 }
