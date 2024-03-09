@@ -2,7 +2,9 @@
 
 Shader& Shader::Use()
 {
-    std::cout << this->ID_ << std::endl;
+    #ifdef SANDBOX_DEBUG
+        std::cout << this->ID_ << std::endl;
+    #endif
     glUseProgram(this->ID_);
     return *this;
 }

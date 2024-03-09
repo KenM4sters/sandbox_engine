@@ -1,5 +1,5 @@
 #pragma once
-#define SANDBOX_DEBUG
+// #define SANDBOX_DEBUG
 // Engine 
 #include <glad/glad.h>
 #include <GLFW/glfw3.h>

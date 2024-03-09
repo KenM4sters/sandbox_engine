@@ -21,12 +21,12 @@ class UContext {
         virtual void PreRender() = 0;
         virtual void SceneRender(float delta_time) = 0;
         virtual void PostRender() = 0;
-        virtual void RenderWithPostProcessing(Shader* shader, std::unique_ptr<PostProcessing> post_processing, float delta_time) = 0;
+        virtual void RenderWithPostProcessing(Shader* shader, PostProcessing* post_processing, float delta_time) = 0;
         virtual void RenderWithoutPostProcessing(float delta_time) = 0;
         UWindow *window_;
         std::unique_ptr<Scene> scene_;
         Shader* fbo_shader_; 
-        std::unique_ptr<PostProcessing> post_processing_;
+        PostProcessing* post_processing_;
         SShaderResource* fbo_shader_res_;
         bool bPostProcessingEnabled;
 };

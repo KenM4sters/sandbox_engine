@@ -15,7 +15,7 @@ class SContext : public UContext {
         void PreRender() override;
         void SceneRender(float delta_time) override;
         void PostRender() override;
-        void RenderWithPostProcessing(Shader* shader, std::unique_ptr<PostProcessing> post_processing, float delta_time) override;
+        void RenderWithPostProcessing(Shader* shader, PostProcessing* post_processing, float delta_time) override;
         void RenderWithoutPostProcessing(float delta_time) override;
         void Terminate() override;
         void ProcessInput(GLFWwindow* window, float delta_time) override;

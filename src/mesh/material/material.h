@@ -20,7 +20,6 @@ class Material {
         Shader* SetShaderMaterial(Shader* shader); // takes in a name and searches the resource shader for that key
         void SetColor(glm::vec3 color) { 
             color_ = color; 
-            std::cout << "Setting color" << std::endl;
             shader_->Use();
             shader_->setVector3f("uColor", color_);
         }

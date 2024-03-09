@@ -94,7 +94,7 @@ void SContext::Init(UWindow *window) {
 
     // *IMPORTANT - must be called after glad has been loaded
     fbo_shader_res_ = new SShaderResource();
-    post_processing_ = std::make_unique<PostProcessing>(window_->width_, window_->height_, fbo_shader_res_);
+    post_processing_ = new PostProcessing(window_->width_, window_->height_, fbo_shader_res_);
     scene_->Init();
 }
 
@@ -118,24 +118,19 @@ void SContext::RenderWithoutPostProcessing(float delta_time) {
     PostRender();
 }
 
-void SContext::RenderWithPostProcessing(Shader* shader, std::unique_ptr<PostProcessing> post_processing, float delta_time) {
+void SContext::RenderWithPostProcessing(Shader* shader, PostProcessing* post_processing, float delta_time) {
     post_processing->BeginRender();
-    std::cout << "begin rendering" << std::endl;
     SceneRender(delta_time);
-    std::cout << "scene rendering" << std::endl;
     post_processing->EndRender();
-    std::cout << "end rendering" << std::endl;
     post_processing->RenderQuad();
-    std::cout << "quad rendering" << std::endl;
     PostRender();
-    std::cout << "post rendering" << std::endl;
 }
 
 void SContext::Render(float delta_time) {
     bPostProcessingEnabled == true ? 
-        RenderWithPostProcessing(fbo_shader_ , std::move(post_processing_), delta_time) 
+        RenderWithPostProcessing(fbo_shader_ , post_processing_, delta_time) 
         : RenderWithoutPostProcessing(delta_time);
-}
+} 
 
 void SContext::Terminate() {
     std::cout << "Terminating Window" << std::endl;
