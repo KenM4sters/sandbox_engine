@@ -2,6 +2,7 @@
 
 Shader& Shader::Use()
 {
+    std::cout << this->ID_ << std::endl;
     glUseProgram(this->ID_);
     return *this;
 }

@@ -149,6 +149,11 @@ class UBufferGeometry {
         UBufferGeometry(unsigned int type = SANDBOX_TRIANGLE) : type_(type) {
             initGeometry();
         }
+        ~UBufferGeometry() {
+            #ifdef SANDBOX_DEBUG 
+                std::cout << "Buffer Geometry is being destroyed!" << std::endl;
+            #endif
+        }
         void AddBufferAttribute(std::string name, unsigned int loc, BufferAtrribute* attribute) {
             attributes_[name] = std::pair<BufferAtrribute*, unsigned int>(attribute, loc);
         }

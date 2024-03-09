@@ -24,10 +24,6 @@ void STextureResource::ClearAllResources() {
 
 Texture2D STextureResource::GenerateTextureDataFromUrl(const char* image_url, bool bIs_alpha) {
     Texture2D texture;
-    // if(bIs_alpha) {
-    //     texture.internal_format_ = GL_RGBA;
-    //     texture.image_format_ = GL_RGBA;
-    // }
     int width, height, nr_channels;
     unsigned char* data = stbi_load(image_url, &width, &height, &nr_channels, 0);
     if(data == nullptr) 

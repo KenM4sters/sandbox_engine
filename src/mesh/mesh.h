@@ -13,14 +13,18 @@ struct Transform {
 class Mesh {
     public:
         Mesh(Material* material, UBufferGeometry* geometry, std::tuple<Camera*, float, float> camera_data) : 
-            material_(material), geometry_(geometry), camera_(std::get<0>(camera_data)), 
+            geometry_(geometry), material_(material), camera_(std::get<0>(camera_data)), 
             scr_wdith_(std::get<1>(camera_data)), scr_height_(std::get<2>(camera_data)) 
             { 
                 InitGeometry();
                 InitUniforms();
             }
 
-        ~Mesh() {}
+        ~Mesh() {
+            #ifdef SANDBOX_DEBUG 
+                std::cout << "Mesh is being destroyed!" << std::endl;
+            #endif
+        }
         void InitGeometry();
         void InitUniforms();
         // must be called at least once after either a single or multiple Geometry::AddAttribute() calls.
@@ -57,10 +61,10 @@ class Mesh {
         glm::vec3 position_{0.0f, 0.0f, 0.0f};
         std::pair<float, glm::vec3> rotation_{0, glm::vec3(0.0f, 1.0f, 0.0f)};
 
-        Camera* camera_;
-        Material* material_;
         UBufferGeometry* geometry_;
+        Material* material_;
+        float scr_wdith_, scr_height_;
+        Camera* camera_;
         Transform transform_;
 
-        float scr_wdith_, scr_height_;
 };

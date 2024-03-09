@@ -27,6 +27,6 @@ class UContext {
         std::unique_ptr<Scene> scene_;
         Shader* fbo_shader_; 
         std::unique_ptr<PostProcessing> post_processing_;
-        std::unique_ptr<SShaderResource> fbo_shader_res_;
+        SShaderResource* fbo_shader_res_;
         bool bPostProcessingEnabled;
 };

@@ -1,6 +1,5 @@
 #include "mesh.h"
 #include "../utils/logging.h"
-#define _DEBUG
 
 void Mesh::InitGeometry() {
     glGenVertexArrays(1, &VAO_);
@@ -21,7 +20,7 @@ void Mesh::UpdateGeometry() {
         glEnableVertexAttribArray(attrib.second.second);
         glBindBuffer(GL_ARRAY_BUFFER, 0);
 
-        #ifdef _DEBUG
+        #ifdef SANDBOX_DEBUG
         Logger::LogAttributes(material_->GetShaderMaterialName(), geometry_->type_, 
             buffer_data.first.size() * sizeof(float), buffer_data.second * sizeof(float), 0);
         #endif
@@ -50,7 +49,6 @@ void Mesh::UpdateUniforms(Mesh* light_mesh, glm::vec3& camera_position) {
 
     // Make sure the right shader is being used, which is simple in our case since we have a getter
     // method for the shader material. 
-    material_->GetShaderMaterial()->Use();
     material_->GetShaderMaterial()->setMat4("projection", transform_.projection);
     material_->GetShaderMaterial()->setMat4("view", transform_.view);
     material_->GetShaderMaterial()->setMat4("model", transform_.model);

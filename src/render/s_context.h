@@ -5,6 +5,11 @@
 class SContext : public UContext {
     public:
         SContext(bool bPostProcessing);
+        ~SContext() {
+            #ifdef SANDBOX_DEBUG 
+                std::cout << "SContext is being destroyed!" << std::endl;
+            #endif
+        }
         void Init(UWindow *window) override;
         void Render(float delta_time) override;
         void PreRender() override;

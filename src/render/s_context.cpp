@@ -64,9 +64,6 @@ SContext::SContext(bool bPostProcessing) {
 void SContext::Init(UWindow *window) {
     window_ = window;
     scene_ = std::make_unique<Scene>(window_->width_, window_->height_, window->camera_);
-    fbo_shader_res_ = std::make_unique<SShaderResource>();
-    fbo_shader_ = fbo_shader_res_->AddResource("src/shaders/post_processing.vert", "src/shaders/post_processing.frag", nullptr, "fbo_quad");
-    post_processing_ = std::make_unique<PostProcessing>(window_->width_, window_->height_, fbo_shader_);
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);
@@ -96,6 +93,8 @@ void SContext::Init(UWindow *window) {
     glEnable(GL_DEPTH_TEST);
 
     // *IMPORTANT - must be called after glad has been loaded
+    fbo_shader_res_ = new SShaderResource();
+    post_processing_ = std::make_unique<PostProcessing>(window_->width_, window_->height_, fbo_shader_res_);
     scene_->Init();
 }
 
@@ -121,10 +120,15 @@ void SContext::RenderWithoutPostProcessing(float delta_time) {
 
 void SContext::RenderWithPostProcessing(Shader* shader, std::unique_ptr<PostProcessing> post_processing, float delta_time) {
     post_processing->BeginRender();
+    std::cout << "begin rendering" << std::endl;
     SceneRender(delta_time);
+    std::cout << "scene rendering" << std::endl;
     post_processing->EndRender();
+    std::cout << "end rendering" << std::endl;
     post_processing->RenderQuad();
+    std::cout << "quad rendering" << std::endl;
     PostRender();
+    std::cout << "post rendering" << std::endl;
 }
 
 void SContext::Render(float delta_time) {

@@ -8,9 +8,15 @@ class Shader
 public:
     unsigned int ID_;
     Shader() {}
+    ~Shader() {
+        #ifdef SANDBOX_DEBUG 
+            std::cout << "Shader is being destroyed!" << std::endl;
+        #endif
+    }
     Shader &Use();
     // No plans for using a geometry shader, so we'll set it to null by defualt
     void Compile(const char *vertex_source, const char *fragment_source, const char *geometry_source = nullptr);
+    
     
     // uniform functions
     void setFloat(const char *name, float value, bool bUseShader = false);

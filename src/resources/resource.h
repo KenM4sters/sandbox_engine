@@ -11,7 +11,7 @@ class UResource {
 
         virtual std::unordered_map<std::string, T> GetAllResources() { return res_; }
         virtual void ClearAllResources() = 0;
-        
+    
         std::unordered_map<std::string, T> res_;
         int num;
 };

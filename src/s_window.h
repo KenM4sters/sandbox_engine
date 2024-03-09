@@ -6,7 +6,11 @@
 class SWindow : public UWindow {
     public:
         SWindow();
-        ~SWindow() {}
+        ~SWindow() {
+            #ifdef SANDBOX_DEBUG
+                std::cout << "Swindow is being destroyed!" << std::endl;
+            #endif
+        }
         void* GetNativeWindow() override { return window_;}
         void SetNativeWindow(void* window) override {window_ = static_cast<GLFWwindow*>(window);}
 

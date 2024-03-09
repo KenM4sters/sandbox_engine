@@ -5,6 +5,11 @@
 
 class STextureResource : public UResource<Texture2D> {
     public:
+        ~STextureResource() {
+            #ifdef SANDBOX_DEBUG 
+                std::cout << "Texture Resource is being destroyed!" << std::endl;
+            #endif
+        }
         Texture2D* AddResource(const char* image_url, std::string name, bool bIs_alpha = false);
         Texture2D GetResource(std::string name) override;
         void DeleteResource(std::string res_name) override;

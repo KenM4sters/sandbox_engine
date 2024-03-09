@@ -21,6 +21,5 @@ class Scene  {
         std::unique_ptr<SShaderResource> shader_res_;
         std::unique_ptr<STextureResource> texture_res_;
         std::unordered_map<std::string, Mesh*> mesh_repo_;
-        unsigned int VAO_, VBO_;
         unsigned int scr_width_, scr_height_;
 };

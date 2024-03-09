@@ -1,7 +1,9 @@
 #include "post_processing.h"
 
-PostProcessing::PostProcessing(unsigned int width, unsigned int height, Shader* shader) :
-    width_(width), height_(height), shader_(shader) {
+PostProcessing::PostProcessing(unsigned int width, unsigned int height, SShaderResource* fbo_shader_res) :
+    width_(width), height_(height) {
+        shader_ = fbo_shader_res->AddResource("src/shaders/post_processing.vert", "src/shaders/post_processing.frag", nullptr, "fbo_quad");
+        shader_->Use();
         glGenFramebuffers(1, &FBO_);
         glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
         tex_.Generate(width_, height_, NULL);
@@ -10,15 +12,14 @@ PostProcessing::PostProcessing(unsigned int width, unsigned int height, Shader* 
         glGenRenderbuffers(1, &RBO_);
         glBindRenderbuffer(GL_RENDERBUFFER, RBO_);
         glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width_, height_);
-        glBindRenderbuffer(GL_RENDERBUFFER, 0);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO_);
 
         if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
             std::cout << "ERROR::Failed to create frame buffer!" << std::endl;
         }
         glBindFramebuffer(GL_FRAMEBUFFER, 0);
-        InitQuad();
 
+        InitQuad();
 }
 
 void PostProcessing::InitQuad() {
@@ -48,7 +49,7 @@ void PostProcessing::InitQuad() {
 }
 
 void PostProcessing::BeginRender() {
-    glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
+    glBindFramebuffer(GL_FRAMEBUFFER, 0);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
     glEnable(GL_DEPTH_TEST);
@@ -59,6 +60,7 @@ void PostProcessing::RenderQuad() {
     glBindVertexArray(VAO_);
     glActiveTexture(tex_.ID_);
     tex_.Bind();
+
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 }

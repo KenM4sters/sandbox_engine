@@ -30,6 +30,11 @@ public:
     unsigned int filter_max_; 
 
     Texture2D();
+    ~Texture2D() {
+        #ifdef SANDBOX_DEBUG
+            std::cout << "Texture is being destroyed!" << std::endl;
+        #endif
+    }
 
     // Uses texture data generated from the Resource class using stb_image.h to configure the texture
     // using OpenGL specfic functions, so that they can be used as actual textures. 

@@ -9,6 +9,9 @@ Scene::Scene(unsigned int w, unsigned int h, Camera* camera) : scr_width_(w), sc
 
 // Destructor traverses the scene and deletes all geometries, materials and meshes
 Scene::~Scene() {
+    #ifdef SANDBOX_DEBUG
+        std::cout << "Scene is being destroyed!" << std::endl;
+    #endif
     for(const auto& itr : mesh_repo_) {
         delete itr.second->GetMaterial();
         delete itr.second->GetGeometry();
@@ -29,7 +32,6 @@ void Scene::Init() {
     auto metal_albedo_tex = texture_res_->AddResource("assets/textures/metal/albedo.jpg", "metal_albedo", true);
     auto mario_tex = texture_res_->AddResource("assets/textures/misc/super-mario-world.jpg", "mario", true);
     auto sonic_tex = texture_res_->AddResource("assets/textures/misc/sonic.jpeg", "sonic", true);
-    cube_shader->Use();
 
 
     // Cubes
