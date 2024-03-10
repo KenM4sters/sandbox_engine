@@ -8,14 +8,14 @@ PostProcessing::PostProcessing(unsigned int width, unsigned int height, SShaderR
         glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
         glGenTextures(1, &tex_.ID_);
         glBindTexture(GL_TEXTURE_2D, tex_.ID_);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, width, height, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2 * width_, 2 * height_, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_.ID_, 0);
 
         glGenRenderbuffers(1, &RBO_);
         glBindRenderbuffer(GL_RENDERBUFFER, RBO_);
-        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, width_, height_);
+        glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 2 * width_, 2 * height_);
         glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO_);
 
         if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
@@ -43,8 +43,8 @@ void PostProcessing::InitQuad() {
     glBindVertexArray(VAO_);
     glBindBuffer(GL_ARRAY_BUFFER, VBO);
     glBufferData(GL_ARRAY_BUFFER, sizeof(vertices), &vertices, GL_STATIC_DRAW);
-    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)(0));
-    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 2, (void*)(2 * sizeof(float)));
+    glVertexAttribPointer(0, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)(0));
+    glVertexAttribPointer(1, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 4, (void*)(2 * sizeof(float)));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
 
@@ -53,8 +53,8 @@ void PostProcessing::InitQuad() {
 }
 
 void PostProcessing::BeginRender() {
-    // glBindFramebuffer(GL_FRAMEBUFFER, 0);
-    // glEnable(GL_DEPTH_TEST);
+    glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
+    glEnable(GL_DEPTH_TEST);
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 }
@@ -62,8 +62,8 @@ void PostProcessing::BeginRender() {
 void PostProcessing::RenderQuad() {
     shader_->Use();
     glBindVertexArray(VAO_);
-    // glActiveTexture(tex_.ID_);
-    // glBindTexture(GL_TEXTURE_2D, tex_.ID_);
+    glActiveTexture(tex_.ID_);
+    glBindTexture(GL_TEXTURE_2D, tex_.ID_);
     glDrawArrays(GL_TRIANGLES, 0, 6);
     glBindVertexArray(0);
 }
