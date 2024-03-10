@@ -3,10 +3,11 @@
 
 // Implementation for rendering
 
-// Callback function for keyboard input, which is only called when a key is pressed, rather than 
-// on each frame the button is held for. 
+// Callback function for keyboard input which is only called when a key is pressed, rather than 
+// on each frame the key is held for - see Window::Camera::ProcessMouseMovement() for 
+// implementation of a function that is key called on every frame a key is held for. 
 static void on_key_callback(GLFWwindow* window, int key, int scancode, int action, int mods) {
-    auto p_window = static_cast<UWindow*>(glfwGetWindowUserPointer(window));
+    auto p_window = static_cast<UWindow*>(glfwGetWindowUserPointer(window));   
     p_window->HandleKeyInput(key, scancode, action, mods);
 }
 
@@ -57,7 +58,7 @@ void SContext::ProcessInput(GLFWwindow* window, float delta_time) {
     }
 }
 
-SContext::SContext(bool bPostProcessing) {
+SContext::SContext(bool bPostProcessing) : UContext() {
     bPostProcessingEnabled = bPostProcessing;
 }
 
@@ -81,18 +82,30 @@ void SContext::Init(UWindow *window) {
     }
 
     glfwSetWindowUserPointer(gl_window, window);
+    // The following functions are glfw-specific callback functions, where the 2nd parameter
+    // takes in one of our application functions and fillts its parameters with the appropriate
+    // data. 
     glfwSetKeyCallback(gl_window, on_key_callback);
     glfwSetCursorPosCallback(gl_window, on_mouse_move_callback);
     glfwSetFramebufferSizeCallback(gl_window, on_window_resize_callback);
     glfwMakeContextCurrent(gl_window);
+    // Locks mouse to the window screen and hides it - GLFW handles recentering the mouse, giving our
+    // camera 6 degrees of freedom with no threshold. 
+    glfwSetInputMode(gl_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
+
+    // In order to use modern OpenGL, we need to load a library that allows us to access the pointers
+    // of the OpenGL api, of which there are many to chose from, with the two most popular being GLAD
+    // and GLUT. 
     if (!gladLoadGLLoader((GLADloadproc)glfwGetProcAddress))
     {
         std::cout << "FAILED to initialize GLAD" << std::endl;
     }
-    glEnable(GL_DEPTH_TEST);
 
-    // *IMPORTANT - must be called after glad has been loaded
+
+    glEnable(GL_DEPTH_TEST);
+    // *IMPORTANT - the following must be called after glad has been loaded, since they make calls to the 
+    // OpenGL api.
     fbo_shader_res_ = new SShaderResource();
     post_processing_ = new PostProcessing(window_->width_, window_->height_, fbo_shader_res_);
     scene_->Init();

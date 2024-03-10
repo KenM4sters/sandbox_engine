@@ -30,6 +30,7 @@ class Mesh {
         // must be called at least once after either a single or multiple Geometry::AddAttribute() calls.
         void UpdateGeometry();
         void UpdateUniforms(Mesh* light_mesh, glm::vec3& camera_pos);
+        void Render();
 
         // Getters
         Mesh* GetMesh() { return this;} 

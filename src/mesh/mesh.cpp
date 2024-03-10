@@ -62,3 +62,12 @@ void Mesh::UpdateUniforms(Mesh* light_mesh, glm::vec3& camera_position) {
     material_->GetShaderMaterial()->setVector3f("material.specular", {0.5f, 0.5f, 0.5f});
     material_->GetShaderMaterial()->setFloat("material.shininess", 32.0f); 
 }
+
+void Mesh::Render() {
+    auto tex = material_->GetTexture();
+    if(tex) {
+        tex->Bind();
+    }
+    glBindVertexArray(VAO_);
+    glDrawArrays(GL_TRIANGLES, 0, geometry_->vert_count_);
+}
