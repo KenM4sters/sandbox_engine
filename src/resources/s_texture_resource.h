@@ -5,6 +5,7 @@
 
 class STextureResource : public UResource<Texture2D> {
     public:
+        STextureResource();
         ~STextureResource() {
             #ifdef SANDBOX_DEBUG 
                 std::cout << "Texture Resource is being destroyed!" << std::endl;

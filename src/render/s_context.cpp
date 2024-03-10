@@ -93,7 +93,6 @@ void SContext::Init(UWindow *window) {
     // camera 6 degrees of freedom with no threshold. 
     glfwSetInputMode(gl_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
-
     // In order to use modern OpenGL, we need to load a library that allows us to access the pointers
     // of the OpenGL api, of which there are many to chose from, with the two most popular being GLAD
     // and GLUT. 

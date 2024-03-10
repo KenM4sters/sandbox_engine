@@ -1,6 +1,12 @@
 #define STB_IMAGE_IMPLEMENTATION
-#include "s_texture_resource.h"
 #include "stb_image.h"
+#include "s_texture_resource.h"
+
+STextureResource::STextureResource() {
+    // OpenGL takes the positive y-axis as the up direction, which is contrast to most other graphics
+    // apis. To compensate for this, stbi provides us with a function to flip the texture.
+    stbi_set_flip_vertically_on_load(true);
+}
 
 Texture2D* STextureResource::AddResource(const char* image_url, std::string name, bool bIs_alpha) {
     res_[name] = GenerateTextureDataFromUrl(image_url, bIs_alpha);
