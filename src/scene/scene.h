@@ -4,6 +4,7 @@
 #include "../resources/s_texture_resource.h"
 #include "../mesh/mesh.h"
 #include "../camera/camera.h"
+#include "../mesh/skybox.h"
 // Scene class which is responsible for creating and rendering our main scene
 class Scene  {
     public:
@@ -20,6 +21,7 @@ class Scene  {
         
     private:
         Camera* camera_;
+        Skybox* skybox_;
         std::unique_ptr<SShaderResource> shader_res_;
         std::unique_ptr<STextureResource> texture_res_;
         std::unordered_map<std::string, Mesh*> game_objects_;
