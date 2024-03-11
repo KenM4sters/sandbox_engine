@@ -45,7 +45,7 @@ void Scene::Init() {
     cube_geo->AddBufferAttribute("aTex_coord", 2, new BufferAtrribute(std::vector<float>(SANDBOX_CUBE_TEX_COORDS), 2));
     Mesh* cube = new Mesh(cube_mat, cube_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
     cube_mat->SetColor(glm::vec3(0.3f, 0.9f, 1.0f));
-    cube_mat->SetTexture(mario_tex);
+    cube_mat->SetTexture(mario_tex);    
     AddGameObject(cube, "cube");
     cube->SetPosition(glm::vec3(0.0f, 0.0f, -7.0f));
     cube->UpdateGeometry();
