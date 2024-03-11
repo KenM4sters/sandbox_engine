@@ -29,9 +29,9 @@ class Material {
         }
 
     private:
-        Shader* shader_;
-        Texture2D* tex_;
+        Shader* shader_;    
         std::string name_;
+        Texture2D* tex_;
         glm::vec3 color_{0.5f, 0.1f, 0.9f};
 
 };

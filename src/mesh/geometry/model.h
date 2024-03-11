@@ -1,0 +1,27 @@
+#pragma once
+#include "../../utils/includes.h"
+#include "../../resources/texture.h"
+
+struct Vertex {
+    glm::vec3 position;
+    glm::vec3 normal;
+    glm::vec2 tex_coords;
+};
+
+class BufferGeometry {
+    public:
+        BufferGeometry(std::vector<Vertex> vertices, std::vector<unsigned int> indices, std::vector<Texture2D> textures) {
+            vertices_ = vertices;
+            indices_ = indices;
+            textures_ = textures;
+            InitGeo();
+        }
+        void InitGeo();
+
+        std::vector<Vertex> vertices_;
+        std::vector<unsigned int> indices_;
+        std::vector<Texture2D> textures_;
+        unsigned int VAO_;
+    private:
+        unsigned int VBO_, EBO_;
+};

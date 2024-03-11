@@ -35,6 +35,7 @@ void Scene::Init() {
     auto metal_albedo_tex = texture_res_->AddResource("assets/textures/metal/albedo.jpg", "metal_albedo", true);
     auto mario_tex = texture_res_->AddResource("assets/textures/misc/super-mario-world.jpg", "mario", true);
     auto sonic_tex = texture_res_->AddResource("assets/textures/misc/sonic.jpeg", "sonic", true);
+    auto sand_tex = texture_res_->AddResource("assets/textures/sand/sand.jpg", "sand", true);
 
 
     // Cubes
@@ -64,7 +65,7 @@ void Scene::Init() {
     floor_geo->AddBufferAttribute("normals", 1, new BufferAtrribute(std::vector<float>(SANDBOX_SQUARE_NORMAL_COORDS), 3));
     floor_geo->AddBufferAttribute("aTex_coord", 2, new BufferAtrribute(std::vector<float>(SANDBOX_SQUARE_TEX_COORDS), 2));
     floor_mat->SetColor(glm::vec3(0.6f, 0.6f, 0.6f)); 
-    floor_mat->SetTexture(sonic_tex);
+    floor_mat->SetTexture(sand_tex);
     Mesh* floor = new Mesh(floor_mat, floor_geo, std::tuple<Camera*, float, float>(camera_, scr_width_, scr_height_));
     AddGameObject(floor, "floor");
     floor->SetPosition(glm::vec3(0.0f, -0.55f, 0.0f));
