@@ -1,6 +1,6 @@
 #pragma once
 #include "window.h"
-#include "render/s_context.h"
+#include "context/s_context.h"
 
 // Header for window
 class SWindow : public UWindow {

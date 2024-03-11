@@ -16,6 +16,12 @@ const float SPEED       =  2.5f;
 const float SENSITIVITY =  0.1f;
 const float ZOOM        =  45.0f;
 
+struct CameraTransformData {
+    glm::mat4 view_matrix;
+    glm::vec3 position;
+    unsigned int scr_width, scr_height;
+    float fov;
+};
 
 class Camera
 {
@@ -44,6 +50,11 @@ public:
     void ProcessKeyboard(Camera_Movement direction, float deltaTime);
     void ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainPitch = true);
     void ProcessMouseScroll(float yoffset);
+
+    static Camera& GetInstance() {
+        static Camera instance;
+        return instance;
+    }
 
 private:
     void UpdateCameraVectors();

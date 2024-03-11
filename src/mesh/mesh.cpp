@@ -25,7 +25,6 @@ void Mesh::UpdateGeometry() {
             buffer_data.first.size() * sizeof(float), buffer_data.second * sizeof(float), 0);
         #endif
     }
-
 }
 
 void Mesh::InitUniforms() {
