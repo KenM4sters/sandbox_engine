@@ -19,4 +19,5 @@ void BasicMesh::DrawMesh() {
         shader_->setInteger(std::string("material.") + mat_.textures[i]->tex_type_, i);
     }
     geometry_->DrawGeometry();
+    glActiveTexture(GL_TEXTURE0);
 }
