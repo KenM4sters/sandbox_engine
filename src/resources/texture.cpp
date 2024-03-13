@@ -1,9 +1,10 @@
 #include "texture.h"
 
 
-Texture2D::Texture2D()
+Texture2D::Texture2D(unsigned int type)
     : width_(0), height_(0), format_(GL_RGB), wrap_s_(GL_REPEAT), wrap_t_(GL_REPEAT), filter_min_(GL_LINEAR_MIPMAP_LINEAR), filter_max_(GL_LINEAR)
 {
+    type_ = type;
     glGenTextures(1, &this->ID_);
 }
 
@@ -28,4 +29,9 @@ void Texture2D::Bind() const
 {
     glActiveTexture(GL_TEXTURE0);
     glBindTexture(GL_TEXTURE_2D, this->ID_);
+}
+
+void Texture2D::Unbind() const {
+    glActiveTexture(GL_TEXTURE0);
+    glBindTexture(GL_TEXTURE_2D, 0);
 }

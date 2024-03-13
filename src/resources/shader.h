@@ -7,6 +7,8 @@ class Shader
 {
 public:
     unsigned int ID_;
+    unsigned int type_;
+    Shader(unsigned int type) : type_(type) {}
     Shader() {}
     ~Shader() {
         #ifdef SANDBOX_DEBUG 
@@ -19,15 +21,15 @@ public:
     
     
     // uniform functions
-    void setFloat(const char *name, float value, bool bUseShader = false);
-    void setInteger(const char *name, int value, bool bUseShader = false);
-    void setVector2f(const char *name, float x, float y, bool bUseShader = false);
-    void setVector2f(const char *name, const glm::vec2 &value, bool bUseShader = false);
-    void setVector3f(const char *name, float x, float y, float z, bool bUseShader = false);
-    void setVector3f(const char *name, const glm::vec3 &value, bool bUseShader = false);
-    void setVector4f(const char *name, float x, float y, float z, float w, bool bUseShader = false);
-    void setVector4f(const char *name, const glm::vec4 &value, bool bUseShader = false);
-    void setMat4(const char *name, const glm::mat4 &matrix, bool bUseShader = false);
+    void setFloat(std::string name, float value, bool bUseShader = false);
+    void setInteger(std::string name, int value, bool bUseShader = false);
+    void setVector2f(std::string name, float x, float y, bool bUseShader = false);
+    void setVector2f(std::string name, const glm::vec2 &value, bool bUseShader = false);
+    void setVector3f(std::string name, float x, float y, float z, bool bUseShader = false);
+    void setVector3f(std::string name, const glm::vec3 &value, bool bUseShader = false);
+    void setVector4f(std::string name, float x, float y, float z, float w, bool bUseShader = false);
+    void setVector4f(std::string name, const glm::vec4 &value, bool bUseShader = false);
+    void setMat4(std::string name, const glm::mat4 &matrix, bool bUseShader = false);
 
 private:
     void checkCompileErrors(unsigned int object, std::string type);

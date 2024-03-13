@@ -2,7 +2,7 @@
 
 PostProcessing::PostProcessing(unsigned int width, unsigned int height, SShaderResource* fbo_shader_res) :
     width_(width), height_(height) {
-        shader_ = fbo_shader_res->AddResource("src/shaders/post_processing.vert", "src/shaders/post_processing.frag", nullptr, "fbo_quad");
+        shader_ = fbo_shader_res->AddResource("src/shaders/post_processing.vert", "src/shaders/post_processing.frag", nullptr, "fbo_quad", SANDBOX_OBJECT);
         shader_->Use();
         glGenFramebuffers(1, &FBO_);
         glBindFramebuffer(GL_FRAMEBUFFER, FBO_);

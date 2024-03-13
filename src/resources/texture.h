@@ -29,7 +29,10 @@ public:
     unsigned int filter_min_; 
     unsigned int filter_max_; 
 
-    Texture2D();
+    unsigned int type_;
+
+    Texture2D(unsigned int type);
+    Texture2D() {glGenTextures(1, &this->ID_);}
     ~Texture2D() {
         #ifdef SANDBOX_DEBUG
             std::cout << "Texture is being destroyed!" << std::endl;
@@ -44,4 +47,5 @@ public:
     // draw calls that follow will assume the currently bounded texture, therefore each different
     // texture must be bound at the time of drawing the "Mesh" that it belongs to.
     void Bind() const;
+    void Unbind() const;
 };
