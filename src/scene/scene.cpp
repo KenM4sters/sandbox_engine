@@ -63,9 +63,10 @@ void Scene::Init() {
     auto floor_shader = shader_res_.AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor", SANDBOX_OBJECT);
     auto skybox_shader = shader_res_.AddResource("src/shaders/skybox.vert", "src/shaders/skybox.frag", nullptr, "skybox", SANDBOX_OBJECT);
     auto light_cube_shader = shader_res_.AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube", SANDBOX_LIGHT);
-    auto mario_tex = texture_res_.AddResource("assets/textures/misc/super-mario-world.jpg", "mario", SANDBOX_OBJECT, true);
-    auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, true);
-    auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, true);
+    auto mario_tex = texture_res_.AddResource("assets/textures/misc/super-mario-world.jpg", "mario", SANDBOX_OBJECT, "diffuse");
+    auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, "diffuse");
+    auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, "diffuse");
+    auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
 
     // Skybox
     std::vector<std::string> skybox_textures = {

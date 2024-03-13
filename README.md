@@ -29,5 +29,11 @@ range of postprocessing effects.
 - Only then are they passed to the Meshes, where the only uniforms that need to be set are the world transformations (model matrix).
 - The whole process is like a conveyerbelt of shaders, where the camera, lights and gameobjects are all lined up in order, ready to take them when they can reach them, only they can change them without taking off the conveyorbelt (they're always passed by reference).
 - This is completely impromptu, and I've had difficulty finding examples of how other people implement their rendering systems, but it sounds very viable to me and I'm looking forward to seeing how it goes. 
+---
+## Progress 13/03
+- After a lot of code restructuring, everything is rendering again now, except it's so much cleaner and easier to implement - very happy with how the project is structured now, despite perhas seeming a little abstract at first. 
+- With that completed, the focus now will be on loading 3D models ussing Assimp, which should be signifcantly easier now than with the previous structure. Additionally, I need to start on integrating some kind of collision detection system so that I can begin to change the "fly" camera into more of an FPS one, where you forced to move around a height-mapped plane instead of a flat one.
+- 3 very important aspects of the engine to get right, so I've decided to make a new git branch called "experimental", and will likely add more in case I need to rebase. 
+
 
 

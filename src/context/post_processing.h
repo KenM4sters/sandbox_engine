@@ -12,7 +12,7 @@ class PostProcessing {
             #endif
         }
         unsigned int width_, height_;
-        Texture2D tex_ = Texture2D(SANDBOX_OBJECT);
+        Texture2D tex_ = Texture2D(SANDBOX_OBJECT, "diffuse");
         Shader* shader_;
         PostProcessing(unsigned int width, unsigned int height, SShaderResource* shader);
         void BeginRender(); 

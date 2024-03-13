@@ -11,6 +11,6 @@ class UResource {
         virtual void ClearAllResources() = 0;
     
         std::unordered_map<std::string, T*> res_;
-        unsigned int type_;
+        unsigned int sandbox_type_;
         int num;
 };

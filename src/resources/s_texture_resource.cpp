@@ -8,9 +8,10 @@ STextureResource::STextureResource() {
     stbi_set_flip_vertically_on_load(true);
 }
 
-Texture2D* STextureResource::AddResource(const char* image_url, std::string name, unsigned int type, bool bIs_alpha) {
-    type_ = type;
-    res_[name] = GenerateTextureDataFromUrl(image_url, bIs_alpha);
+Texture2D* STextureResource::AddResource(const char* image_url, std::string name, unsigned int sandbox_type, std::string tex_type) {
+    sandbox_type_ = sandbox_type;
+    tex_type_ = tex_type;
+    res_[name] = GenerateTextureDataFromUrl(image_url);
     return res_[name];
 }
 
@@ -29,8 +30,8 @@ void STextureResource::ClearAllResources() {
     }
 }
 
-Texture2D* STextureResource::GenerateTextureDataFromUrl(const char* image_url, bool bIs_alpha) {
-    Texture2D* texture = new Texture2D(type_);
+Texture2D* STextureResource::GenerateTextureDataFromUrl(const char* image_url) {
+    Texture2D* texture = new Texture2D(sandbox_type_, tex_type_);
     int width, height, nr_channels;
     unsigned char* data = stbi_load(image_url, &width, &height, &nr_channels, 0);
     if(data == nullptr) 
@@ -42,6 +43,6 @@ Texture2D* STextureResource::GenerateTextureDataFromUrl(const char* image_url, b
     else if (nr_channels == 4)
         texture->format_ = GL_RGBA;
     texture->Generate(width, height, data);
-    // stbi_image_free(data);
+    stbi_image_free(data);
     return texture;
 }

@@ -4,7 +4,7 @@
 #include "../resources/texture.h"
 #include "../resources/s_shader_resource.h"
 #include "../resources/s_texture_resource.h"
-#include "mesh.h"
+#include "basic_mesh.h"
 
 
 class URenderSystem {
@@ -16,5 +16,5 @@ class URenderSystem {
     protected:
         SShaderResource* shaders_;
         STextureResource* textures_;
-        std::unordered_map<std::string, Mesh*> children_;
+        std::unordered_map<std::string, BasicMesh*> children_;
 };  

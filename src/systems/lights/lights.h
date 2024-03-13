@@ -1,7 +1,7 @@
 #pragma once
 #include "../base_system.h"
 #include "../../utils/includes.h"
-#include "../mesh.h"
+#include "../basic_mesh.h"
 #include "../../resources/s_shader_resource.h"
 #include "../../resources/s_texture_resource.h"
 

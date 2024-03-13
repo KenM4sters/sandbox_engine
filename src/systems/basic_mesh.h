@@ -13,18 +13,24 @@ struct Transforms {
 
 struct Material {
     glm::vec3 ambient{1.0f, 1.0f, 1.0f};
-    Texture2D* texture;
+    std::vector<Texture2D*> textures;
     glm::vec3 specular{1.0f, 1.0f, 1.0f};
     float shininess{32.0f};
 };
 
-class Mesh {
+class BasicMesh {
     public:
-        Mesh(BufferGeometry* geometry, Shader* shader, Texture2D* texture)
-            : geometry_(geometry), shader_(shader) {
-                mat_.texture = texture;
-            }
-        ~Mesh() {}
+        BasicMesh(BufferGeometry* geometry, Shader* shader, Texture2D* texture)
+            : geometry_(geometry), shader_(shader) 
+        {
+            mat_.textures.push_back(texture);
+        }
+        BasicMesh(BufferGeometry* geometry, Shader* shader, std::vector<Texture2D*> &textures)
+            : geometry_(geometry), shader_(shader) 
+        {
+            mat_.textures = textures;
+        }
+        ~BasicMesh() {}
         void DrawMesh();
                 
         Transforms transforms_;
