@@ -45,10 +45,11 @@ void SLights::Init() {
         -0.5f,  0.5f, -0.5f,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
     };
 
-    // Shader light_shader = shaders_.GetResource("light_cube");
-    // Texture2D light_tex = textures_.GetResource("glowstone");
-    // Mesh* light_mesh = new Mesh(new BufferGeometry(vertices, SANDBOX_CUBE_VERTICES_COUNT), &light_shader, &light_tex);
-    // children_["light_cube"] = light_mesh;
+    Shader* light_shader = shaders_->GetResource("light_cube");
+    Texture2D* light_tex = textures_->GetResource("glowstone");
+    Mesh* light_mesh = new Mesh(new BufferGeometry(vertices, SANDBOX_CUBE_VERTICES_COUNT), light_shader, light_tex);
+    light_mesh->transforms_.position = glm::vec3(3.0f, 5.0f, -1.0f);
+    children_["light_cube"] = light_mesh;
 }
 
 SShaderResource* SLights::SetLightData() {
@@ -57,8 +58,8 @@ SShaderResource* SLights::SetLightData() {
         if(shader->type_ == SANDBOX_OBJECT) {
             objects_shaders_.AddResource(k.first, shader);
             for(auto l : children_ ) {
-                std::cout << objects_shaders_.type_ << std::endl;
                 std::string light_name = l.first;
+                shader->Use();
                 shader->setVector3f(light_name + ".position", l.second->transforms_.position);
                 shader->setVector3f(light_name + ".ambient", l.second->mat_.ambient );
                 shader->setVector3f(light_name + ".diffuse", {0.8f, 0.8f, 0.8f});

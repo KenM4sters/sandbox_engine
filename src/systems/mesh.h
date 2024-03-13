@@ -12,7 +12,7 @@ struct Transforms {
 };
 
 struct Material {
-    glm::vec3 ambient{1.0f, 0.0f, 0.0f};
+    glm::vec3 ambient{1.0f, 1.0f, 1.0f};
     Texture2D* texture;
     glm::vec3 specular{1.0f, 1.0f, 1.0f};
     float shininess{32.0f};

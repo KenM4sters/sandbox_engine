@@ -67,9 +67,6 @@ void Scene::Init() {
     auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, true);
     auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, true);
 
-    for(const auto& tex : texture_res_.GetAllResources()) {
-        std::cout << tex.second->ID_ << "\n";
-    }   
     // Skybox
     std::vector<std::string> skybox_textures = {
         "assets/textures/skybox/rainbow_rt.png",    
