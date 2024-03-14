@@ -3,11 +3,15 @@
 #include "../resources/shader.h"
 #include "../resources/texture.h"
 
+struct Rotation {
+    float rotation_angle{0.0f};
+    glm::vec3 rotation_axis{0.0f, 1.0f, 0.0f};
+};
+
 struct Transforms {
     glm::vec3 position{0.0f, 0.0f, -5.0f};
     glm::vec3 scale{1.0f, 1.0f, 1.0f};
-    glm::vec3 rotation_axis{0.0f, 1.0f, 0.0f};
-    float rotation_angle{0.0f};
+    Rotation rotation;
     glm::mat4 model;
 };
 

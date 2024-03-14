@@ -27,7 +27,7 @@ void StandardMesh::Draw() {
     // but in our case we want to rotate around their new positions, as opposed to their starting ones.
     transforms_.model = glm::translate(transforms_.model, transforms_.position);
     transforms_.model = glm::scale(transforms_.model, transforms_.scale);
-    transforms_.model = glm::rotate(transforms_.model, transforms_.rotation_angle, transforms_.rotation_axis);
+    transforms_.model = glm::rotate(transforms_.model, transforms_.rotation.rotation_angle, transforms_.rotation.rotation_axis);
     shader_->setMat4("model", transforms_.model);
     geometry_.DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
