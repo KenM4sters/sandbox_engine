@@ -64,7 +64,10 @@ void SObjects::Init() {
     // Model 
     Shader* model_shader = shaders_->GetResource("model");
     Model* back_pack = new Model("assets/models/backpack/backpack.obj", model_shader);
+    back_pack->transforms_.position = glm::vec3(-1.0f, 1.0f, -1.0f);
+    back_pack->transforms_.scale = glm::vec3(0.5f, 0.5f, 0.5f);
     models_["backpack"] = back_pack;
+
 }
 
 void SObjects::Draw() {

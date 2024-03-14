@@ -2,6 +2,7 @@
 
 void Model::DrawModel() {
     for(auto& m : meshes_) {
+        m.transforms_ = transforms_;
         m.Draw();
     }
 }

@@ -20,7 +20,7 @@ void StandardMesh::Draw() {
         }
         shader_->Use();
         textures_[i].Bind(i);
-        shader_->setInteger(name + tex_index, textures_[i].ID_);
+        shader_->setInteger(name + tex_index, i);
     };
     transforms_.model = glm::mat4(1.0f);
     // Order matters here and is dependant on the particular use case - neither is right nor wrong,

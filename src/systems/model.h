@@ -16,6 +16,7 @@ class Model {
         void ProcessNode(aiNode *node, const aiScene *scene);
         std::vector<Texture2D> LoadModelTextures(aiMaterial* mat, aiTextureType type, std::string type_name);
         StandardMesh ProcessModelMesh(aiMesh *mesh, const aiScene *scene);
+        Transforms transforms_;
     private:
         std::vector<StandardMesh> meshes_;
         std::unordered_map<std::string, Texture2D> textures_loaded_;
