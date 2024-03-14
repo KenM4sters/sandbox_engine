@@ -47,10 +47,10 @@ void SObjects::Init() {
     };
 
     const std::vector<float> square_vertices = {
-        0.5f,  0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   1.0f, 1.0f,  
-        0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   1.0f, 0.0f,   
-       -0.5f, -0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   0.0f, 0.0f,   
-       -0.5f,  0.5f, 0.0f,  0.0f, 1.0f, 0.0f,   0.0f, -1.0f  
+        0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,   1.0f, 1.0f,  
+        0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,   1.0f, 0.0f,   
+       -0.5f, -0.5f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, 0.0f,   
+       -0.5f,  0.5f, 0.0f,  0.0f, 0.0f, 1.0f,   0.0f, -1.0f  
     };
     const std::vector<unsigned int> square_indices = {
         0, 1, 3,   

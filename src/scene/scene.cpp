@@ -50,7 +50,7 @@ Scene::Scene(unsigned int w, unsigned int h, Camera* camera) : scr_width_(w), sc
 }
 void Scene::SetCameraData(Camera* camera) {
     for(auto& shader : shader_res_.GetAllResources()) {
-        glm::mat4 projection = glm::perspective(camera_->zoom_, (float)scr_width_ / (float)scr_height_, 0.1f, 100.0f);
+        glm::mat4 projection = glm::perspective(camera_->zoom_, (float)scr_width_ / (float)scr_height_, 0.1f, 2000.0f);
         shader.second->Use();
         shader.second->setMat4("projection", projection);
         shader.second->setMat4("view", camera_->GetViewMatrix());
