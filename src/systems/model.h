@@ -7,18 +7,19 @@
 
 class Model {
     public:
-        Model(const std::string &path, Shader &shader) {
+        Model(const std::string &path, Shader* shader) : shader_(shader) {
             LoadModel(path);
         }
         ~Model() {}
         void DrawModel();
         void LoadModel(const std::string &path);
         void ProcessNode(aiNode *node, const aiScene *scene);
-        void ProcessModelMesh();
+        std::vector<Texture2D> LoadModelTextures(aiMaterial* mat, aiTextureType type, std::string type_name);
+        StandardMesh ProcessModelMesh(aiMesh *mesh, const aiScene *scene);
     private:
         std::vector<StandardMesh> meshes_;
         std::unordered_map<std::string, Texture2D> textures_loaded_;
+        Shader* shader_;
         std::string dir_;
         bool bGammeCorrection;
-
 };

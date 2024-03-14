@@ -1,6 +1,7 @@
 #pragma once
 #include "../utils/includes.h"
 
+
 /**
  * Much like the Shader class, the Texture2D class is reponsible generating and binding data,
  * in this case texture data, that is stored in an unordered_map held by the resource class.
@@ -31,8 +32,9 @@ public:
 
     unsigned int sandbox_type_;
     std::string tex_type_;
+    const char* path_;
 
-    Texture2D(unsigned int sandbox_type, std::string tex_type);
+    Texture2D(unsigned int sandbox_type, std::string tex_type, const char* path = "");
     Texture2D() {glGenTextures(1, &this->ID_);}
     ~Texture2D() {
         #ifdef SANDBOX_DEBUG
@@ -43,6 +45,7 @@ public:
     // Uses texture data generated from the Resource class using stb_image.h to configure the texture
     // using OpenGL specfic functions, so that they can be used as actual textures. 
     void Generate(unsigned int width, unsigned int height, unsigned char* data);
+    void LoadFromFile(const char* path, std::string &dir);
 
     // Similar to Shader::Use() only for textures instead - binds the texture so that any 
     // draw calls that follow will assume the currently bounded texture, therefore each different

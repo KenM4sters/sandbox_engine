@@ -16,8 +16,8 @@ struct Vertex {
 class BufferGeometry {
     public:
         // Takes in a vector Vertex structs (used mostly for model loading).
-        BufferGeometry(std::vector<Vertex> &vertices, std::vector<int> &indices, unsigned int vertex_count) 
-            : vertices_vertex(vertices), indices_(indices), vertex_count_(vertex_count) {
+        BufferGeometry(std::vector<Vertex> &vertices, std::vector<unsigned int> &indices) 
+            : vertices_vertex(vertices), indices_(indices) {
             InitGeometry();
         }
         // Takes in a simple vector of floats (used for simple shape loading).
@@ -28,7 +28,7 @@ class BufferGeometry {
         void InitGeometry();
         std::vector<Vertex> vertices_vertex;
         std::vector<float> vertices_float;
-        std::vector<int> indices_;
+        std::vector<unsigned int> indices_;
         unsigned int VAO_, VBO_, EBO_;
         unsigned int vertex_count_;
 };

@@ -60,11 +60,20 @@ void SObjects::Init() {
     floor_mesh->transforms_.position = glm::vec3(0.0f, -0.75f, 0.0f);
     floor_mesh->transforms_.scale = glm::vec3(200.0f, 0.25f, 200.0f);
     children_["floor"] = floor_mesh;
+
+    // Model 
+    Shader* model_shader = shaders_->GetResource("model");
+    Model* back_pack = new Model("assets/models/backpack/backpack.obj", model_shader);
+    models_["backpack"] = back_pack;
 }
 
 void SObjects::Draw() {
     for(auto& k : children_) {
         auto mesh = k.second;
         mesh->DrawMesh();
+    }
+    for(auto& m : models_) {
+        auto model = m.second;
+        model->DrawModel();
     }
 }

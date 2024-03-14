@@ -1,5 +1,6 @@
 #pragma once
 #include "../base_system.h"
+#include "../model.h"
 
 
 class SObjects : URenderSystem {
@@ -13,4 +14,5 @@ class SObjects : URenderSystem {
         void Init();
         void Draw();
     private:
+        std::unordered_map<std::string, Model*> models_;
 };

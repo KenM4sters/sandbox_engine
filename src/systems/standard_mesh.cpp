@@ -7,11 +7,8 @@ void StandardMesh::Draw() {
     unsigned int height_count = 1;
 
     for(unsigned int i = 0; i < textures_.size(); i++) {
-        // This is effectively the same as GL_TEXTUREi, which is important since we need each texture to bind
-        // to a different texture index so that they don't override each other.
-        glActiveTexture(GL_TEXTURE0 + i);
         std::string tex_index;
-        std::string name = textures_[i]->tex_type_;
+        std::string name = textures_[i].tex_type_;
         if(name == "texture_diffuse") {
             tex_index = std::to_string(diffuse_count++);
         } else if(name == "texture_specular") {
@@ -21,11 +18,17 @@ void StandardMesh::Draw() {
         } else if(name == "texture_height") {
             tex_index = std::to_string(height_count++);
         }
-        shader_.Use();
-        shader_.setInteger(name + tex_index, textures_[i]->ID_);
-        textures_[i]->Bind();
+        shader_->Use();
+        textures_[i].Bind(i);
+        shader_->setInteger(name + tex_index, textures_[i].ID_);
     };
-
-    geometry_->DrawGeometry();
+    transforms_.model = glm::mat4(1.0f);
+    // Order matters here and is dependant on the particular use case - neither is right nor wrong,
+    // but in our case we want to rotate around their new positions, as opposed to their starting ones.
+    transforms_.model = glm::translate(transforms_.model, transforms_.position);
+    transforms_.model = glm::scale(transforms_.model, transforms_.scale);
+    transforms_.model = glm::rotate(transforms_.model, transforms_.rotation_angle, transforms_.rotation_axis);
+    shader_->setMat4("model", transforms_.model);
+    geometry_.DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
 }   
