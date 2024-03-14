@@ -9,8 +9,6 @@ struct Vertex {
     // Model Specifcs
     glm::vec3 tangent;
     glm::vec3 bi_tangent;
-    int n_model_bones[MAX_BONE_INFLUENCE];
-    float model_weights[MAX_BONE_INFLUENCE];
 };
 
 class BufferGeometry {

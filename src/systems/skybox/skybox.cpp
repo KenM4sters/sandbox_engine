@@ -16,6 +16,8 @@ unsigned int* Skybox::LoadCubeMap() const {
     glGenTextures(1, &tex_->ID);
     glBindTexture(GL_TEXTURE_CUBE_MAP, tex_->ID);
     int w, h, nr_channels;
+    // Since we're not using tex_coords in the traditional way, we don't want to flip the texture on load.
+    // * Keep this in mind when trying to load textures after this one (need to set it back to true).
     stbi_set_flip_vertically_on_load(false);
     for(int i = 0; i < face_textures_.size(); i++) {
         unsigned char* data = stbi_load(face_textures_[i].c_str(), &w, &h, &nr_channels, 0);

@@ -1,4 +1,5 @@
 #include "model.h"
+#include "../resources/stb_image.h"
 
 void Model::DrawModel() {
     for(auto& m : meshes_) {
@@ -36,32 +37,32 @@ StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
     std::vector<Texture2D> textures;
     for(unsigned int i = 0; i < mesh->mNumVertices; i++) {
         Vertex vertex;
-        glm::vec3 place_holder;
-        place_holder.x = mesh->mVertices[i].x;
-        place_holder.y = mesh->mVertices[i].y;
-        place_holder.z = mesh->mVertices[i].z;
-        vertex.position = place_holder;
+        glm::vec3 p_vector;
+        p_vector.x = mesh->mVertices[i].x;
+        p_vector.y = mesh->mVertices[i].y;
+        p_vector.z = mesh->mVertices[i].z;
+        vertex.position = p_vector;
         if(mesh->HasNormals()) {
-            place_holder.x = mesh->mNormals[i].x;
-            place_holder.y = mesh->mNormals[i].y;
-            place_holder.z = mesh->mNormals[i].z;
-            vertex.normal = place_holder;
+            p_vector.x = mesh->mNormals[i].x;
+            p_vector.y = mesh->mNormals[i].y;
+            p_vector.z = mesh->mNormals[i].z;
+            vertex.normal = p_vector;
         }
         if(mesh->mTextureCoords[0]) {
             glm::vec2 p;
             p.x = mesh->mTextureCoords[0][i].x;
-            p.x = mesh->mTextureCoords[0][i].y;
+            p.y = mesh->mTextureCoords[0][i].y;
             vertex.tex_coords = p;
 
-            place_holder.x = mesh->mTangents[i].x;
-            place_holder.y = mesh->mTangents[i].y;
-            place_holder.z = mesh->mTangents[i].z;
-            vertex.tangent = place_holder;
+            p_vector.x = mesh->mTangents[i].x;
+            p_vector.y = mesh->mTangents[i].y;
+            p_vector.z = mesh->mTangents[i].z;
+            vertex.tangent = p_vector;
             // bitangent
-            place_holder.x = mesh->mBitangents[i].x;
-            place_holder.y = mesh->mBitangents[i].y;
-            place_holder.z = mesh->mBitangents[i].z;
-            vertex.bi_tangent = place_holder;
+            p_vector.x = mesh->mBitangents[i].x;
+            p_vector.y = mesh->mBitangents[i].y;
+            p_vector.z = mesh->mBitangents[i].z;
+            vertex.bi_tangent = p_vector;
         } else {
             vertex.tex_coords = glm::vec2(0.0f, 0.0f);
         }
@@ -77,6 +78,11 @@ StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
 
+    // When we loaded the skybox, we set the textures to not be flipped on load since we weren't using
+    // tex_coords in the traditional way, but we need to make sure that we set it back to true when
+    // we want to load any other textures.
+    stbi_set_flip_vertically_on_load(true);
+
     std::vector<Texture2D> diffuseMaps = LoadModelTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
     // 2. specular maps
@@ -88,6 +94,7 @@ StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
     // 4. height maps
     std::vector<Texture2D> heightMaps = LoadModelTextures(material, aiTextureType_AMBIENT, "texture_height");
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
+
 
     BufferGeometry geo = BufferGeometry(vertices, indices);
     return StandardMesh(geo, shader_, textures);
