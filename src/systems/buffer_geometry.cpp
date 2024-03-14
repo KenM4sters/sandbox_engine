@@ -80,6 +80,19 @@ void BufferGeometry::DrawGeometry() {
     glBindVertexArray(0);
 }
 
+void BufferGeometry::DrawGeometry(unsigned int n_strips, unsigned int n_vertices_strip) {
+    glBindVertexArray(VAO_);
+    for(unsigned int i = 0; i < n_strips; i++) {
+        glDrawElements(
+            GL_TRIANGLE_STRIP, 
+            n_vertices_strip, 
+            GL_UNSIGNED_INT, 
+            (void*)(sizeof(unsigned int)*n_vertices_strip*i)
+        );
+    }
+    glBindVertexArray(0);
+}
+
 // TODO
 std::vector<Vertex>* MakeVertexFromVector(std::vector<float> &data) {
     const auto size = data.size();

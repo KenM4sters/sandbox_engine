@@ -17,6 +17,8 @@ range of postprocessing effects.
 - At the moment, my render system involves creating meshes from geometries and materials and adding buffer attributes like normals and texture coordinates manually, at the cost of creating new glbuffers. Initially, I liked this idea of seperating the a game object into 3 different classes, but this doesn't really implement well with loading external 3d models - I need a single, revised way of rendering where an obejct can take in a single vector of some struct that defines all the buffer attributes that are needeed, as well as container of textures - high priority.
 ### Const Keyword
 - I have a bad habit of assuming mutability, and then only specifiying for non-mutability if it's really necessary/obvious to me that that something shouldn't be changed. As a result, the const keyword can be found very sparsly throughout the program, and almost never for functions - high priority (maybe I should use rust more often...)
+### Uses of smart pointers, regular pointers and references
+- I feel as if I need to clamp down on being consistent with these different ways of passing my reference. While I realise that not all of them may be viable in any particular circumstance (references can't be null, for example), not much thought goes into which one I should use at the moment - Being honest with myself, it's generally just what I feel like using, which obviously should not be the case - high priority.
 ---
 ## Progress - 12/03
 - In the middle of a complete refactoring of the rendering system (meshes, lights, shaders, textures etc...), with the ambition to achieve something much less verbose and with cleaner abstractions. 
@@ -34,6 +36,9 @@ range of postprocessing effects.
 - After a lot of code restructuring, everything is rendering again now, except it's so much cleaner and easier to implement - very happy with how the project is structured now, despite perhas seeming a little abstract at first. 
 - With that completed, the focus now will be on loading 3D models ussing Assimp, which should be signifcantly easier now than with the previous structure. Additionally, I need to start on integrating some kind of collision detection system so that I can begin to change the "fly" camera into more of an FPS one, where you forced to move around a height-mapped plane instead of a flat one.
 - 3 very important aspects of the engine to get right, so I've decided to make a new git branch called "experimental", and will likely add more in case I need to rebase. 
-
+## Progress 14/03
+- Models can now be loaded and transformed.
+- BufferGeometry class has been significantly improved to be flexible in terms of the data that it can creater buffers for in memory for rendering.
+- 
 
 

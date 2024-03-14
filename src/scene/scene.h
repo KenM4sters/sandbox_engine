@@ -6,6 +6,7 @@
 #include "../systems/lights/lights.h"
 #include "../systems/objects/objects.h"
 #include "../systems/skybox/skybox.h"
+#include "../systems/terrain/terrain.h"
 // Scene class which is responsible for creating and rendering our main scene
 class Scene  {
     public:
@@ -23,5 +24,7 @@ class Scene  {
         SLights* lights_res_;
         SObjects* objects_res_;
         Skybox* skybox_;
+        Terrain* terrain_;
+        
         unsigned int scr_width_, scr_height_;
 };

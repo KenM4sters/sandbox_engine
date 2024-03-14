@@ -50,7 +50,7 @@ Scene::Scene(unsigned int w, unsigned int h, Camera* camera) : scr_width_(w), sc
 }
 void Scene::SetCameraData(Camera* camera) {
     for(auto& shader : shader_res_.GetAllResources()) {
-        glm::mat4 projection = glm::perspective(camera_->zoom_, (float)scr_width_ / (float)scr_height_, 0.1f, 2000.0f);
+        glm::mat4 projection = glm::perspective(camera_->zoom_, (float)scr_width_ / (float)scr_height_, 0.1f, 10000.0f);
         shader.second->Use();
         shader.second->setMat4("projection", projection);
         shader.second->setMat4("view", camera_->GetViewMatrix());
@@ -65,11 +65,14 @@ void Scene::Init() {
     auto skybox_shader = shader_res_.AddResource("src/shaders/skybox.vert", "src/shaders/skybox.frag", nullptr, "skybox", SANDBOX_OBJECT);
     auto light_cube_shader = shader_res_.AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube", SANDBOX_LIGHT);
     auto back_pack_shader = shader_res_.AddResource("src/shaders/model.vert", "src/shaders/model.frag", nullptr, "model", SANDBOX_OBJECT);
+    auto terrain_shader = shader_res_.AddResource("src/shaders/terrain.vert", "src/shaders/terrain.frag", nullptr, "terrain", SANDBOX_OBJECT);
     // Loading ALL textures
     auto mario_tex = texture_res_.AddResource("assets/textures/misc/super-mario-world.jpg", "mario", SANDBOX_OBJECT, "diffuse");
     auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, "diffuse");
     auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, "diffuse");
     auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
+    auto terrain_tex = texture_res_.AddResource("assets/textures/terrain.jpg", "terrain", SANDBOX_OBJECT, "diffuse");
+
 
     // Skybox - texture loading is different for this, so it's abstracted away into dealing with all
     // of its shaders/textures for itself.
@@ -94,13 +97,15 @@ void Scene::Init() {
     // that the objects need.
     SShaderResource* objects_shaders = lights_res_->SetLightData();
     objects_res_ = new SObjects(objects_shaders, &texture_res_);
-
+    unsigned int scale = 64;
+    terrain_ = new Terrain("assets/iceland_height_map.png", terrain_shader, terrain_tex, scale);
 }
 
 void Scene::Render(float &delta_time) {
     SetCameraData(camera_);
     lights_res_->Draw();
     objects_res_->Draw();
+    terrain_->DrawTerrain();
     // Render Skybox - more efficient to draw it last so that any parts of the cube that are
     // blocked by other game objects will be discared.
     glDepthFunc(GL_LEQUAL);

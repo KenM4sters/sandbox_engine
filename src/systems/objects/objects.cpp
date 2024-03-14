@@ -66,15 +66,15 @@ void SObjects::Init() {
     children_["cube"] = cube_mesh;
 
     // Floor
-    Shader* floor_shader = shaders_->GetResource("floor");
-    Texture2D* sand_tex = textures_->GetResource("sand");
-    BasicMesh* floor_mesh = new BasicMesh(new BufferGeometry(square_vertices, square_indices, SANDBOX_CUBE_VERTICES_COUNT), floor_shader, sand_tex);
-    floor_mesh->transforms_.position = glm::vec3(0.0f, -0.75f, 0.0f);
-    floor_mesh->transforms_.rotation = {glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f),};
-    floor_mesh->transforms_.scale = glm::vec3(200.0f, 0.0f, 200.0f);
-    children_["floor"] = floor_mesh;
+    // Shader* floor_shader = shaders_->GetResource("floor");
+    // Texture2D* sand_tex = textures_->GetResource("sand");
+    // BasicMesh* floor_mesh = new BasicMesh(new BufferGeometry(square_vertices, square_indices, SANDBOX_CUBE_VERTICES_COUNT), floor_shader, sand_tex);
+    // floor_mesh->transforms_.position = glm::vec3(0.0f, -0.75f, 0.0f);
+    // floor_mesh->transforms_.rotation = {glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f),};
+    // floor_mesh->transforms_.scale = glm::vec3(1000.0f, 0.0f, 1000.0f);
+    // children_["floor"] = floor_mesh;
 
-    // Model 
+    // Models 
     Shader* model_shader = shaders_->GetResource("model");
     Model* back_pack = new Model("assets/models/backpack/backpack.obj", model_shader);
     back_pack->transforms_.position = glm::vec3(-2.0f, 0.0f, -4.0f);

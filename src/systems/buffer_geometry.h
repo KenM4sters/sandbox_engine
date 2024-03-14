@@ -24,6 +24,8 @@ class BufferGeometry {
         BufferGeometry(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, unsigned int vertex_count);
         ~BufferGeometry() {}
         void DrawGeometry();
+        // Function to draw elements with a specified number of elements and offset into the element buffer.
+        void DrawGeometry(unsigned int n_strips, unsigned int n_vertices_strip);
     private:
         void InitGeometry();
         const std::vector<Vertex> vertices_vertex;

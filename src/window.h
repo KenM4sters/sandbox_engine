@@ -16,7 +16,7 @@ class UWindow {
         std::string title_;
 
         // Camera related variables
-        Camera* camera_ = new Camera(glm::vec3(0.0f, 0.0f, 3.0f));
+        Camera* camera_ = new Camera(glm::vec3(0.0f, 5.0f, 10.0f));
         // Current values of the mouse position
         float mouse_pos_x_;
         float mouse_pos_y_;
