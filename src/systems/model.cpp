@@ -1,5 +1,4 @@
 #include "model.h"
-#include "../resources/stb_image.h"
 
 void Model::DrawModel() {
     for(auto& m : meshes_) {
@@ -77,11 +76,6 @@ StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
     }
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
-    // When we loaded the skybox, we set the textures to not be flipped on load since we weren't using
-    // tex_coords in the traditional way, but we need to make sure that we set it back to true when
-    // we want to load any other textures.
-    stbi_set_flip_vertically_on_load(true);
 
     std::vector<Texture2D> diffuseMaps = LoadModelTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());

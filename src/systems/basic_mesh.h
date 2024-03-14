@@ -12,10 +12,10 @@ struct Transforms {
 };
 
 struct Material {
-    glm::vec3 ambient{1.0f, 1.0f, 1.0f};
+    glm::vec3 ambient{0.2f, 0.2f, 0.2f};
     std::vector<Texture2D*> textures;
-    glm::vec3 specular{1.0f, 1.0f, 1.0f};
-    float shininess{32.0f};
+    glm::vec3 specular{0.2f, 0.2f, 0.2f};
+    float shininess{10.0f};
 };
 
 class BasicMesh {

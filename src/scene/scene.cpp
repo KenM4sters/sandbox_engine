@@ -59,17 +59,20 @@ void Scene::SetCameraData(Camera* camera) {
 }
 
 void Scene::Init() {
+    // Loading ALL shaders
     auto cube_shader = shader_res_.AddResource("src/shaders/cube.vert", "src/shaders/cube.frag", nullptr, "cube", SANDBOX_OBJECT);
     auto floor_shader = shader_res_.AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor", SANDBOX_OBJECT);
     auto skybox_shader = shader_res_.AddResource("src/shaders/skybox.vert", "src/shaders/skybox.frag", nullptr, "skybox", SANDBOX_OBJECT);
     auto light_cube_shader = shader_res_.AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube", SANDBOX_LIGHT);
     auto back_pack_shader = shader_res_.AddResource("src/shaders/model.vert", "src/shaders/model.frag", nullptr, "model", SANDBOX_OBJECT);
+    // Loading ALL textures
     auto mario_tex = texture_res_.AddResource("assets/textures/misc/super-mario-world.jpg", "mario", SANDBOX_OBJECT, "diffuse");
     auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, "diffuse");
     auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, "diffuse");
     auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
 
-    // Skybox
+    // Skybox - texture loading is different for this, so it's abstracted away into dealing with all
+    // of its shaders/textures for itself.
     std::vector<std::string> skybox_textures = {
         "assets/textures/skybox/rainbow_rt.png",    
         "assets/textures/skybox/rainbow_lf.png",    
@@ -80,8 +83,15 @@ void Scene::Init() {
     };
     skybox_ = new Skybox(skybox_vertices, skybox_textures, skybox_shader, camera_);
 
+    // When we loaded the skybox, we set the textures to not be flipped on load since we weren't using
+    // tex_coords in the traditional way, but we need to make sure that we set it back to true when
+    // we want to load any other textures.
+    stbi_set_flip_vertically_on_load(true);
     lights_res_->Init();
-
+    // All shaders were passed to the lights so that they can set their uniform data to those shaders
+    // themselves, but we only need the object-specific ones to go to our objects rendering system,
+    // so we call a function that loops through them and returns an SShaderResource pointer to the ones
+    // that the objects need.
     SShaderResource* objects_shaders = lights_res_->SetLightData();
     objects_res_ = new SObjects(objects_shaders, &texture_res_);
 

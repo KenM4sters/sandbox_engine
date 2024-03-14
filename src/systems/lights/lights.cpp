@@ -48,7 +48,7 @@ void SLights::Init() {
     Shader* light_shader = shaders_->GetResource("light_cube");
     Texture2D* light_tex = textures_->GetResource("glowstone");
     BasicMesh* light_mesh = new BasicMesh(new BufferGeometry(vertices, SANDBOX_CUBE_VERTICES_COUNT), light_shader, light_tex);
-    light_mesh->transforms_.position = glm::vec3(0.0f, 8.0f, -2.0f);
+    light_mesh->transforms_.position = glm::vec3(2.0f, 2.0f, -1.0f);
     children_["light_cube"] = light_mesh;
 }
 
