@@ -32,3 +32,7 @@ void StandardMesh::Draw() {
     geometry_.DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
 }   
+
+void StandardMesh::ComputeBoundingBox(Shader* shader) {
+
+}

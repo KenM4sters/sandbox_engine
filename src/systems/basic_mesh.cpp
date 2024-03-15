@@ -1,8 +1,6 @@
 #include "basic_mesh.h"
 
-void BasicMesh::InitMesh() {}
-
-void BasicMesh::DrawMesh() {
+void BasicMesh::Draw() {
     shader_->Use();
     transforms_.model = glm::mat4(1.0f);
     // Order matters here and is dependant on the particular use case - neither is right nor wrong,
@@ -20,4 +18,10 @@ void BasicMesh::DrawMesh() {
     }
     geometry_->DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
+    bounding_box->Draw();
+}
+
+void BasicMesh::ComputeBoundingBox(Shader *shader) {
+
+    bounding_box = new BoundingBox(shader, &transforms_, 1, 1, 1);
 }

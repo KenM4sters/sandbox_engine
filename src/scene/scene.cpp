@@ -66,13 +66,13 @@ void Scene::Init() {
     auto light_cube_shader = shader_res_.AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube", SANDBOX_LIGHT);
     auto back_pack_shader = shader_res_.AddResource("src/shaders/model.vert", "src/shaders/model.frag", nullptr, "model", SANDBOX_OBJECT);
     auto terrain_shader = shader_res_.AddResource("src/shaders/terrain.vert", "src/shaders/terrain.frag", nullptr, "terrain", SANDBOX_OBJECT);
+    auto bounding_box_shader = shader_res_.AddResource("src/shaders/bounding_box.vert", "src/shaders/bounding_box.frag", nullptr, "bounding_box", SANDBOX_OBJECT);
     // Loading ALL textures
     auto mario_tex = texture_res_.AddResource("assets/textures/misc/super-mario-world.jpg", "mario", SANDBOX_OBJECT, "diffuse");
     auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, "diffuse");
     auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, "diffuse");
     auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
     auto terrain_tex = texture_res_.AddResource("assets/textures/terrain.jpg", "terrain", SANDBOX_OBJECT, "diffuse");
-
 
     // Skybox - texture loading is different for this, so it's abstracted away into dealing with all
     // of its shaders/textures for itself.

@@ -16,12 +16,12 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
             v.position.y = (int)y_displacement * y_scale_ / 255;
             v.position.z = -(width/2.0f) + j;
 
-            v.normal.x = 0.0f;
-            v.normal.y = 1.0f;
-            v.normal.z = 0.0f;
+            // v.normal.x = 0.0f;
+            // v.normal.y = 0.0f;
+            // v.normal.z = 0.0f;
 
-            v.tex_coords.x = (float)1/i;
-            v.tex_coords.y = (float)1/j;
+            v.tex_coords.x = (float)i/height;
+            v.tex_coords.y = (float)j/width;
 
             v.tangent.x = 0.0f;
             v.tangent.y = 0.0f;
@@ -34,6 +34,17 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
             vertices_.push_back(v);
         }
     }
+
+    for(int i = 0; i < vertices_.size(); i+=3) {
+        glm::vec3 n = glm::cross(
+            vertices_[i].position - vertices_[i + 2].position,
+            vertices_[i].position - vertices_[i + 1].position
+            );
+        vertices_[i].normal = n;
+        vertices_[i + 1].normal = n;
+        vertices_[i + 2].normal = n;
+    }
+
     stbi_image_free(data);
 
     // Generate indices
