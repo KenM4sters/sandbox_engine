@@ -30,9 +30,10 @@ SShaderResource* SLights::SetLightData() {
     return &objects_shaders_;
 }
 
-void SLights::Draw() {
+void SLights::Draw(float &delta_time) {
     for(auto& l : children_) {
         auto light = l.second;
-        light->Draw();
+        WorldPhysics::ApplyGravitationalAcceleration(light->transforms_.accelration);
+        light->Draw(delta_time);
     }
 }

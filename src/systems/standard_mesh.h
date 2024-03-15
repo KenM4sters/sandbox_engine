@@ -13,7 +13,7 @@ class StandardMesh : public UMesh<VertexRanges> {
         {
             shader_ = shader;
         }
-        void Draw() override;
+        void Draw(float &delta_time) override;
         void ComputeBoundingBox(Shader* shader, VertexRanges vertices_data = {}) override {}
     private:
         BufferGeometry geometry_;

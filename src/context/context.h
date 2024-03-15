@@ -25,6 +25,7 @@ class UContext {
         virtual void RenderWithoutPostProcessing(float delta_time) = 0;
         UWindow *window_;
         std::unique_ptr<Scene> scene_;
+        CollisionHandler* collision_handler_;
         Shader* fbo_shader_; 
         PostProcessing* post_processing_;
         SShaderResource* fbo_shader_res_;

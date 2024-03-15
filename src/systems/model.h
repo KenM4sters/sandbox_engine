@@ -13,7 +13,7 @@ class Model {
             LoadModel(path);
         }
         ~Model() { std::cout << "model is destroyed" << std::endl; }
-        void DrawModel();
+        void DrawModel(float &delta_time);
         void LoadModel(const std::string &path);
         void ProcessNode(aiNode *node, const aiScene *scene);
         std::vector<Texture2D> LoadModelTextures(aiMaterial* mat, aiTextureType type, std::string type_name);

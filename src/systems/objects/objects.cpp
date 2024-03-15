@@ -28,13 +28,15 @@ void SObjects::Init() {
 
 }
 
-void SObjects::Draw() {
+void SObjects::Draw(float &delta_time) {
     for(auto& k : children_) {
         auto mesh = k.second;
-        mesh->Draw();
+        WorldPhysics::ApplyGravitationalAcceleration(mesh->transforms_.accelration);
+        mesh->Draw(delta_time);
     }
     for(auto& m : models_) {
         auto model = m.second;
-        model->DrawModel();
+        WorldPhysics::ApplyGravitationalAcceleration(model->transforms_->accelration);
+        model->DrawModel(delta_time);
     }
 }

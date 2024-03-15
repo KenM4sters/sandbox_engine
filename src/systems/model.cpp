@@ -1,10 +1,11 @@
 #include "model.h"
 
-void Model::DrawModel() {
+void Model::DrawModel(float &delta_time) {
+    transforms_->position += transforms_->velocity * delta_time * 100.0f;
     auto transforms = *transforms_;
     for(auto& m : meshes_) {
         m.transforms_ = transforms;
-        m.Draw();
+        m.Draw(delta_time);
         bounding_box_->Draw();
     }
 }

@@ -44,8 +44,10 @@ std::vector<float> skybox_vertices = {
      1.0f, -1.0f,  1.0f
 };
 
-Scene::Scene(unsigned int w, unsigned int h, Camera* camera) : scr_width_(w), scr_height_(h), camera_(camera)  {
-    lights_res_ = new SLights(&shader_res_, &texture_res_);
+Scene::Scene(unsigned int w, unsigned int h, Camera* camera, CollisionHandler* collision_handler) 
+    : scr_width_(w), scr_height_(h), camera_(camera), collision_handler_(collision_handler)  
+{
+    lights_res_ = new SLights(&shader_res_, &texture_res_, collision_handler_);
     std::cout << "Lights resource created!" << std::endl;
 }
 void Scene::SetCameraData(Camera* camera) {
@@ -96,15 +98,16 @@ void Scene::Init() {
     // so we call a function that loops through them and returns an SShaderResource pointer to the ones
     // that the objects need.
     SShaderResource* objects_shaders = lights_res_->SetLightData();
-    objects_res_ = new SObjects(objects_shaders, &texture_res_);
+    objects_res_ = new SObjects(objects_shaders, &texture_res_, collision_handler_);
     unsigned int scale = 64;
     terrain_ = new Terrain("assets/iceland_height_map.png", terrain_shader, terrain_tex, scale);
+    collision_handler_->FeedTerrain(terrain_);
 }
 
 void Scene::Render(float &delta_time) {
     SetCameraData(camera_);
-    lights_res_->Draw();
-    objects_res_->Draw();
+    lights_res_->Draw(delta_time);
+    objects_res_->Draw(delta_time);
     terrain_->DrawTerrain();
     // Render Skybox - more efficient to draw it last so that any parts of the cube that are
     // blocked by other game objects will be discared.

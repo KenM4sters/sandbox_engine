@@ -16,6 +16,8 @@ struct Transforms {
     glm::vec3 position{0.0f, 0.0f, -5.0f};
     glm::vec3 scale{1.0f, 1.0f, 1.0f};
     Rotation rotation;
+    glm::vec3 velocity{0.0f, 0.0f, 0.0f};
+    glm::vec3 accelration{0.0f, 0.0f, 0.0f};
     glm::mat4 model;
 };
 
@@ -30,7 +32,7 @@ struct Material {
 template <typename T>
 class UMesh {
     public:
-        virtual void Draw() = 0;
+        virtual void Draw(float &delta_time) = 0;
         Transforms transforms_;
         Shader* shader_;
         virtual void ComputeBoundingBox(Shader* shader, T vertices_data = {}) = 0;

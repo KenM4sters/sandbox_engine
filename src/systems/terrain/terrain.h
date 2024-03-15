@@ -12,13 +12,15 @@ class Terrain {
             if(data == nullptr) 
                 throw std::runtime_error("Couldn't load terrain height map");
             InitTerrainMeshData(data, width, height, nr_channels);
+            transforms_.position = {0.0f, -20.0f, 0.0f};
         }
         ~Terrain() {}
         void DrawTerrain();
         void InitTerrainMeshData(unsigned char* data, int &width, int &height, int &nr_channels);
+        BufferGeometry* geometry_;
+        Transforms transforms_;
     private:
         unsigned int y_scale_;
-        BufferGeometry* geometry_;
         Shader* shader_;
         Texture2D* tex_;
         Material mat_;

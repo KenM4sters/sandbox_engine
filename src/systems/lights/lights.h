@@ -8,13 +8,13 @@
 
 class SLights : URenderSystem {
     public:
-        SLights(SShaderResource* shaders, STextureResource* textures) 
-            : URenderSystem(shaders, textures) 
+        SLights(SShaderResource* shaders, STextureResource* textures, CollisionHandler* collision_handler) 
+            : URenderSystem(shaders, textures, collision_handler_) 
         {
         }
         ~SLights() {}
-        void Draw();
-        void Init();
+        void Init() override;
+        void Draw(float &delta_time) override;
         SShaderResource* SetLightData();
     private:
         SShaderResource objects_shaders_;

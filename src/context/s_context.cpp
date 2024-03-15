@@ -64,7 +64,13 @@ SContext::SContext(bool bPostProcessing) : UContext() {
 
 void SContext::Init(UWindow *window) {
     window_ = window;
-    scene_ = std::make_unique<Scene>(window_->width_, window_->height_, window->camera_);
+    collision_handler_ = new CollisionHandler();
+    scene_ = std::make_unique<Scene>(
+        window_->width_, 
+        window_->height_, 
+        window->camera_,
+        collision_handler_
+    );
 
     glfwInit();
     glfwWindowHint(GLFW_CONTEXT_VERSION_MAJOR, 3);

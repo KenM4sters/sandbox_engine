@@ -10,7 +10,7 @@
 // Scene class which is responsible for creating and rendering our main scene
 class Scene  {
     public:
-        Scene(unsigned int w, unsigned int h, Camera* camera);
+        Scene(unsigned int w, unsigned int h, Camera* camera, CollisionHandler* collision_handler);
         ~Scene() {}
         // Initializes all game objects (meshes) 
         void Init();
@@ -19,6 +19,7 @@ class Scene  {
         
     private:
         Camera* camera_;
+        CollisionHandler* collision_handler_;
         SShaderResource shader_res_;
         STextureResource texture_res_;
         SLights* lights_res_;

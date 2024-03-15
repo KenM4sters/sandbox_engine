@@ -16,6 +16,20 @@ class BoundingBox {
             mesh_transforms_->model = glm::translate(mesh_transforms_->model, mesh_transforms_->position);
             mesh_transforms_->model = glm::scale(mesh_transforms_->model, mesh_transforms_->scale );
             mesh_transforms_->model = glm::rotate(mesh_transforms_->model, mesh_transforms_->rotation.rotation_angle, mesh_transforms_->rotation.rotation_axis);
+
+            // Update bounding_box_sizes with any transformations made to the relative mesh.
+            bounding_box_sizes_.width *= mesh_transforms_->scale.x;
+            bounding_box_sizes_.width *= mesh_transforms_->scale.x;
+            bounding_box_sizes_.width *= mesh_transforms_->scale.x;
+
+            bounding_box_sizes_.height *= mesh_transforms_->scale.y;
+            bounding_box_sizes_.height *= mesh_transforms_->scale.y;
+            bounding_box_sizes_.height *= mesh_transforms_->scale.y;
+
+            bounding_box_sizes_.depth *= mesh_transforms_->scale.z;
+            bounding_box_sizes_.depth *= mesh_transforms_->scale.z;
+            bounding_box_sizes_.depth *= mesh_transforms_->scale.z;
+            
             shader_->setMat4("model", mesh_transforms_->model);
             geometry_->DrawGeometry();
             glUseProgram(0);

@@ -16,8 +16,8 @@ class BasicMesh : public UMesh<float> {
             mat_.textures = textures;
         }
         ~BasicMesh() {}
-        void Draw() override;
-        void ComputeBoundingBox(Shader* shader, float vertices_data = NULL) override;
+        void Draw(float &delta_time) override;
+        void ComputeBoundingBox(Shader* shader, float vertices_data = 0.0f) override;
             
         Material mat_;
     private:

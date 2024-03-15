@@ -1,6 +1,6 @@
 #include "standard_mesh.h"
 
-void StandardMesh::Draw() {
+void StandardMesh::Draw(float &delta_time) {
     unsigned int diffuse_count = 1;
     unsigned int specular_count = 1;
     unsigned int normal_count = 1;
@@ -23,6 +23,7 @@ void StandardMesh::Draw() {
         shader_->setInteger(name + tex_index, i);
     };
     transforms_.model = glm::mat4(1.0f);
+    transforms_.position += transforms_.velocity * delta_time * 100.0f;;
     // Order matters here and is dependant on the particular use case - neither is right nor wrong,
     // but in our case we want to rotate around their new positions, as opposed to their starting ones.
     transforms_.model = glm::translate(transforms_.model, transforms_.position);
