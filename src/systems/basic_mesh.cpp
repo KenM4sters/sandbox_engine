@@ -22,5 +22,7 @@ void BasicMesh::Draw() {
 }
 
 void BasicMesh::ComputeBoundingBox(Shader *shader, float vertices_data) {
-    bounding_box = new BoundingBox(shader, &transforms_, glm::vec3(1.05f));
+    // Regular cube, so we can just use the global cube_vertices variable which holds 
+    // the position, normal and tex coords for a cube.
+    bounding_box = new BoundingBox(shader, &transforms_, cube_vertices);
 }

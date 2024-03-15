@@ -130,7 +130,7 @@ std::vector<Texture2D> Model::LoadModelTextures(aiMaterial* mat, aiTextureType t
 }
 
 void Model::ComputeBoundingBox() {
-    // Apply effects of all transformations (if none were applied, then they'll be unchanged)
+    // Apply effects of all transformations (if none were applied, then they'll be unchanged).
     // ----------------------------------------------
     vertex_ranges_.maxima.x *= transforms_->scale.x;
     vertex_ranges_.maxima.y *= transforms_->scale.y;
@@ -141,14 +141,60 @@ void Model::ComputeBoundingBox() {
     vertex_ranges_.minima.z *= transforms_->scale.z;
     // ----------------------------------------------
 
-    float width = vertex_ranges_.maxima.x - vertex_ranges_.minima.x;
-    float height = vertex_ranges_.maxima.y - vertex_ranges_.minima.y;
-    float depth = vertex_ranges_.maxima.z - vertex_ranges_.minima.z;
+    // creating name aliases to make the following vertices more readable.
+    auto& min_x = vertex_ranges_.minima.x;
+    auto& min_y = vertex_ranges_.minima.y;
+    auto& min_z = vertex_ranges_.minima.z;
 
-    std::cout << vertex_ranges_.minima.y << std::endl;
-    std::cout << vertex_ranges_.maxima.y << std::endl;
+    auto& max_x = vertex_ranges_.maxima.x;
+    auto& max_y = vertex_ranges_.maxima.y;
+    auto& max_z = vertex_ranges_.maxima.z;
 
-    glm::vec3 translation = glm::vec3(0.0f);
-    translation.y = vertex_ranges_.minima.y + 0.5; 
-    bounding_box_ = new BoundingBox(bounding_box_shader_, transforms_, glm::vec3(width, height, depth), translation);
+    // You see includes.h for the positions coords of a uniform cube for reference.
+    const std::vector<float> vertices = {
+      //  back
+        min_x, min_y,  min_z, 0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+        max_x, min_y,  min_z, 0.0f,  0.0f, -1.0f,  1.0f,  0.0f,
+        max_x, max_y,  min_z, 0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+        max_x, max_y,  min_z, 0.0f,  0.0f, -1.0f,  1.0f,  1.0f,
+        min_x, max_y,  min_z, 0.0f,  0.0f, -1.0f,  0.0f,  1.0f,
+        min_x, min_y,  min_z, 0.0f,  0.0f, -1.0f,  0.0f,  0.0f,
+      // front
+        max_x, min_y,  max_z, 0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+        max_x, min_y,  max_z, 0.0f,  0.0f,  1.0f,  1.0f,  0.0f,
+        max_x, max_y,  max_z, 0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+        max_x, max_y,  max_z, 0.0f,  0.0f,  1.0f,  1.0f,  1.0f,
+        min_x, max_y,  max_z, 0.0f,  0.0f,  1.0f,  0.0f,  1.0f,
+        min_x, min_y,  max_z, 0.0f,  0.0f,  1.0f,  0.0f,  0.0f,
+      // left
+        min_x, max_y, max_z, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+        min_x, max_y, min_z, -1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+        min_x, min_y, min_z, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        min_x, min_y, min_z, -1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        min_x, min_y, max_z, -1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+        min_x, max_y, max_z, -1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+      // right
+        max_x, max_y, max_z,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+        max_x, max_y, min_z,  1.0f,  0.0f,  0.0f,  1.0f,  1.0f,
+        max_x, min_y, min_z,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        max_x, min_y, min_z,  1.0f,  0.0f,  0.0f,  0.0f,  1.0f,
+        max_x, min_y, max_z,  1.0f,  0.0f,  0.0f,  0.0f,  0.0f,
+        max_x, max_y, max_z,  1.0f,  0.0f,  0.0f,  1.0f,  0.0f,
+      // bottom
+        min_x, min_y, min_z,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+        max_x, min_y, min_z,  0.0f, -1.0f,  0.0f,  1.0f,  1.0f,
+        max_x, min_y, max_z,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+        max_x, min_y, max_z,  0.0f, -1.0f,  0.0f,  1.0f,  0.0f,
+        min_x, min_y, max_z,  0.0f, -1.0f,  0.0f,  0.0f,  0.0f,
+        min_x, min_y, min_z,  0.0f, -1.0f,  0.0f,  0.0f,  1.0f,
+      // top
+        min_x, max_y, min_z,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f,
+        max_x, max_y, min_z,  0.0f,  1.0f,  0.0f,  1.0f,  1.0f,
+        max_x, max_y, max_z,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+        max_x, max_y, max_z,  0.0f,  1.0f,  0.0f,  1.0f,  0.0f,
+        min_x, max_y, max_z,  0.0f,  1.0f,  0.0f,  0.0f,  0.0f,
+        min_x, max_y, min_z,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
+    };
+
+    bounding_box_ = new BoundingBox(bounding_box_shader_, transforms_, vertices);
 }
