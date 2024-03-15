@@ -12,8 +12,8 @@ class StandardMesh {
         void Draw();
         Transforms transforms_;
     private:
+        BufferGeometry geometry_;
         std::vector<Texture2D> textures_;
         Shader* shader_;
-        BufferGeometry geometry_;
 
 };

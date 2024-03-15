@@ -19,7 +19,7 @@ unsigned int* Skybox::LoadCubeMap() const {
     // Since we're not using tex_coords in the traditional way, we don't want to flip the texture on load.
     // * Keep this in mind when trying to load textures after this one (need to set it back to true).
     stbi_set_flip_vertically_on_load(false);
-    for(int i = 0; i < face_textures_.size(); i++) {
+    for(unsigned int i = 0; i < face_textures_.size(); i++) {
         unsigned char* data = stbi_load(face_textures_[i].c_str(), &w, &h, &nr_channels, 0);
         if(data) {
             glTexImage2D(GL_TEXTURE_CUBE_MAP_POSITIVE_X + i, 0, GL_RGB, w, h, 0, GL_RGB, GL_UNSIGNED_BYTE, data);

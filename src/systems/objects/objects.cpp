@@ -65,21 +65,15 @@ void SObjects::Init() {
     BasicMesh* cube_mesh = new BasicMesh(new BufferGeometry(cube_vertices, SANDBOX_CUBE_VERTICES_COUNT), cube_shader, tex_vec);
     children_["cube"] = cube_mesh;
 
-    // Floor
-    // Shader* floor_shader = shaders_->GetResource("floor");
-    // Texture2D* sand_tex = textures_->GetResource("sand");
-    // BasicMesh* floor_mesh = new BasicMesh(new BufferGeometry(square_vertices, square_indices, SANDBOX_CUBE_VERTICES_COUNT), floor_shader, sand_tex);
-    // floor_mesh->transforms_.position = glm::vec3(0.0f, -0.75f, 0.0f);
-    // floor_mesh->transforms_.rotation = {glm::radians(90.0f), glm::vec3(1.0f, 0.0f, 0.0f),};
-    // floor_mesh->transforms_.scale = glm::vec3(1000.0f, 0.0f, 1000.0f);
-    // children_["floor"] = floor_mesh;
-
     // Models 
     Shader* model_shader = shaders_->GetResource("model");
     Model* back_pack = new Model("assets/models/backpack/backpack.obj", model_shader);
     back_pack->transforms_.position = glm::vec3(-2.0f, 0.0f, -4.0f);
     back_pack->transforms_.scale = glm::vec3(0.2f, 0.2f, 0.2f);
     models_["backpack"] = back_pack;
+
+    Model* m_p1 = new Model("assets/models/m_p1/m_p1.obj", model_shader);
+    models_["m_p1"] = m_p1;
 
 }
 

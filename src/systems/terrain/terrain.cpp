@@ -6,8 +6,8 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     n_vertices_strip_ = width * 2;
 
     // Vertices
-    for(unsigned int i = 0; i < height; i++) {
-        for(unsigned int j = 0; j < width; j++) {
+    for(int i = 0; i < height; i++) {
+        for(int j = 0; j < width; j++) {
 
             unsigned char* texel = data + (j + width * i) * nr_channels;
             unsigned char y_displacement = texel[0];
@@ -37,9 +37,9 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     stbi_image_free(data);
 
     // Generate indices
-    for(unsigned int i = 0; i < height-1; i++) {
-        for(unsigned int j = 0; j < width; j++) {
-            for(unsigned int k = 0; k < 2; k++) {
+    for(int i = 0; i < height-1; i++) {
+        for(int j = 0; j < width; j++) {
+            for(int k = 0; k < 2; k++) {
                 indices_.push_back(j + width * (i + k));
             }
         }

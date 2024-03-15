@@ -94,15 +94,15 @@ void BufferGeometry::DrawGeometry(unsigned int n_strips, unsigned int n_vertices
 }
 
 // TODO
-std::vector<Vertex>* MakeVertexFromVector(std::vector<float> &data) {
+std::vector<Vertex> MakeVertexFromVector(std::vector<float> &data) {
     const auto size = data.size();
     if(size % 20 != 0) throw std::runtime_error("Vertex data must be a multiple of 20 to be converted to a Vertex");
     std::vector<Vertex> vertices;
-    for(int i = 0; i < vertices.size() / 20; i++) {
+    for(unsigned int i = 0; i < vertices.size() / 20; i++) {
         Vertex v;
         v.position = glm::vec3{data[i], data[i + 1], data[i + 2]};
         v.normal = glm::vec3{data[i + 3], data[i + 4], data[i + 5]};
         v.tex_coords = glm::vec2{data[i + 6], data[i + 7]};
     }
-    return &vertices;
+    return vertices;
 }

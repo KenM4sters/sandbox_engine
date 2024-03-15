@@ -17,11 +17,11 @@ class Terrain {
         void DrawTerrain();
         void InitTerrainMeshData(unsigned char* data, int &width, int &height, int &nr_channels);
     private:
+        unsigned int y_scale_;
         BufferGeometry* geometry_;
+        Shader* shader_;
         Texture2D* tex_;
         Material mat_;
-        Shader* shader_;
-        unsigned int y_scale_;
         unsigned int n_strips_;
         unsigned int n_vertices_strip_;
         std::vector<Vertex> vertices_;
