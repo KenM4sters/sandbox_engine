@@ -3,8 +3,8 @@
 
 class BoundingBox {
     public:
-        BoundingBox(Shader* shader, Transforms* transforms, std::vector<float> vertices)
-            : shader_(shader), mesh_transforms_(transforms)
+        BoundingBox(Shader* shader, Transforms* transforms, const std::vector<float> &vertices, BoundingBoxSizes sizes)
+            : shader_(shader), mesh_transforms_(transforms), bounding_box_sizes_(sizes)
         {
             geometry_ = new BufferGeometry(vertices, SANDBOX_CUBE_VERTICES_COUNT);
         }
@@ -23,6 +23,7 @@ class BoundingBox {
         }
         Shader* shader_;
         Transforms* mesh_transforms_;
+        BoundingBoxSizes bounding_box_sizes_;
     private:
         BufferGeometry* geometry_;
 };

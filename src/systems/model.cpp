@@ -132,13 +132,13 @@ std::vector<Texture2D> Model::LoadModelTextures(aiMaterial* mat, aiTextureType t
 void Model::ComputeBoundingBox() {
     // Apply effects of all transformations (if none were applied, then they'll be unchanged).
     // ----------------------------------------------
-    vertex_ranges_.maxima.x *= transforms_->scale.x;
-    vertex_ranges_.maxima.y *= transforms_->scale.y;
-    vertex_ranges_.maxima.z *= transforms_->scale.z;
+    // vertex_ranges_.maxima.x *= transforms_->scale.x;
+    // vertex_ranges_.maxima.y *= transforms_->scale.y;
+    // vertex_ranges_.maxima.z *= transforms_->scale.z;
 
-    vertex_ranges_.minima.x *= transforms_->scale.x;
-    vertex_ranges_.minima.y *= transforms_->scale.y;
-    vertex_ranges_.minima.z *= transforms_->scale.z;
+    // vertex_ranges_.minima.x *= transforms_->scale.x;
+    // vertex_ranges_.minima.y *= transforms_->scale.y;
+    // vertex_ranges_.minima.z *= transforms_->scale.z;
     // ----------------------------------------------
 
     // creating name aliases to make the following vertices more readable.
@@ -196,5 +196,11 @@ void Model::ComputeBoundingBox() {
         min_x, max_y, min_z,  0.0f,  1.0f,  0.0f,  0.0f,  1.0f
     };
 
-    bounding_box_ = new BoundingBox(bounding_box_shader_, transforms_, vertices);
+    BoundingBoxSizes sizes = BoundingBoxSizes{
+        max_x - min_x,  
+        max_y - min_y,  
+        max_z - min_z 
+    };
+
+    bounding_box_ = new BoundingBox(bounding_box_shader_, transforms_, vertices, sizes);
 }

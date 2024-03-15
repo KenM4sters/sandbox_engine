@@ -3,6 +3,10 @@
 #include "buffer_geometry.h"
 #include "../resources/texture.h"
 
+struct BoundingBoxSizes {
+    float width, height, depth;
+};
+
 struct Rotation {
     float rotation_angle{0.0f};
     glm::vec3 rotation_axis{0.0f, 1.0f, 0.0f};
