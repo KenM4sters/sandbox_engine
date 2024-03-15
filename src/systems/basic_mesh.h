@@ -1,7 +1,7 @@
 #pragma once
 #include "mesh.h"
 
-class BasicMesh : public UMesh {
+class BasicMesh : public UMesh<float> {
     public:
         BasicMesh(BufferGeometry* geometry, Shader* shader, Texture2D* texture)
             : geometry_(geometry) 
@@ -17,7 +17,7 @@ class BasicMesh : public UMesh {
         }
         ~BasicMesh() {}
         void Draw() override;
-        void ComputeBoundingBox(Shader* shader) override;
+        void ComputeBoundingBox(Shader* shader, float vertices_data = NULL) override;
             
         Material mat_;
     private:

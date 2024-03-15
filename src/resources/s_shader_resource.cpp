@@ -2,7 +2,7 @@
 
 Shader* SShaderResource::AddResource(const char* v_shader_file, const char* f_shader_file, const char* g_shader_file, std::string name, unsigned int type) {
     sandbox_type_ = type;
-    res_[name] = LoadShaderFromFile(v_shader_file, f_shader_file, g_shader_file);
+    res_[name] = LoadShaderFromFile(v_shader_file, f_shader_file, g_shader_file, name);
     return res_[name];
 }
 
@@ -26,7 +26,7 @@ void SShaderResource::ClearAllResources() {
     std::cout << "SUCCESS::All shader resources were cleared!" << std::endl;
 }
 
-Shader* SShaderResource::LoadShaderFromFile(const char *v_shader_source, const char *f_shader_source, const char *g_shader_source)
+Shader* SShaderResource::LoadShaderFromFile(const char *v_shader_source, const char *f_shader_source, const char *g_shader_source, std::string name)
 {
     // 1. retrieve the vertex/fragment source code from filePath
     std::string v_code;
@@ -65,7 +65,7 @@ Shader* SShaderResource::LoadShaderFromFile(const char *v_shader_source, const c
     const char *f_shader = f_code.c_str();
     const char *g_shader = g_code.c_str();
     // 2. now create shader object from source code
-    Shader* shader = new Shader(sandbox_type_);
+    Shader* shader = new Shader(sandbox_type_, name);
     shader->Compile(v_shader, f_shader, g_shader_source != nullptr ? g_shader : nullptr);
     return shader;
 }

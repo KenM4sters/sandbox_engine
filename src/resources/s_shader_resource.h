@@ -14,6 +14,6 @@ class SShaderResource : public UResource<Shader> {
         Shader* GetResource(std::string name) override;
         void DeleteResource(std::string res_name) override;
         void ClearAllResources() override;
-        Shader* LoadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile);
+        Shader* LoadShaderFromFile(const char *vShaderFile, const char *fShaderFile, const char *gShaderFile, std::string name);
 
 };

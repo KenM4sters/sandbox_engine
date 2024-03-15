@@ -21,7 +21,6 @@ void BasicMesh::Draw() {
     bounding_box->Draw();
 }
 
-void BasicMesh::ComputeBoundingBox(Shader *shader) {
-
-    bounding_box = new BoundingBox(shader, &transforms_, 1, 1, 1);
+void BasicMesh::ComputeBoundingBox(Shader *shader, float vertices_data) {
+    bounding_box = new BoundingBox(shader, &transforms_, glm::vec3(1.05f));
 }

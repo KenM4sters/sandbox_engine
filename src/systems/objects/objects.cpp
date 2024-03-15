@@ -15,14 +15,16 @@ void SObjects::Init() {
 
     // Models 
     Shader* model_shader = shaders_->GetResource("model");
-    Model* back_pack = new Model("assets/models/backpack/backpack.obj", model_shader);
-    back_pack->transforms_.position = glm::vec3(-2.0f, 0.0f, -4.0f);
-    back_pack->transforms_.scale = glm::vec3(0.2f, 0.2f, 0.2f);
+    Model* back_pack = new Model("assets/models/backpack/backpack.obj", model_shader, bounding_box_shader);
+    back_pack->transforms_->position = glm::vec3(-2.0f, 0.0f, -4.0f);
+    back_pack->transforms_->scale = glm::vec3(0.2f, 0.2f, 0.2f);
     models_["backpack"] = back_pack;
+    back_pack->ComputeBoundingBox();
 
-    Model* m_p1 = new Model("assets/models/m_p1/m_p1.obj", model_shader);
-    m_p1->transforms_.position = glm::vec3(5.0f, 0.0f, -4.0f);
+    Model* m_p1 = new Model("assets/models/m_p1/m_p1.obj", model_shader, bounding_box_shader);
+    m_p1->transforms_->position = glm::vec3(5.0f, 0.0f, -4.0f);
     models_["m_p1"] = m_p1;
+    m_p1->ComputeBoundingBox();
 
 }
 

@@ -1,9 +1,11 @@
 #include "model.h"
 
 void Model::DrawModel() {
+    auto transforms = *transforms_;
     for(auto& m : meshes_) {
-        m.transforms_ = transforms_;
+        m.transforms_ = transforms;
         m.Draw();
+        bounding_box_->Draw();
     }
 }
 
@@ -28,6 +30,7 @@ void Model::ProcessNode(aiNode *node, const aiScene *scene) {
     for(unsigned int i = 0; i < node->mNumChildren; i++) {
         ProcessNode(node->mChildren[i], scene);
     }
+
 }   
 
 StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
@@ -41,6 +44,20 @@ StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
         p_vector.y = mesh->mVertices[i].y;
         p_vector.z = mesh->mVertices[i].z;
         vertex.position = p_vector;
+
+        // Computing Bounding Box
+        // Checking whether the vertices are more extreme than the previously stored vertices.
+        // ----------------------------------------------------------------
+        if(p_vector.x > vertex_ranges_.maxima.x) vertex_ranges_.maxima.x = p_vector.x;
+        if(p_vector.x < vertex_ranges_.minima.x) vertex_ranges_.minima.x = p_vector.x;
+
+        if(p_vector.y > vertex_ranges_.maxima.y) vertex_ranges_.maxima.y = p_vector.y;
+        if(p_vector.y < vertex_ranges_.minima.y) vertex_ranges_.minima.y = p_vector.y;
+
+        if(p_vector.z > vertex_ranges_.maxima.z) vertex_ranges_.maxima.z = p_vector.z;
+        if(p_vector.z < vertex_ranges_.minima.z) vertex_ranges_.minima.z = p_vector.z;
+        // ----------------------------------------------------------------
+
         if(mesh->HasNormals()) {
             p_vector.x = mesh->mNormals[i].x;
             p_vector.y = mesh->mNormals[i].y;
@@ -110,4 +127,28 @@ std::vector<Texture2D> Model::LoadModelTextures(aiMaterial* mat, aiTextureType t
         }
     }
     return textures;
+}
+
+void Model::ComputeBoundingBox() {
+    // Apply effects of all transformations (if none were applied, then they'll be unchanged)
+    // ----------------------------------------------
+    vertex_ranges_.maxima.x *= transforms_->scale.x;
+    vertex_ranges_.maxima.y *= transforms_->scale.y;
+    vertex_ranges_.maxima.z *= transforms_->scale.z;
+
+    vertex_ranges_.minima.x *= transforms_->scale.x;
+    vertex_ranges_.minima.y *= transforms_->scale.y;
+    vertex_ranges_.minima.z *= transforms_->scale.z;
+    // ----------------------------------------------
+
+    float width = vertex_ranges_.maxima.x - vertex_ranges_.minima.x;
+    float height = vertex_ranges_.maxima.y - vertex_ranges_.minima.y;
+    float depth = vertex_ranges_.maxima.z - vertex_ranges_.minima.z;
+
+    std::cout << vertex_ranges_.minima.y << std::endl;
+    std::cout << vertex_ranges_.maxima.y << std::endl;
+
+    glm::vec3 translation = glm::vec3(0.0f);
+    translation.y = vertex_ranges_.minima.y + 0.5; 
+    bounding_box_ = new BoundingBox(bounding_box_shader_, transforms_, glm::vec3(width, height, depth), translation);
 }

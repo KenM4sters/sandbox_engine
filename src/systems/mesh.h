@@ -23,12 +23,13 @@ struct Material {
 };
 
 #include "bounding_box.h"
+template <typename T>
 class UMesh {
     public:
         virtual void Draw() = 0;
         Transforms transforms_;
         Shader* shader_;
-        virtual void ComputeBoundingBox(Shader* shader) = 0;
+        virtual void ComputeBoundingBox(Shader* shader, T vertices_data = {}) = 0;
     protected:
         BoundingBox* bounding_box;
 };

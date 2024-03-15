@@ -8,7 +8,8 @@ class Shader
 public:
     unsigned int ID_;
     unsigned int type_;
-    Shader(unsigned int type) : type_(type) {}
+    std::string name_;
+    Shader(unsigned int type, std::string name) : type_(type), name_(name) {}
     Shader() {}
     ~Shader() {
         #ifdef SANDBOX_DEBUG 
