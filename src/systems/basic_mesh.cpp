@@ -2,13 +2,9 @@
 
 void BasicMesh::Draw(float &delta_time) {
     shader_->Use();
-    transforms_.model = glm::mat4(1.0f);
     // Order matters here and is dependant on the particular use case - neither is right nor wrong,
     // but in our case we want to rotate around their new positions, as opposed to their starting ones.
-    transforms_.position += transforms_.velocity * delta_time * 100.0f;
-    transforms_.model = glm::translate(transforms_.model, transforms_.position);
-    transforms_.model = glm::scale(transforms_.model, transforms_.scale);
-    transforms_.model = glm::rotate(transforms_.model, transforms_.rotation.rotation_angle, transforms_.rotation.rotation_axis);
+    WorldPhysics::UpdateTransforms(transforms_, delta_time);
     shader_->setMat4("model", transforms_.model);
     shader_->setVector3f("material.ambient", mat_.ambient);
     shader_->setVector3f("material.specular", mat_.specular);

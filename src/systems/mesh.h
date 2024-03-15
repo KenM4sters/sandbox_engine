@@ -29,6 +29,7 @@ struct Material {
 };
 
 #include "bounding_box.h"
+#include "../world_physics/physics.h"
 template <typename T>
 class UMesh {
     public:
