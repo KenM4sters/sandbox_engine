@@ -16,7 +16,25 @@ class WorldPhysics {
             transforms.model = glm::rotate(transforms.model, transforms.rotation.rotation_angle, transforms.rotation.rotation_axis);
         }
 
-        static void ComputeNormal(glm::vec3& vertex_target, TerrainQuadrant& target_quad) {
+        static void ComputeNormal(Vertex& v, TerrainQuadrant& q) {
+            glm::vec3 tr = glm::normalize(glm::cross(
+                q.right - v.position,
+                q.top - v.position
+            ));
+            glm::vec3 br = glm::normalize(glm::cross(
+                q.bottom - v.position,
+                q.right - v.position
+            ));
+            glm::vec3 bl = glm::normalize(glm::cross(
+                q.left - v.position,
+                q.bottom - v.position
+            ));
+            glm::vec3 tl = glm::normalize(glm::cross(
+                q.top - v.position,
+                q.left - v.position
+            ));
+
+            v.normal = glm::normalize(tr + br + bl + tl);
         }
     private:
         WorldPhysics() {}

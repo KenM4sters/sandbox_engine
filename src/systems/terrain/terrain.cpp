@@ -69,7 +69,7 @@ void Terrain::GenerateTerrainQuadrants() {
             quad.left = vertices_[j + i - width_].position;
             quad.bottom = vertices_[j + i + 1].position;
             quad.right = vertices_[j + i + width_].position;
-            WorldPhysics::ComputeNormal(vertices_[i].normal, quad);
+            WorldPhysics::ComputeNormal(vertices_[i], quad);
         }
     }
 }
