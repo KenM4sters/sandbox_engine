@@ -5,7 +5,7 @@
 
 struct Vertex {
     glm::vec3 position;
-    glm::vec3 normal;   // Normals are required for calculating phong shading due to lights in the scene.
+    glm::vec3 normal{0.0f, 1.0f, 0.0f};   // Normals are required for calculating phong shading due to lights in the scene.
     glm::vec2 tex_coords;
     // Model Specifcs
     glm::vec3 tangent;

@@ -13,18 +13,21 @@ void CollisionHandler::FeedObjects(std::unordered_map<std::string, Model*> &obje
 }
 void CollisionHandler::FeedTerrain(Terrain* terrain) {
     terrain_ = terrain;
-    auto& v = terrain_->vertices_;
 
-    std::vector<Vertex> quad_1;
-    std::vector<Vertex>::iterator itr;
-    for(int i = 0; i < TERRRAIN_QUADRANTS_SIZE; i++ ) {
-        itr = quad_1.begin();
-        quad_1.insert(itr, v.begin(), v.begin() + v.size() / 4);
-    }
+    // int left = 0;
+    // int name_counter = 1;
+    // int right = v.size() / TERRRAIN_QUADRANTS_SIZE;
+    // while(right <= v.size()) {
+    //     std::vector<Vertex> vertices;
+    //     std::vector<Vertex>::iterator itr;
+    //     itr = vertices.begin();
+    //     vertices.insert(itr, v.begin() + left, v.begin() + right);
+    //     terrain_quadrants_["quad_" + std::to_string(name_counter)];
+    //     name_counter++;
+    //     left = right;
+    //     right += v.size()/ TERRRAIN_QUADRANTS_SIZE;
+    // }
 
-
-    std::cout << terrain_->world_width_ << std::endl;
-    std::cout << terrain_->world_depth_ << std::endl;
 }
 
 void CollisionHandler::CheckCollisions() {

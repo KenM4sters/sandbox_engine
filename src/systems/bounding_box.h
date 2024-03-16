@@ -10,7 +10,7 @@ class BoundingBox {
         }
         ~BoundingBox() {}
         void Draw() {
-            glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
+            // glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
             shader_->Use();
             mesh_transforms_->model = glm::mat4(1.0f);
             mesh_transforms_->model = glm::translate(mesh_transforms_->model, mesh_transforms_->position);
@@ -33,7 +33,7 @@ class BoundingBox {
             shader_->setMat4("model", mesh_transforms_->model);
             geometry_->DrawGeometry();
             glUseProgram(0);
-            glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
+            // glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
         }
         Shader* shader_;
         Transforms* mesh_transforms_;

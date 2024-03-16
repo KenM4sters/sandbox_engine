@@ -1,6 +1,13 @@
 #pragma once
 #include "../standard_mesh.h"
 #include "../../resources/stb_image.h"
+#define TERRRAIN_QUADRANTS_SIZE 16
+
+struct TerrainQuadrant {
+    std::vector<Vertex> vertices;
+    glm::vec3 center_vert;
+    glm::vec3 left, right, top, bottom;
+};
 
 class Terrain {
     public:
@@ -11,9 +18,9 @@ class Terrain {
             unsigned char* data = stbi_load(height_map, &width, &height, &nr_channels, 0);
             if(data == nullptr) 
                 throw std::runtime_error("Couldn't load terrain height map");
+            width_ = width;
+            depth_ = height;
             InitTerrainMeshData(data, width, height, nr_channels);
-            world_width_ = width;
-            world_depth_ = height;
             transforms_.position = {0.0f, -20.0f, 0.0f};
         }
         ~Terrain() {}
@@ -21,10 +28,12 @@ class Terrain {
         void InitTerrainMeshData(unsigned char* data, int &width, int &height, int &nr_channels);
         BufferGeometry* geometry_;
         Transforms transforms_;
-        int world_width_;
-        int world_depth_;
+        int width_;
+        int depth_;
         std::vector<Vertex> vertices_;
+        std::unordered_map<std::string, TerrainQuadrant> terrain_quadrants_;
     private:
+        void GenerateTerrainQuadrants();
         unsigned int y_scale_;
         Shader* shader_;
         Texture2D* tex_;

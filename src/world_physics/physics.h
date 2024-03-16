@@ -5,7 +5,7 @@
 class WorldPhysics {
     public:
         static void ApplyGravitationalAcceleration(glm::vec3 &acc_vec) {
-            acc_vec.y = -9.81;
+            acc_vec.y = 0;
         }
         static void UpdateTransforms(Transforms &transforms, float &delta_time) {
             transforms.model = glm::mat4(1.0f);
@@ -14,6 +14,9 @@ class WorldPhysics {
             transforms.model = glm::translate(transforms.model, transforms.position);
             transforms.model = glm::scale(transforms.model, transforms.scale);
             transforms.model = glm::rotate(transforms.model, transforms.rotation.rotation_angle, transforms.rotation.rotation_axis);
+        }
+
+        static void ComputeNormal(glm::vec3& vertex_target, TerrainQuadrant& target_quad) {
         }
     private:
         WorldPhysics() {}

@@ -100,15 +100,17 @@ void Scene::Init() {
     SShaderResource* objects_shaders = lights_res_->SetLightData();
     objects_res_ = new SObjects(objects_shaders, &texture_res_, collision_handler_);
     unsigned int scale = 64;
-    terrain_ = new Terrain("assets/iceland_height_map.png", terrain_shader, terrain_tex, scale);
+    terrain_ = new Terrain("assets/height_map.png", terrain_shader, terrain_tex, scale);
     collision_handler_->FeedTerrain(terrain_);
 }
 
 void Scene::Render(float &delta_time) {
+    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     SetCameraData(camera_);
     lights_res_->Draw(delta_time);
     objects_res_->Draw(delta_time);
     terrain_->DrawTerrain();
+    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     // Render Skybox - more efficient to draw it last so that any parts of the cube that are
     // blocked by other game objects will be discared.
     glDepthFunc(GL_LEQUAL);

@@ -4,6 +4,8 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     // These two variables will be used later to generate indices for our terrain mesh data.
     n_strips_ = height - 1;
     n_vertices_strip_ = width * 2;
+    std::cout << height << std::endl;
+    std::cout << width << std::endl;
 
     // Vertices
     for(int i = 0; i < height; i++) {
@@ -15,10 +17,6 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
             v.position.x = -(height/2.0f) + i;
             v.position.y = (int)y_displacement * y_scale_ / 255;
             v.position.z = -(width/2.0f) + j;
-
-            // v.normal.x = 0.0f;
-            // v.normal.y = 0.0f;
-            // v.normal.z = 0.0f;
 
             v.tex_coords.x = (float)i/height;
             v.tex_coords.y = (float)j/width;
@@ -35,16 +33,16 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
         }
     }
 
-    // Calculating the normal coordinates for each vertex
-    for(int i = 0; i < vertices_.size(); i+=3) {
-        glm::vec3 n = glm::cross(
-            vertices_[i].position - vertices_[i + 2].position,
-            vertices_[i].position - vertices_[i + 1].position
-            );
-        vertices_[i].normal = n;
-        vertices_[i + 1].normal = n;
-        vertices_[i + 2].normal = n;
-    }
+    // Normals
+    // for(int i = 0; i < 12; i++) {
+    //     std::cout << "-----------------" << std::endl;
+    //     std::cout << i << std::endl;
+    //     std::cout << "x: " << vertices_[i].position.x << std::endl;
+    //     std::cout << "y: " << vertices_[i].position.y << std::endl;
+    //     std::cout << "z: " << vertices_[i].position.z << std::endl;
+    // }
+    GenerateTerrainQuadrants();
+
 
     stbi_image_free(data);
 
@@ -58,6 +56,22 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     }
 
     geometry_ = new BufferGeometry(vertices_, indices_);
+}
+
+void Terrain::GenerateTerrainQuadrants() {
+    int column = 1;
+    int row = width_;
+    for(int i = 1; i < depth_ - 1; i++) {
+        for(int j = width_; j < width_*depth_; j += width_) {
+            TerrainQuadrant quad;
+            quad.center_vert = vertices_[j + i].position;
+            quad.top = vertices_[j + i - 1].position;
+            quad.left = vertices_[j + i - width_].position;
+            quad.bottom = vertices_[j + i + 1].position;
+            quad.right = vertices_[j + i + width_].position;
+            WorldPhysics::ComputeNormal(vertices_[i].normal, quad);
+        }
+    }
 }
 
 void Terrain::DrawTerrain() {
