@@ -35,6 +35,7 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
         }
     }
 
+    // Calculating the normal coordinates for each vertex
     for(int i = 0; i < vertices_.size(); i+=3) {
         glm::vec3 n = glm::cross(
             vertices_[i].position - vertices_[i + 2].position,
