@@ -1,13 +1,8 @@
 #pragma once
-#include "../standard_mesh.h"
-#include "../../resources/stb_image.h"
 #define TERRRAIN_QUADRANTS_SIZE 16
-
-struct TerrainQuadrant {
-    std::vector<Vertex> vertices;
-    glm::vec3 center_vert;
-    glm::vec3 left, right, top, bottom;
-};
+#include "../../resources/stb_image.h"
+#include "../standard_mesh.h"
+#include "../system_includes.h"
 
 class Terrain {
     public:

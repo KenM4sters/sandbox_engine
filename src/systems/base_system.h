@@ -6,7 +6,6 @@
 #include "../resources/s_texture_resource.h"
 #include "basic_mesh.h"
 #include "../context/collision_handler.h"
-#include "../world_physics/physics.h"
 
 
 class URenderSystem {

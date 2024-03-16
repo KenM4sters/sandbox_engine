@@ -1,4 +1,5 @@
 #include "lights.h"
+#include "../../world_physics/physics.h"
 
 void SLights::Init() {
     // Bounding Box - used for collision detection
@@ -7,7 +8,7 @@ void SLights::Init() {
     Shader* light_shader = shaders_->GetResource("light_cube");
     Texture2D* light_tex = textures_->GetResource("glowstone");
     BasicMesh* light_mesh = new BasicMesh(new BufferGeometry(cube_vertices, SANDBOX_CUBE_VERTICES_COUNT), light_shader, light_tex);
-    light_mesh->transforms_.position = glm::vec3(-500.0f, 0.0f, -500.0f);
+    light_mesh->transforms_.position = glm::vec3(0.0f, 100.0f, 0.0f);
     light_mesh->ComputeBoundingBox(bounding_box_shader);
     children_["light_cube"] = light_mesh;
 }

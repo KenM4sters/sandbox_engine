@@ -4,7 +4,6 @@
 #include "../../resources/stb_image.h"
 #include "../../camera/camera.h"
 
-
 struct SkyboxTransforms {
     glm::vec3 rotation;
     glm::vec3 scale;

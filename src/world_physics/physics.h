@@ -1,11 +1,12 @@
 #pragma once
 #include "../utils/includes.h"
 #include "../systems/mesh.h"
+#include "../systems/terrain/terrain.h"
 
 class WorldPhysics {
     public:
         static void ApplyGravitationalAcceleration(glm::vec3 &acc_vec) {
-            acc_vec.y = 0;
+            acc_vec.y = -15.0;
         }
         static void UpdateTransforms(Transforms &transforms, float &delta_time) {
             transforms.model = glm::mat4(1.0f);

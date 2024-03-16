@@ -1,11 +1,10 @@
 #include "terrain.h"
+#include "../../world_physics/physics.h"
 
 void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, int &nr_channels) {
     // These two variables will be used later to generate indices for our terrain mesh data.
     n_strips_ = height - 1;
     n_vertices_strip_ = width * 2;
-    std::cout << height << std::endl;
-    std::cout << width << std::endl;
 
     // Vertices
     for(int i = 0; i < height; i++) {
@@ -41,6 +40,9 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     //     std::cout << "y: " << vertices_[i].position.y << std::endl;
     //     std::cout << "z: " << vertices_[i].position.z << std::endl;
     // }
+    std::cout << vertices_[vertices_.size() - 1].position.x << "\n";
+    std::cout << vertices_[vertices_.size() - 1].position.y << "\n";
+    std::cout << vertices_[vertices_.size() - 1].position.z << "\n";
     GenerateTerrainQuadrants();
 
 
@@ -61,8 +63,8 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
 void Terrain::GenerateTerrainQuadrants() {
     int column = 1;
     int row = width_;
-    for(int i = 1; i < depth_ - 1; i++) {
-        for(int j = width_; j < width_*depth_; j += width_) {
+    for(int i = 1; i < depth_ - 2; i++) {
+        for(int j = width_; j < (width_*depth_) - width_; j += width_) {
             TerrainQuadrant quad;
             quad.center_vert = vertices_[j + i].position;
             quad.top = vertices_[j + i - 1].position;

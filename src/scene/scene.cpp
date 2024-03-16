@@ -105,12 +105,10 @@ void Scene::Init() {
 }
 
 void Scene::Render(float &delta_time) {
-    glPolygonMode(GL_FRONT_AND_BACK, GL_LINE);
     SetCameraData(camera_);
     lights_res_->Draw(delta_time);
     objects_res_->Draw(delta_time);
     terrain_->DrawTerrain();
-    glPolygonMode(GL_FRONT_AND_BACK, GL_FILL);
     // Render Skybox - more efficient to draw it last so that any parts of the cube that are
     // blocked by other game objects will be discared.
     glDepthFunc(GL_LEQUAL);

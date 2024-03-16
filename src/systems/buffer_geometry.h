@@ -1,16 +1,9 @@
 #pragma once
 #include "../utils/includes.h"
+#include "system_includes.h"
 #define MAX_BONE_INFLUENCE 4
 
 
-struct Vertex {
-    glm::vec3 position;
-    glm::vec3 normal{0.0f, 1.0f, 0.0f};   // Normals are required for calculating phong shading due to lights in the scene.
-    glm::vec2 tex_coords;
-    // Model Specifcs
-    glm::vec3 tangent;
-    glm::vec3 bi_tangent;
-};
 
 class BufferGeometry {
     public:

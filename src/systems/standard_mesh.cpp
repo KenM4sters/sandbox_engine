@@ -1,4 +1,5 @@
 #include "standard_mesh.h"
+#include "../world_physics/physics.h"
 
 void StandardMesh::Draw(float &delta_time) {
     unsigned int diffuse_count = 1;

@@ -1,4 +1,5 @@
 #include "objects.h"
+#include "../../world_physics/physics.h"
 void SObjects::Init() {
 
     // Bounding Box - used for collision detection

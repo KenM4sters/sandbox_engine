@@ -1,4 +1,5 @@
 #include "model.h"
+#include "../world_physics/physics.h"
 
 void Model::DrawModel(float &delta_time) {
     WorldPhysics::UpdateTransforms(*transforms_, delta_time);
