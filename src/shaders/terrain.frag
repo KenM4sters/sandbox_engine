@@ -17,6 +17,7 @@ out vec4 FragColor;
 in vec3 frag_pos;
 in vec3 normal;
 in vec2 tex_coord;
+in float tex_val;
 
 uniform Material material;
 uniform Light light_cube;
@@ -24,12 +25,12 @@ uniform vec3 camera_pos;
 
 void main() {
     // Ambient light
-    vec3 ambient_shading = light_cube.ambient * vec3(1.0, 0.5, 0.0);
+    vec3 ambient_shading = light_cube.ambient * vec3(1.0, 1.0, tex_val);
     // Diffuse light_cube
     vec3 normal_dir = normalize(normal);
     vec3 light_cube_dir = normalize(light_cube.position - frag_pos);
     float diffuse_angle = max(dot(normal_dir, light_cube_dir), 0.0);
-    vec3 diffuse_shading = light_cube.diffuse * diffuse_angle * vec3(1.0, 0.5, 0.0);
+    vec3 diffuse_shading = light_cube.diffuse * diffuse_angle * vec3(1.0, 1.0, tex_val);
     // Specular light_cube
     vec3 view_dir = normalize(camera_pos - frag_pos);
     vec3 critical_reflection = reflect(-light_cube_dir, normal_dir);

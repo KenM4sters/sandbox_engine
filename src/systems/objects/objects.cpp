@@ -26,7 +26,6 @@ void SObjects::Init() {
     m_p1->transforms_->position = glm::vec3(5.0f, 0.0f, -4.0f);
     models_["m_p1"] = m_p1;
     m_p1->ComputeBoundingBox();
-
 }
 
 void SObjects::Draw(float &delta_time) {

@@ -17,7 +17,7 @@ class WorldPhysics {
             transforms.model = glm::rotate(transforms.model, transforms.rotation.rotation_angle, transforms.rotation.rotation_axis);
         }
 
-        static void ComputeNormal(Vertex& v, TerrainQuadrant& q) {
+        static void ComputeNormal(Vertex& v, VertexQuadrant& q) {
             static int counter = 0;
             glm::vec3 tr = glm::normalize(glm::cross(
                 q.right - v.position,

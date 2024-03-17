@@ -21,9 +21,9 @@ struct Transforms {
 };
 
 struct Material {
-    glm::vec3 ambient{0.2f, 0.2f, 0.2f};
+    glm::vec3 ambient{0.4f, 0.4f, 0.4f};
     std::vector<Texture2D*> textures;
-    glm::vec3 specular{0.2f, 0.2f, 0.2f};
+    glm::vec3 specular{0.1f, 0.1f, 0.1f};
     float shininess{10.0f};
 };
 
@@ -34,10 +34,16 @@ struct Vertex {
     // Model Specifcs
     glm::vec3 tangent;
     glm::vec3 bi_tangent;
+    // Terrain specifics
+    float texel_val{0.0f};
 };
 
-struct TerrainQuadrant {
+struct VertexQuadrant {
     std::vector<Vertex> vertices;
     glm::vec3 center_vert;
     glm::vec3 left, right, top, bottom;
+};
+
+struct TerrainQuadrant {
+    int max_w, max_d;
 };

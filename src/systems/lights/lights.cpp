@@ -23,7 +23,7 @@ SShaderResource* SLights::SetLightData() {
                 shader->Use();
                 shader->setVector3f(light_name + ".position", l.second->transforms_.position);
                 shader->setVector3f(light_name + ".ambient", l.second->mat_.ambient );
-                shader->setVector3f(light_name + ".diffuse", {0.8f, 0.8f, 0.8f});
+                shader->setVector3f(light_name + ".diffuse", {0.5f, 0.5f, 0.5f});
                 shader->setVector3f(light_name + ".specular", {1.0f, 1.0f, 1.0f});
             }
         }
@@ -38,7 +38,7 @@ void SLights::UpdateLights() {
             obj.second->Use();
             obj.second->setVector3f(light_name + ".position", l.second->transforms_.position);
             obj.second->setVector3f(light_name + ".ambient", l.second->mat_.ambient );
-            obj.second->setVector3f(light_name + ".diffuse", {0.8f, 0.8f, 0.8f});
+            obj.second->setVector3f(light_name + ".diffuse", {0.5f, 0.5f, 0.5f});
             obj.second->setVector3f(light_name + ".specular", {1.0f, 1.0f, 1.0f});
         }
     }

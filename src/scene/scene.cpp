@@ -74,7 +74,7 @@ void Scene::Init() {
     auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, "diffuse");
     auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, "diffuse");
     auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
-    auto terrain_tex = texture_res_.AddResource("assets/textures/terrain.jpg", "terrain", SANDBOX_OBJECT, "diffuse");
+    auto terrain_tex = texture_res_.AddResource("assets/textures/lawn/tileable-IMG_0062-dark.png", "terrain", SANDBOX_OBJECT, "diffuse");
 
     // Skybox - texture loading is different for this, so it's abstracted away into dealing with all
     // of its shaders/textures for itself.
@@ -99,7 +99,9 @@ void Scene::Init() {
     // that the objects need.
     SShaderResource* objects_shaders = lights_res_->SetLightData();
     objects_res_ = new SObjects(objects_shaders, &texture_res_, collision_handler_);
-    unsigned int scale = 64;
+
+    // Terrain
+    unsigned int scale = 64; // sets a uniform scale and the terrain size
     terrain_ = new Terrain("assets/height_map.png", terrain_shader, terrain_tex, scale);
     collision_handler_->FeedTerrain(terrain_);
 }

@@ -1,5 +1,4 @@
 #pragma once
-#define TERRRAIN_QUADRANTS_SIZE 16
 #include "../../resources/stb_image.h"
 #include "../standard_mesh.h"
 #include "../system_includes.h"
@@ -26,9 +25,10 @@ class Terrain {
         int width_;
         int depth_;
         std::vector<Vertex> vertices_;
-        std::unordered_map<std::string, TerrainQuadrant> terrain_quadrants_;
+        std::unordered_map<std::string, VertexQuadrant> terrain_quadrants_;
     private:
-        void GenerateTerrainQuadrants();
+        void GenerateTerrainNormals();
+        void GenerateTerrainQuadrants(unsigned int base_num);
         unsigned int y_scale_;
         Shader* shader_;
         Texture2D* tex_;

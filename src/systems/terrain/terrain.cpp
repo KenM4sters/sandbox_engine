@@ -28,6 +28,8 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
             v.bi_tangent.y = 0.0f;
             v.bi_tangent.z = 0.0f;
 
+            v.texel_val = y_displacement / 255;
+
             vertices_.push_back(v);
         }
     }
@@ -35,7 +37,8 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     // Generates normals from terrain quadrants, where each quadrant contains a center vertex and
     // the 4 adjacent veritces (up, down, left, right), used to create an average normal for blended
     // shading.
-    GenerateTerrainQuadrants();
+    GenerateTerrainNormals();
+    GenerateTerrainQuadrants(4);
     stbi_image_free(data);
 
     // Generate indices
@@ -52,21 +55,27 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     geometry_ = new BufferGeometry(vertices_, indices_);
 }
 
-void Terrain::GenerateTerrainQuadrants() {
+void Terrain::GenerateTerrainNormals() {
     int counter = 1;
     for(int i = 1; i < depth_ - 2; i++) {
         for(int j = width_; j < (width_*depth_) - width_; j += width_) {
-            TerrainQuadrant quad;
+            VertexQuadrant quad;
             quad.center_vert = vertices_[j + i].position;
             quad.top = vertices_[j + i - 1].position;
             quad.left = vertices_[j + i - width_].position;
             quad.bottom = vertices_[j + i + 1].position;
             quad.right = vertices_[j + i + width_].position;
             WorldPhysics::ComputeNormal(vertices_[j + i], quad);
-            terrain_quadrants_["AREA_" + std::to_string(counter)] = quad;
+            // terrain_quadrants_["AREA_" + std::to_string(counter)] = quad;
             counter++;
         }
     }
+}
+void Terrain::GenerateTerrainQuadrants(unsigned int base_num) {
+    if (base_num < 2) 
+        throw std::runtime_error("Terrain::GenerateTerrainQuadrants() - invalid base value - value must be at least 2");
+    int num_quads = pow(base_num, 2);
+    int quad_size = width_ / num_quads;
 }
 
 void Terrain::DrawTerrain() {
