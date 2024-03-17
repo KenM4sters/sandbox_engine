@@ -77,17 +77,18 @@ void Scene::Init() {
     auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
     auto terrain_tex_forest = texture_res_.AddResource("assets/textures/terrain/forest_floor.jpg", "terrain_forest", SANDBOX_OBJECT, "diffuse_forest");
     auto terrain_tex_salt = texture_res_.AddResource("assets/textures/terrain/salt_flats.jpg", "terrain_salt", SANDBOX_OBJECT, "diffuse_salt");
-    auto terrain_tex_grass = texture_res_.AddResource("assets/textures/terrain/grass.png", "terrain", SANDBOX_OBJECT, "diffuse_grass");
+    auto terrain_tex_grass = texture_res_.AddResource("assets/textures/terrain/grass.png", "terrain_grass", SANDBOX_OBJECT, "diffuse_grass");
+    auto terrain_tex_wild_flower = texture_res_.AddResource("assets/textures/terrain/wild_flower.png", "terrain_wild_flower", SANDBOX_OBJECT, "diffuse_wild_flower");
 
     // Skybox - texture loading is different for this, so it's abstracted away into dealing with all
     // of its shaders/textures for itself.
     std::vector<std::string> skybox_textures = {
-        "assets/textures/skybox/sky.jpg",    
-        "assets/textures/skybox/sky.jpg",    
-        "assets/textures/skybox/sky.jpg",    
-        "assets/textures/skybox/sky.jpg",    
-        "assets/textures/skybox/sky.jpg",
-        "assets/textures/skybox/sky.jpg",    
+        "assets/textures/skybox/rainbow_rt.png",    
+        "assets/textures/skybox/rainbow_lf.png",    
+        "assets/textures/skybox/rainbow_up.png",    
+        "assets/textures/skybox/rainbow_dn.png",    
+        "assets/textures/skybox/rainbow_bk.png",
+        "assets/textures/skybox/rainbow_ft.png",   
     };
     skybox_ = new Skybox(skybox_vertices, skybox_textures, skybox_shader, camera_);
     // When we loaded the skybox, we set the textures to not be flipped on load since we weren't using
@@ -109,10 +110,11 @@ void Scene::Init() {
         terrain_tex_salt
     };
     std::vector<Texture2D*> scenery_textures = {
-        terrain_tex_grass
+        terrain_tex_grass,
+        terrain_tex_wild_flower
     };
     Material terrain_ground_mat = {
-        glm::vec3(0.2f),
+        glm::vec3(0.4f),
         ground_textures,
         glm::vec3(0.0f),
         1.0f

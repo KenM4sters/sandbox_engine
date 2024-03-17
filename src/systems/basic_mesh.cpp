@@ -13,7 +13,6 @@ void BasicMesh::Draw(float &delta_time) {
     for(int i = 0; i < mat_.textures.size(); i++) {
         mat_.textures[i]->Bind(i);
         shader_->setInteger(std::string("material.") + mat_.textures[i]->tex_type_, i);
-        // std::cout << mat_.textures[i]->tex_type_ << std::endl;
     }
     geometry_->DrawGeometry();
     glActiveTexture(GL_TEXTURE0);

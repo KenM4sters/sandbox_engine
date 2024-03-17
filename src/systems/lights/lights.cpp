@@ -8,7 +8,8 @@ void SLights::Init() {
     Shader* light_shader = shaders_->GetResource("light_cube");
     Texture2D* light_tex = textures_->GetResource("glowstone");
     BasicMesh* light_mesh = new BasicMesh(new BufferGeometry(cube_vertices, SANDBOX_CUBE_VERTICES_COUNT), light_shader, light_tex);
-    light_mesh->transforms_.position = glm::vec3(0.0f, 100.0f, 0.0f);
+    light_mesh->transforms_.scale = glm::vec3(40.0f, 40.0f, 40.0f);
+    light_mesh->transforms_.position = glm::vec3(-300.0f, 400.0f, 0.0f);
     light_mesh->ComputeBoundingBox(bounding_box_shader);
     children_["light_cube"] = light_mesh;
 }
@@ -23,7 +24,7 @@ SShaderResource* SLights::SetLightData() {
                 shader->Use();
                 shader->setVector3f(light_name + ".position", l.second->transforms_.position);
                 shader->setVector3f(light_name + ".ambient", l.second->mat_.ambient );
-                shader->setVector3f(light_name + ".diffuse", {0.5f, 0.5f, 0.5f});
+                shader->setVector3f(light_name + ".diffuse", {0.8f, 0.8f, 0.8f});
                 shader->setVector3f(light_name + ".specular", {1.0f, 1.0f, 1.0f});
             }
         }

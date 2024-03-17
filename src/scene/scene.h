@@ -11,7 +11,12 @@
 class Scene  {
     public:
         Scene(unsigned int w, unsigned int h, Camera* camera, CollisionHandler* collision_handler);
-        ~Scene() {}
+        ~Scene() {
+            delete lights_res_;
+            delete objects_res_;
+            delete skybox_;
+            delete terrain_;
+        }
         // Initializes all game objects (meshes) 
         void Init();
         void Render(float &delta_time);
