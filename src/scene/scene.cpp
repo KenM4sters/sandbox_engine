@@ -112,9 +112,9 @@ void Scene::Init() {
         terrain_tex_grass
     };
     Material terrain_ground_mat = {
-        glm::vec3(0.8f),
+        glm::vec3(0.2f),
         ground_textures,
-        glm::vec3(0.1f),
+        glm::vec3(0.0f),
         1.0f
     };
     Material terrain_scenery_mat = {
@@ -123,8 +123,8 @@ void Scene::Init() {
         glm::vec3(1.0f),
         4.0f
     };
-    unsigned int scale = 64; // sets a uniform scale and the terrain size
-    terrain_ = new Terrain("assets/height_map.png", terrain_shader, terrain_ground_mat, scale);
+    unsigned int scale = 40; // sets a uniform scale and the terrain size
+    terrain_ = new Terrain("assets/textures/terrain/height_map.png", terrain_shader, terrain_ground_mat, scale);
     terrain_->GenerateScenary(terrain_scenery_shader, terrain_scenery_mat);
     collision_handler_->FeedTerrain(terrain_);
 }

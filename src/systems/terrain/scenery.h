@@ -13,6 +13,7 @@ class Scenery {
                 instance_positions.push_back(v.position.z);
             }
             misc_mesh = new BasicMesh(new BufferGeometry(square_vertices, square_indices, instance_positions), shader_, mat_.textures);
+            misc_mesh->transforms_.position = glm::vec3(0.0f, 0.5f, 0.0f);
         }
         ~Scenery() {}
         void Draw(float& delta_time);

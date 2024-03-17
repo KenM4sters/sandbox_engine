@@ -12,7 +12,8 @@ struct Rotation {
 };
 
 struct Transforms {
-    glm::vec3 position{0.0f, 0.0f, -5.0f};
+    // Initially set to {0.0f, 2.0f, 0.0f}
+    glm::vec3 position{0.0f, 2.0f, 0.0f};
     glm::vec3 scale{1.0f, 1.0f, 1.0f};
     Rotation rotation;
     glm::vec3 velocity{0.0f, 0.0f, 0.0f};

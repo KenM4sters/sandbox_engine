@@ -25,7 +25,7 @@ uniform vec3 camera_pos;
 
 void main() {
     vec4 tex_color = texture(material.diffuse_grass, tex_coord);
-    if(tex_color.a < 0.1)
+    if(tex_color.a < 0.5)
         discard;
     // Ambient light
     vec3 ambient_shading = light_cube.ambient * texture(material.diffuse_grass, tex_coord).rgb;

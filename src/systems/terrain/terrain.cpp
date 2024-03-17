@@ -92,7 +92,6 @@ void Terrain::GenerateScenary(Shader* shader, Material& scenery_mat) {
 void Terrain::DrawTerrain(float& delta_time) {
     shader_->Use();
     transforms_.model = glm::mat4(1.0f);
-    transforms_.model = glm::translate(transforms_.model, transforms_.position);
     shader_->setMat4("model", transforms_.model);
     shader_->setVector3f("material.ambient", mat_.ambient);
     shader_->setVector3f("material.specular", mat_.specular);
