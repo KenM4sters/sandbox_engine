@@ -82,7 +82,7 @@ void Terrain::GenerateTerrainQuadrants(unsigned int base_num) {
 void Terrain::GenerateScenary(Shader* shader, Material& scenery_mat) {
     std::vector<Vertex> flat_vertices;
     for(const auto& v : vertices_) {
-        if(glm::dot(v.normal, glm::vec3(0.0f, 1.0f, 0.0f)) < 0.8) {
+        if(glm::dot(v.normal, glm::vec3(0.0f, 1.0f, 0.0f)) < 0.3) {
             flat_vertices.push_back(v);
         }
     }

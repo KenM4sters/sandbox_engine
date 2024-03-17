@@ -45,35 +45,39 @@ BufferGeometry::BufferGeometry(const std::vector<float> &vertices, const std::ve
 }
 
 BufferGeometry::BufferGeometry(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, std::vector<float> &instance_positions)
-    : vertices_float(vertices), indices_(indices), instance_count_(vertices.size())
+    : vertices_float(vertices), indices_(indices), instance_count_(instance_positions.size() / 3)
 {
-    unsigned int instance_VBO;
     glGenBuffers(1, &VBO_);
-    glGenBuffers(1, &EBO_);
     glGenVertexArrays(1, &VAO_);
+    glGenBuffers(1, &EBO_);
     glBindVertexArray(VAO_);
     glBindBuffer(GL_ARRAY_BUFFER, VBO_);
-    glBufferData(GL_ARRAY_BUFFER, vertices_float.size(), vertices_float.data(), GL_STATIC_DRAW);
-    // Setting Vertex Attributes
+    glBufferData(GL_ARRAY_BUFFER, vertices_float.size() * sizeof(float), vertices_float.data(), GL_STATIC_DRAW);
+    // Indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_.size()*sizeof(unsigned int), indices_.data(), GL_STATIC_DRAW);
+
     glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(0));
     glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(3*sizeof(float)));
     glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(6*sizeof(float)));
     glEnableVertexAttribArray(0);
     glEnableVertexAttribArray(1);
     glEnableVertexAttribArray(2);
-    // Instacing
-    glGenBuffers(1, &instance_VBO);
-    glBindBuffer(GL_ARRAY_BUFFER, instance_VBO);
-    glBufferData(GL_ARRAY_BUFFER, instance_positions.size(), instance_positions.data(), GL_STATIC_DRAW);
-    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)(0));
-    glEnableVertexAttribArray(3);
-    glVertexAttribDivisor(3, 1);
-    // Indices
-    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
-    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_.size()*sizeof(unsigned int), indices_.data(), GL_STATIC_DRAW);
 
     glBindVertexArray(0);
     glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+    std::cout << "Instance geometry created" << std::endl;
+    // Instacing
+    unsigned int instance_VBO;
+    glGenBuffers(1, &instance_VBO);
+    glBindVertexArray(VAO_);
+    glBindBuffer(GL_ARRAY_BUFFER, instance_VBO);
+    glBufferData(GL_ARRAY_BUFFER, instance_positions.size() * sizeof(float), instance_positions.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)(0));
+    glEnableVertexAttribArray(3);
+    glVertexAttribDivisor(3, 1);
+    glBindVertexArray(0);
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 

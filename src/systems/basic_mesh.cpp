@@ -17,8 +17,8 @@ void BasicMesh::Draw(float &delta_time) {
     }
     geometry_->DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
-    if(bounding_box != nullptr)
-        bounding_box->Draw();
+    // if(bounding_box != nullptr)
+    //     bounding_box->Draw();
 }
 
 void BasicMesh::DrawInstanced(float &delta_time, unsigned int instance_count) {
