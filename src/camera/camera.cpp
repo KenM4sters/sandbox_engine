@@ -23,9 +23,14 @@ glm::mat4 Camera::GetViewMatrix()
     return glm::lookAt(position_, position_ + front_, up_);
 }
 
-void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
+void Camera::ProcessKeyboard(Camera_Movement direction, float delta_time, bool speed_up)
 {
-    float velocity = movement_speed_ * deltaTime;
+    float velocity = movement_speed_ * delta_time;
+    if(speed_up) 
+        velocity *= 10;
+    else 
+        velocity = movement_speed_ * delta_time;
+        
     if (direction == FORWARD)
         position_ += front_ * velocity;
     if (direction == BACKWARD)
@@ -40,16 +45,16 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float deltaTime)
         position_ -= up_ * velocity;
 }
 
-void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constrainpitch_)
+void Camera::ProcessMouseMovement(float x_offset, float y_offset, GLboolean constrain_pitch)
 {
-    xoffset *= mouse_sensitivity_;
-    yoffset *= mouse_sensitivity_;
+    x_offset *= mouse_sensitivity_;
+    y_offset *= mouse_sensitivity_;
 
-    yaw_   += xoffset;
-    pitch_ += yoffset;
+    yaw_   += x_offset;
+    pitch_ += y_offset;
 
     // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (constrainpitch_)
+    if (constrain_pitch)
     {
         if (pitch_ > 89.0f)
             pitch_ = 89.0f;
@@ -60,9 +65,9 @@ void Camera::ProcessMouseMovement(float xoffset, float yoffset, GLboolean constr
     UpdateCameraVectors();
 }
 
-void Camera::ProcessMouseScroll(float yoffset)
+void Camera::ProcessMouseScroll(float y_offset)
 {
-    zoom_ -= (float)yoffset;
+    zoom_ -= (float)y_offset;
     if (zoom_ < 1.0f)
         zoom_ = 1.0f;
     if (zoom_ > 45.0f)

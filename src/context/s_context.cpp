@@ -39,22 +39,40 @@ static void on_window_resize_callback(GLFWwindow* window, int width, int height)
 // of the press, which is important for our camera. 
 void SContext::ProcessInput(GLFWwindow* window, float delta_time) {
     if(glfwGetKey(window, GLFW_KEY_W) == GLFW_PRESS) {
-       window_->camera_->ProcessKeyboard(FORWARD, delta_time);
+        if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) 
+            window_->camera_->ProcessKeyboard(FORWARD, delta_time, true);
+        else 
+            window_->camera_->ProcessKeyboard(FORWARD, delta_time, false);
     }
     if(glfwGetKey(window, GLFW_KEY_A) == GLFW_PRESS) {
-        window_->camera_->ProcessKeyboard(LEFT, delta_time);
+        if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) 
+            window_->camera_->ProcessKeyboard(LEFT, delta_time, true);
+        else 
+            window_->camera_->ProcessKeyboard(LEFT, delta_time, false);
     }
     if(glfwGetKey(window, GLFW_KEY_S) == GLFW_PRESS) {
-        window_->camera_->ProcessKeyboard(BACKWARD, delta_time);
+        if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) 
+            window_->camera_->ProcessKeyboard(BACKWARD, delta_time, true);
+        else 
+            window_->camera_->ProcessKeyboard(BACKWARD, delta_time, false);
     }
     if(glfwGetKey(window, GLFW_KEY_D) == GLFW_PRESS) {
-        window_->camera_->ProcessKeyboard(RIGHT, delta_time);
+        if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) 
+            window_->camera_->ProcessKeyboard(RIGHT, delta_time, true);
+        else 
+            window_->camera_->ProcessKeyboard(RIGHT, delta_time, false);
     }
     if(glfwGetKey(window, GLFW_KEY_Q) == GLFW_PRESS) {
-        window_->camera_->ProcessKeyboard(UP, delta_time);
+        if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) 
+            window_->camera_->ProcessKeyboard(UP, delta_time, true);
+        else 
+            window_->camera_->ProcessKeyboard(UP, delta_time, false);
     }
     if(glfwGetKey(window, GLFW_KEY_E) == GLFW_PRESS) {
-        window_->camera_->ProcessKeyboard(DOWN, delta_time);
+        if(glfwGetKey(window, GLFW_KEY_LEFT_SHIFT) == GLFW_PRESS) 
+            window_->camera_->ProcessKeyboard(DOWN, delta_time, true);
+        else 
+            window_->camera_->ProcessKeyboard(DOWN, delta_time, false);
     }
 }
 

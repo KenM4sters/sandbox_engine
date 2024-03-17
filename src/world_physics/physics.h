@@ -6,7 +6,7 @@
 class WorldPhysics {
     public:
         static void ApplyGravitationalAcceleration(glm::vec3 &acc_vec) {
-            acc_vec.y = -15.0;
+            acc_vec.y = 0.0;
         }
         static void UpdateTransforms(Transforms &transforms, float &delta_time) {
             transforms.model = glm::mat4(1.0f);
@@ -37,7 +37,7 @@ class WorldPhysics {
             ));
 
             v.normal = glm::normalize(tr + br + bl + tl);
-            if(counter < 10) {
+            if(counter < 50) {
                 std::cout << v.position.x << std::endl; 
                 std::cout << v.position.y << std::endl; 
                 std::cout << v.position.z << std::endl; 
