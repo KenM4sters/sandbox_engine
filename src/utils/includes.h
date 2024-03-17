@@ -15,8 +15,10 @@
 #include <string>
 #include <cassert>
 
+
 #define SANDBOX_OBJECT 0xff0000
 #define SANDBOX_LIGHT 0x00ff00
+#define SANDBOX_INSTANCED 0x00000f
 #define SANDBOX_TRIANGLE                  0
 #define SANDBOX_SQUARE                    1
 #define SANDBOX_CUBE                      3

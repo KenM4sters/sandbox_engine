@@ -17,6 +17,7 @@ class BasicMesh : public UMesh<float> {
         }
         ~BasicMesh() {}
         void Draw(float &delta_time) override;
+        void DrawInstanced(float &delta_time, unsigned int instance_count = 0) override;
         void ComputeBoundingBox(Shader* shader, float vertices_data = 0.0f) override;
             
         Material mat_;

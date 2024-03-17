@@ -9,6 +9,7 @@ template <typename T>
 class UMesh {
     public:
         virtual void Draw(float &delta_time) = 0;
+        virtual void DrawInstanced(float &delta_time, unsigned int instance_count = 0) = 0;
         Transforms transforms_;
         Shader* shader_;
         virtual void ComputeBoundingBox(Shader* shader, T vertices_data = {}) = 0;

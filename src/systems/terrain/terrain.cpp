@@ -18,8 +18,6 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
             v.position.y = (int)y_displacement * y_scale_ / 255;
             v.position.z = -(width/2.0f) + j;
 
-            
-
             v.tex_coords.x = i % 2 == 0 ? 0.0f : 1.0f;
             v.tex_coords.y = j % 2 == 0 ? 0.0f : 1.0f;
 
@@ -81,15 +79,32 @@ void Terrain::GenerateTerrainQuadrants(unsigned int base_num) {
     int quad_size = width_ / num_quads;
 }
 
-void Terrain::DrawTerrain() {
+void Terrain::GenerateScenary(Shader* shader, Material& scenery_mat) {
+    std::vector<Vertex> flat_vertices;
+    for(const auto& v : vertices_) {
+        if(glm::dot(v.normal, glm::vec3(0.0f, 1.0f, 0.0f)) < 0.8) {
+            flat_vertices.push_back(v);
+        }
+    }
+    scenery = new Scenery(shader, scenery_mat, vertices_);
+}
+
+void Terrain::DrawTerrain(float& delta_time) {
     shader_->Use();
-    tex_->Bind();
     transforms_.model = glm::mat4(1.0f);
     transforms_.model = glm::translate(transforms_.model, transforms_.position);
     shader_->setMat4("model", transforms_.model);
     shader_->setVector3f("material.ambient", mat_.ambient);
     shader_->setVector3f("material.specular", mat_.specular);
-    shader_->setFloat("material.shininess", mat_.shininess);
+    shader_->setFloat("material.shininess", mat_.shininess); 
+    for(int i = 0; i < mat_.textures.size(); i++) {
+        mat_.textures[i]->Bind(i);
+        shader_->setInteger(std::string("material.") + mat_.textures[i]->tex_type_, i);
+    }
     geometry_->DrawGeometry(n_strips_, n_vertices_strip_);
+    glActiveTexture(GL_TEXTURE0);
     glUseProgram(0);
+    // Draw the scenery after the terrain, and make sure textures and shaders have been unbounded 
+    // out of courtesy.
+    scenery->Draw(delta_time);
 }

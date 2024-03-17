@@ -14,6 +14,7 @@ class StandardMesh : public UMesh<VertexRanges> {
             shader_ = shader;
         }
         void Draw(float &delta_time) override;
+        void DrawInstanced(float &delta_time, unsigned int instance_count) override {}
         void ComputeBoundingBox(Shader* shader, VertexRanges vertices_data = {}) override {}
     private:
         BufferGeometry geometry_;

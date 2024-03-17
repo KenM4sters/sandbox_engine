@@ -44,6 +44,39 @@ BufferGeometry::BufferGeometry(const std::vector<float> &vertices, const std::ve
     glBindBuffer(GL_ARRAY_BUFFER, 0);
 }
 
+BufferGeometry::BufferGeometry(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, std::vector<float> &instance_positions)
+    : vertices_float(vertices), indices_(indices), instance_count_(vertices.size())
+{
+    unsigned int instance_VBO;
+    glGenBuffers(1, &VBO_);
+    glGenBuffers(1, &EBO_);
+    glGenVertexArrays(1, &VAO_);
+    glBindVertexArray(VAO_);
+    glBindBuffer(GL_ARRAY_BUFFER, VBO_);
+    glBufferData(GL_ARRAY_BUFFER, vertices_float.size(), vertices_float.data(), GL_STATIC_DRAW);
+    // Setting Vertex Attributes
+    glVertexAttribPointer(0, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(0));
+    glVertexAttribPointer(1, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(3*sizeof(float)));
+    glVertexAttribPointer(2, 2, GL_FLOAT, GL_FALSE, sizeof(float) * 8, (void*)(6*sizeof(float)));
+    glEnableVertexAttribArray(0);
+    glEnableVertexAttribArray(1);
+    glEnableVertexAttribArray(2);
+    // Instacing
+    glGenBuffers(1, &instance_VBO);
+    glBindBuffer(GL_ARRAY_BUFFER, instance_VBO);
+    glBufferData(GL_ARRAY_BUFFER, instance_positions.size(), instance_positions.data(), GL_STATIC_DRAW);
+    glVertexAttribPointer(3, 3, GL_FLOAT, GL_FALSE, sizeof(float) * 3, (void*)(0));
+    glEnableVertexAttribArray(3);
+    glVertexAttribDivisor(3, 1);
+    // Indices
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, EBO_);
+    glBufferData(GL_ELEMENT_ARRAY_BUFFER, indices_.size()*sizeof(unsigned int), indices_.data(), GL_STATIC_DRAW);
+
+    glBindVertexArray(0);
+    glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, 0);
+    glBindBuffer(GL_ARRAY_BUFFER, 0);
+}
+
 void BufferGeometry::InitGeometry() {
     glGenBuffers(1, &VBO_);
     glGenBuffers(1, &EBO_);
@@ -91,6 +124,21 @@ void BufferGeometry::DrawGeometry(unsigned int n_strips, unsigned int n_vertices
             GL_UNSIGNED_INT, 
             (void*)(sizeof(unsigned int)*n_vertices_strip*i)
         );
+    }
+    glBindVertexArray(0);
+}
+
+void BufferGeometry::DrawGeometryInstanced(unsigned int instance_count) {
+    // isntance_count_ is initially inferred and set from the size of the vertices that you pass into the constructor,
+    // but if you chose to specify a count in this draw function, then the instance_count_ will be set to that.
+    if(instance_count != 0) {
+        instance_count_ = instance_count;
+    }
+    glBindVertexArray(VAO_);
+    if(!indices_.empty()) { 
+        glDrawElementsInstanced(GL_TRIANGLES, static_cast<unsigned int>(indices_.size()), GL_UNSIGNED_INT, 0, instance_count_);
+    } else {
+        glDrawArraysInstanced(GL_TRIANGLES, 0, vertex_count_, instance_count_);
     }
     glBindVertexArray(0);
 }

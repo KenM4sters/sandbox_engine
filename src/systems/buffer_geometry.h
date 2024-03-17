@@ -16,10 +16,17 @@ class BufferGeometry {
         BufferGeometry(const std::vector<float> &vertices, unsigned int vertex_count);
         // Similar to the above only with the addition of an indices container.
         BufferGeometry(const std::vector<float> &vertices, const std::vector<unsigned int> &indices, unsigned int vertex_count);
+        // Allocates memory for a second positions vector for instancing the geometry.
+        BufferGeometry(
+            const std::vector<float> &vertices, 
+            const std::vector<unsigned int> &indices, 
+            std::vector<float> &instance_positions
+        );
         ~BufferGeometry() {}
         void DrawGeometry();
         // Function to draw elements with a specified number of elements and offset into the element buffer.
         void DrawGeometry(unsigned int n_strips, unsigned int n_vertices_strip);
+        void DrawGeometryInstanced(unsigned int instance_count = 0);
     private:
         void InitGeometry();
         const std::vector<Vertex> vertices_vertex;
@@ -27,6 +34,7 @@ class BufferGeometry {
         const std::vector<unsigned int> indices_;
         unsigned int VAO_, VBO_, EBO_;
         unsigned int vertex_count_;
+        unsigned int instance_count_;
 };
 
 
