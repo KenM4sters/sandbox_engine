@@ -32,20 +32,10 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
         }
     }
 
-    // Normals
-    // for(int i = 0; i < 12; i++) {
-    //     std::cout << "-----------------" << std::endl;
-    //     std::cout << i << std::endl;
-    //     std::cout << "x: " << vertices_[i].position.x << std::endl;
-    //     std::cout << "y: " << vertices_[i].position.y << std::endl;
-    //     std::cout << "z: " << vertices_[i].position.z << std::endl;
-    // }
-    std::cout << vertices_[vertices_.size() - 1].position.x << "\n";
-    std::cout << vertices_[vertices_.size() - 1].position.y << "\n";
-    std::cout << vertices_[vertices_.size() - 1].position.z << "\n";
+    // Generates normals from terrain quadrants, where each quadrant contains a center vertex and
+    // the 4 adjacent veritces (up, down, left, right), used to create an average normal for blended
+    // shading.
     GenerateTerrainQuadrants();
-
-
     stbi_image_free(data);
 
     // Generate indices
@@ -55,14 +45,15 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
                 indices_.push_back(j + width * (i + k));
             }
         }
-    }
+    }  
 
+    // Create geometry from vertices and indices.
+    // Buffer Geometry class has a special constructor designed for this terrain class. 
     geometry_ = new BufferGeometry(vertices_, indices_);
 }
 
 void Terrain::GenerateTerrainQuadrants() {
-    int column = 1;
-    int row = width_;
+    int counter = 1;
     for(int i = 1; i < depth_ - 2; i++) {
         for(int j = width_; j < (width_*depth_) - width_; j += width_) {
             TerrainQuadrant quad;
@@ -71,7 +62,9 @@ void Terrain::GenerateTerrainQuadrants() {
             quad.left = vertices_[j + i - width_].position;
             quad.bottom = vertices_[j + i + 1].position;
             quad.right = vertices_[j + i + width_].position;
-            WorldPhysics::ComputeNormal(vertices_[i], quad);
+            WorldPhysics::ComputeNormal(vertices_[j + i], quad);
+            terrain_quadrants_["AREA_" + std::to_string(counter)] = quad;
+            counter++;
         }
     }
 }

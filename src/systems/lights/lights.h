@@ -15,6 +15,7 @@ class SLights : URenderSystem {
         ~SLights() {}
         void Init() override;
         void Draw(float &delta_time) override;
+        void UpdateLights();
         SShaderResource* SetLightData();
     private:
         SShaderResource objects_shaders_;

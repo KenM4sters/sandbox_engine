@@ -107,6 +107,7 @@ void Scene::Init() {
 void Scene::Render(float &delta_time) {
     SetCameraData(camera_);
     lights_res_->Draw(delta_time);
+    lights_res_->UpdateLights();
     objects_res_->Draw(delta_time);
     terrain_->DrawTerrain();
     // Render Skybox - more efficient to draw it last so that any parts of the cube that are

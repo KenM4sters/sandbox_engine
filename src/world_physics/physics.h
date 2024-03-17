@@ -18,6 +18,7 @@ class WorldPhysics {
         }
 
         static void ComputeNormal(Vertex& v, TerrainQuadrant& q) {
+            static int counter = 0;
             glm::vec3 tr = glm::normalize(glm::cross(
                 q.right - v.position,
                 q.top - v.position
@@ -36,6 +37,12 @@ class WorldPhysics {
             ));
 
             v.normal = glm::normalize(tr + br + bl + tl);
+            if(counter < 10) {
+                std::cout << v.position.x << std::endl; 
+                std::cout << v.position.y << std::endl; 
+                std::cout << v.position.z << std::endl; 
+            }
+            counter++;
         }
     private:
         WorldPhysics() {}

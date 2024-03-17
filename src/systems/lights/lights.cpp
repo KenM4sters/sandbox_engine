@@ -31,6 +31,19 @@ SShaderResource* SLights::SetLightData() {
     return &objects_shaders_;
 }
 
+void SLights::UpdateLights() {
+    for(auto &obj : objects_shaders_.GetAllResources()) {
+        for(auto &l : children_) {
+            std::string light_name = l.first;
+            obj.second->Use();
+            obj.second->setVector3f(light_name + ".position", l.second->transforms_.position);
+            obj.second->setVector3f(light_name + ".ambient", l.second->mat_.ambient );
+            obj.second->setVector3f(light_name + ".diffuse", {0.8f, 0.8f, 0.8f});
+            obj.second->setVector3f(light_name + ".specular", {1.0f, 1.0f, 1.0f});
+        }
+    }
+}
+
 void SLights::Draw(float &delta_time) {
     for(auto& l : children_) {
         auto light = l.second;
