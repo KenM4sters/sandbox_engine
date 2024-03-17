@@ -74,17 +74,25 @@ void Scene::Init() {
     auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, "diffuse");
     auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, "diffuse");
     auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
-    auto terrain_tex = texture_res_.AddResource("assets/textures/lawn/tileable-IMG_0062-dark.png", "terrain", SANDBOX_OBJECT, "diffuse");
+    auto terrain_tex = texture_res_.AddResource("assets/textures/terrain/forest_floor.jpg", "terrain", SANDBOX_OBJECT, "diffuse");
 
     // Skybox - texture loading is different for this, so it's abstracted away into dealing with all
     // of its shaders/textures for itself.
+    // std::vector<std::string> skybox_textures = {
+    //     "assets/textures/skybox/rainbow_rt.png",    
+    //     "assets/textures/skybox/rainbow_lf.png",    
+    //     "assets/textures/skybox/rainbow_up.png",    
+    //     "assets/textures/skybox/rainbow_dn.png",    
+    //     "assets/textures/skybox/rainbow_bk.png",
+    //     "assets/textures/skybox/rainbow_ft.png",    
+    // };
     std::vector<std::string> skybox_textures = {
-        "assets/textures/skybox/rainbow_rt.png",    
-        "assets/textures/skybox/rainbow_lf.png",    
-        "assets/textures/skybox/rainbow_up.png",    
-        "assets/textures/skybox/rainbow_dn.png",    
-        "assets/textures/skybox/rainbow_bk.png",
-        "assets/textures/skybox/rainbow_ft.png",    
+        "assets/textures/skybox/sky.jpg",    
+        "assets/textures/skybox/sky.jpg",    
+        "assets/textures/skybox/sky.jpg",    
+        "assets/textures/skybox/sky.jpg",    
+        "assets/textures/skybox/sky.jpg",
+        "assets/textures/skybox/sky.jpg",    
     };
     skybox_ = new Skybox(skybox_vertices, skybox_textures, skybox_shader, camera_);
 

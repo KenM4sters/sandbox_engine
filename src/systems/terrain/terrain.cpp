@@ -6,10 +6,11 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
     n_strips_ = height - 1;
     n_vertices_strip_ = width * 2;
 
+
     // Vertices
+    int count = 0;
     for(int i = 0; i < height; i++) {
         for(int j = 0; j < width; j++) {
-
             unsigned char* texel = data + (j + width * i) * nr_channels;
             unsigned char y_displacement = texel[0];
             Vertex v;
@@ -17,8 +18,10 @@ void Terrain::InitTerrainMeshData(unsigned char* data, int &width, int &height, 
             v.position.y = (int)y_displacement * y_scale_ / 255;
             v.position.z = -(width/2.0f) + j;
 
-            v.tex_coords.x = (float)i/height;
-            v.tex_coords.y = (float)j/width;
+            
+
+            v.tex_coords.x = i % 2 == 0 ? 0.0f : 1.0f;
+            v.tex_coords.y = j % 2 == 0 ? 0.0f : 1.0f;
 
             v.tangent.x = 0.0f;
             v.tangent.y = 0.0f;
@@ -61,7 +64,7 @@ void Terrain::GenerateTerrainNormals() {
         for(int j = width_; j < (width_*depth_) - width_; j += width_) {
             VertexQuadrant quad;
             quad.center_vert = vertices_[j + i].position;
-            quad.top = vertices_[j + i - 1].position;
+            quad.top = vertices_[j + i - 1].position; 
             quad.left = vertices_[j + i - width_].position;
             quad.bottom = vertices_[j + i + 1].position;
             quad.right = vertices_[j + i + width_].position;
