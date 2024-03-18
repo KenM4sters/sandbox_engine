@@ -8,6 +8,7 @@ layout (location = 3) in vec3 aInstance_pos;
 uniform mat4 projection;
 uniform mat4 view;
 uniform mat4 model;
+uniform mat4 look_at_camera;
 uniform vec3 camera_pos;
 
 out vec3 frag_pos;
@@ -36,7 +37,7 @@ void main()
 	// mat4 new_model = model * rotation_matrix;
 
 	gl_Position = projection * view * model * vec4(aPos + aInstance_pos, 1.0);
-	frag_pos = vec3(model * vec4(aPos, 1.0));
+	frag_pos = vec3(model * vec4(aPos + aInstance_pos, 1.0));
 	tex_coord = aTex_coord;
     normal = mat3(transpose(inverse(model))) * aNormal; 
 }

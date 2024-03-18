@@ -53,10 +53,12 @@ Scene::Scene(unsigned int w, unsigned int h, Camera* camera, CollisionHandler* c
 void Scene::SetCameraData(Camera* camera) {
     for(auto& shader : shader_res_.GetAllResources()) {
         glm::mat4 projection = glm::perspective(camera_->zoom_, (float)scr_width_ / (float)scr_height_, 0.1f, 10000.0f);
+        glm::mat4 look_at_camera = glm::lookAt(camera_->position_,camera_->position_, camera_->up_);
         shader.second->Use();
         shader.second->setMat4("projection", projection);
         shader.second->setMat4("view", camera_->GetViewMatrix());
         shader.second->setVector3f("camera_pos", camera_->position_);
+        shader.second->setMat4("look_at_camera", look_at_camera);
     }
 }
 
@@ -75,8 +77,9 @@ void Scene::Init() {
     auto sand_tex = texture_res_.AddResource("assets/textures/sand/sand.jpg", "sand", SANDBOX_OBJECT, "diffuse");
     auto light_cube_tex = texture_res_.AddResource("assets/textures/misc/glowstone.png", "glowstone", SANDBOX_LIGHT, "diffuse");
     auto sonic_tex = texture_res_.AddResource("assets/textures/misc/sonic.jpeg", "sonic", SANDBOX_OBJECT, "test");
-    auto terrain_tex_forest = texture_res_.AddResource("assets/textures/terrain/forest_floor.jpg", "terrain_forest", SANDBOX_OBJECT, "diffuse_forest");
-    auto terrain_tex_salt = texture_res_.AddResource("assets/textures/terrain/salt_flats.jpg", "terrain_salt", SANDBOX_OBJECT, "diffuse_salt");
+    auto terrain_tex_forest = texture_res_.AddResource("assets/textures/terrain/light_grass.jpg", "terrain_middle", SANDBOX_OBJECT, "diffuse_middle");
+    auto terrain_tex_salt = texture_res_.AddResource("assets/textures/terrain/red_rock.jpg", "terrain_top", SANDBOX_OBJECT, "diffuse_top");
+    auto terrain_tex_rock = texture_res_.AddResource("assets/textures/terrain/forest_floor.jpg", "terrain_bottom", SANDBOX_OBJECT, "diffuse_bottom");
     auto terrain_tex_grass = texture_res_.AddResource("assets/textures/terrain/grass.png", "terrain_grass", SANDBOX_OBJECT, "diffuse_grass");
     auto terrain_tex_wild_flower = texture_res_.AddResource("assets/textures/terrain/wild_flower.png", "terrain_wild_flower", SANDBOX_OBJECT, "diffuse_wild_flower");
 
@@ -107,7 +110,8 @@ void Scene::Init() {
     // Terrain
     std::vector<Texture2D*> ground_textures = {
         terrain_tex_forest,
-        terrain_tex_salt
+        terrain_tex_salt,
+        terrain_tex_rock
     };
     std::vector<Texture2D*> scenery_textures = {
         terrain_tex_grass,

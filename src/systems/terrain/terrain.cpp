@@ -81,14 +81,24 @@ void Terrain::GenerateTerrainQuadrants(unsigned int base_num) {
 
 void Terrain::GenerateScenary(Shader* shader, Material& scenery_mat) {
     std::vector<Vertex> flat_vertices;
-    for(const auto& v : vertices_) {
+    for(int i  = 0; i < vertices_.size(); i++) {
         // if(glm::dot(
         //     v.normal, 
         //     glm::vec3(0.0f, 1.0f, 0.0f)) / glm::acos(glm::length(v.normal)/glm::length(glm::vec3(0.0f, 1.0f, 0.0f))) < 0.3) {
         //     flat_vertices.push_back(v);
         // }
-        if(v.position.y < 20) flat_vertices.push_back(v);
+        if(vertices_[i].normal == glm::vec3(0.0f, 1.0f, 0.0f) 
+            && vertices_[i].position.y < 18
+            && vertices_[i].position.x > -200 
+            && vertices_[i].position.x < 200
+        ) {
+            if(vertices_[i + 10].position.y == vertices_[i].position.y)
+                i += 15;
+            else
+                flat_vertices.push_back(vertices_[i]);
+        }
     }
+    std::cout << flat_vertices.size() << "\n";
     scenery = new Scenery(shader, scenery_mat, flat_vertices);
 }
 

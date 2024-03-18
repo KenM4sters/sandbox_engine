@@ -1,8 +1,9 @@
 #version 330 core
 
 struct Material {
-    sampler2D diffuse_forest;
-    sampler2D  diffuse_salt;
+    sampler2D diffuse_middle;
+    sampler2D diffuse_top;
+    sampler2D diffuse_bottom;
     vec3 specular;
     float shininess;
 };
@@ -25,13 +26,16 @@ uniform Light light_cube;
 uniform vec3 camera_pos;
 
 void main() {
-    vec3 salt = texture(material.diffuse_salt, tex_coord).rgb;
-    vec3 forest = texture(material.diffuse_forest, tex_coord).rgb;
+    vec3 top = texture(material.diffuse_top, tex_coord).rgb;
+    vec3 middle = texture(material.diffuse_middle, tex_coord).rgb;
+    vec3 bottom = texture(material.diffuse_bottom, tex_coord).rgb;
     vec3 resultant_tex;
-    if(frag_pos.y < 20.0)
-        resultant_tex = forest.rgb;
-    else
-        resultant_tex = mix(forest, salt, min(1.0, (frag_pos.y - 20) / 5.0)).rgb;
+    if(frag_pos.y < 17.0 && frag_pos.y > 10.0) {
+        resultant_tex = middle.rgb;
+    } else if(frag_pos.y <= 10.0)
+        resultant_tex = mix(middle, bottom, min(1.0, (10 - frag_pos.y) / 10.0)).rgb;
+    else 
+        resultant_tex = mix(middle, top, min(1.0, (frag_pos.y - 17) / 10.0)).rgb;
     // Ambient light
     vec3 ambient_shading = light_cube.ambient * resultant_tex;
     // Diffuse light_cube
