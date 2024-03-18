@@ -14,5 +14,5 @@ class UMesh {
         Shader* shader_;
         virtual void ComputeBoundingBox(Shader* shader, T vertices_data = {}) = 0;
     protected:
-        BoundingBox* bounding_box;
+        BoundingBox* bounding_box = nullptr;
 };

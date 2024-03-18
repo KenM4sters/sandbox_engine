@@ -16,14 +16,12 @@ void BasicMesh::Draw(float &delta_time) {
     }
     geometry_->DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
-    // if(bounding_box != nullptr)
-    //     bounding_box->Draw();
+    if(bounding_box != nullptr)
+        bounding_box->Draw();
 }
 
 void BasicMesh::DrawInstanced(float &delta_time, unsigned int instance_count) {
     shader_->Use();
-    // Order matters here and is dependant on the particular use case - neither is right nor wrong,
-    // but in our case we want to rotate around their new positions, as opposed to their starting ones.
     WorldPhysics::UpdateTransforms(transforms_, delta_time);
     shader_->setMat4("model", transforms_.model);
     shader_->setVector3f("material.ambient", mat_.ambient);

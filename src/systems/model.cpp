@@ -7,7 +7,8 @@ void Model::DrawModel(float &delta_time) {
     for(auto& m : meshes_) {
         m.transforms_ = transforms;
         m.Draw(delta_time);
-        bounding_box_->Draw();
+        if(bounding_box_ != nullptr)
+            bounding_box_->Draw();
     }
 }
 

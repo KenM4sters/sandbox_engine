@@ -1,0 +1,88 @@
+newmtl Chassislicence1Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.6 0.6 0.6 
+
+d 1
+
+Ns 0
+
+map_Ka Chassislicence1_diff.png
+map_Kd Chassislicence1_diff.png
+map_d Chassislicence1_diff.png
+
+newmtl Chassisbottom1Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.6 0.6 0.6 
+
+d 1
+
+Ns 0
+
+map_Ka Chassisbottom1_diff.png
+map_Kd Chassisbottom1_diff.png
+map_d Chassisbottom1_diff.png
+
+newmtl Glassespivotglass1Mtl
+Material Color
+Ka 0.373615 0.368591 0.383775
+Kd 0.373615 0.368591 0.383775
+Ks 0.224169 0.221155 0.230265 
+
+d 0.501961
+
+Ns 0
+
+map_Ka Glassespivotglass1_diff.png
+map_Kd Glassespivotglass1_diff.png
+map_d Glassespivotglass1_diff.png
+
+map_Bump Glassespivotglass1_nmap.png
+
+map_Ns Glassespivotglass1_spec.png
+
+newmtl Chassiscarbone1Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.6 0.6 0.6 
+
+d 1
+
+Ns 0
+
+map_Ka Chassiscarbone1_diff.png
+map_Kd Chassiscarbone1_diff.png
+map_d Chassiscarbone1_diff.png
+
+newmtl Wheelfrtyres1Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.6 0.6 0.6 
+
+d 1
+
+Ns 0
+
+map_Ka Wheelfrtyres1_diff.png
+map_Kd Wheelfrtyres1_diff.png
+map_d Wheelfrtyres1_diff.png
+
+newmtl Wheelfrrims1Mtl
+Material Color
+Ka 1 1 1
+Kd 1 1 1
+Ks 0.6 0.6 0.6 
+
+d 1
+
+Ns 0
+
+map_Ka Wheelfrrims1_diff.png
+map_Kd Wheelfrrims1_diff.png
+map_d Wheelfrrims1_diff.png
+

@@ -13,8 +13,8 @@ class WorldPhysics {
             transforms.velocity += transforms.accelration * delta_time;
             transforms.position += transforms.velocity * delta_time * 0.005f;
             transforms.model = glm::translate(transforms.model, transforms.position);
-            transforms.model = glm::scale(transforms.model, transforms.scale);
             transforms.model = glm::rotate(transforms.model, transforms.rotation.rotation_angle, transforms.rotation.rotation_axis);
+            transforms.model = glm::scale(transforms.model, transforms.scale);
         }
 
         static void ComputeNormal(Vertex& v, VertexQuadrant& q) {

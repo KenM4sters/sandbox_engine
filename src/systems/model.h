@@ -31,5 +31,5 @@ class Model {
         Shader* bounding_box_shader_;
         std::string dir_;
         bool bGammeCorrection;
-        BoundingBox* bounding_box_;
+        BoundingBox* bounding_box_ = nullptr;
 };
