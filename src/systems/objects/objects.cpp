@@ -18,11 +18,10 @@ void SObjects::Init() {
     // Models 
     Shader* model_shader = shaders_->GetResource("model");
 
-
     // p1
     Model* m_p1 = new Model("assets/models/2021 McLaren Artura/2021 McLaren Artura.obj", model_shader, bounding_box_shader);
-    m_p1->transforms_->position = glm::vec3(8.0f, 13.5f, -1.0f);
     m_p1->transforms_->rotation = {glm::radians(90.0f), glm::vec3(0.0f, 1.0f, 0.0f)};
+    m_p1->transforms_->position = glm::vec3(8.0f, 13.5f, -1.0f);
     m_p1->transforms_->scale = glm::vec3(0.2f, 0.2f, 0.2f);
     models_["m_p1"] = m_p1;
     // m_p1->ComputeBoundingBox();

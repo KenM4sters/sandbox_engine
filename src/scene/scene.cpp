@@ -53,12 +53,15 @@ Scene::Scene(unsigned int w, unsigned int h, Camera* camera, CollisionHandler* c
 void Scene::SetCameraData(Camera* camera) {
     for(auto& shader : shader_res_.GetAllResources()) {
         glm::mat4 projection = glm::perspective(camera_->zoom_, (float)scr_width_ / (float)scr_height_, 0.1f, 10000.0f);
-        glm::mat4 look_at_camera = glm::lookAt(camera_->position_,camera_->position_, camera_->up_);
         shader.second->Use();
         shader.second->setMat4("projection", projection);
-        shader.second->setMat4("view", camera_->GetViewMatrix());
         shader.second->setVector3f("camera_pos", camera_->position_);
-        shader.second->setMat4("look_at_camera", look_at_camera);
+        glm::mat4 view = camera_->GetViewMatrix();
+        if(shader.first == "terrain_grass") {   
+            shader.second->setMat4("view", view);
+        } else {
+            shader.second->setMat4("view", view);
+        }
     }
 }
 

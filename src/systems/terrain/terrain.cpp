@@ -92,8 +92,8 @@ void Terrain::GenerateScenary(Shader* shader, Material& scenery_mat) {
             && vertices_[i].position.x > -200 
             && vertices_[i].position.x < 200
         ) {
-            if(vertices_[i + 10].position.y == vertices_[i].position.y)
-                i += 15;
+            if(vertices_[i + 20].position.y == vertices_[i].position.y)
+                i += 10;
             else
                 flat_vertices.push_back(vertices_[i]);
         }
