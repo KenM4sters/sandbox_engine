@@ -1,6 +1,14 @@
 #pragma once
 #include "../utils/includes.h"
 
+/**
+ * Camera Class handles everything about Camera movement and passing its data such as the View matrix
+ * and camera position to all shaders so that they can be rendered in 3D and have realistic shading 
+ * based on where the angle of which you are viewing objects.
+*/
+
+
+// Simple enum to make directions a bit more intuitive.
 enum Camera_Movement {
     FORWARD,
     BACKWARD,

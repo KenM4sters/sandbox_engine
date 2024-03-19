@@ -5,6 +5,12 @@
 #include "../resources/texture.h"
 #include "bounding_box.h"
 
+/**
+ * Base class for BasicMesh and StandardMesh which defines a shader object, a transform object to hold
+ * transformation data for each mesh (scale, rotate, translate), as well as a bounding box object and
+ * methods to render the meshes.
+*/
+
 template <typename T>
 class UMesh {
     public:

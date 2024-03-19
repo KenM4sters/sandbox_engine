@@ -1,6 +1,11 @@
 #pragma once
 #include "../basic_mesh.h"
 
+/**
+ * The Scenery class is repsonsible for generating buffer data and making the appropriate draw calls
+ * to render miscellaneous scenery objects of our terrain, like grass and flowers. 
+*/
+
 class Scenery {
     public:
         Scenery(Shader* shader, Material &mat, std::vector<Vertex> instance_vertices)

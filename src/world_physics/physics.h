@@ -3,6 +3,10 @@
 #include "../systems/mesh.h"
 #include "../systems/terrain/terrain.h"
 
+/**
+ * WorldPhysics is a static class that handles transfoormation data that all of our scene objects need.
+*/
+
 class WorldPhysics {
     public:
         static void ApplyGravitationalAcceleration(glm::vec3 &acc_vec) {

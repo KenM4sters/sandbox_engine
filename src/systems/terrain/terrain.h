@@ -5,6 +5,11 @@
 #include "../system_includes.h"
 #include "scenery.h"
 
+/**
+ * The Terrain class completely handles setting and allocating memory for its vertex data, generating and
+ * rendering its scenery object as well as itself.
+*/
+
 class Terrain {
     public:
         Terrain(const char* height_map, Shader* shader, Material &mat, unsigned int &scale) 

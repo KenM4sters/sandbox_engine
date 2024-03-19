@@ -3,7 +3,7 @@
 #include "../scene/scene.h"
 #include "post_processing.h"
 
-// Base class for rendering 
+// Base class for rendering our scene based one whether PostProcessing is enabled or not. 
 
 class UContext {
     public:

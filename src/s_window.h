@@ -2,7 +2,9 @@
 #include "window.h"
 #include "context/s_context.h"
 
-// Header for window
+// SWindow sits in between the main App class and the context class that handles rendering our entire
+// application, acting as an intermediary between the two, handling small but important variables 
+// such as screen size and the time between frames (delta_time).
 class SWindow : public UWindow {
     public:
         SWindow();
