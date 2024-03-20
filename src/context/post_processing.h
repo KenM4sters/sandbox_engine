@@ -36,6 +36,7 @@ class PostProcessing {
         // ...and now we want to render a quad to the standard framebuffer set in EndRender() that we can actually
         // see, since this quad has been textures with the visual output of our scene in our custom framebuffer. 
         void RenderQuad();
+        void Resize(GLuint w, GLuint h);
 
     private:
         unsigned int FBO_, VAO_, RBO_;

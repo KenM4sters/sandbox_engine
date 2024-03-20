@@ -40,6 +40,7 @@ void SWindow::HandleKeyInput(int key, int scancode, int action, int mods) {
 }
 void SWindow::HandleWindowResize(int w, int h) {
     glViewport(0, 0, w, h);
+    renderer_->post_processing_->Resize(w, h);
 }
 
 SWindow::SWindow() 

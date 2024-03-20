@@ -3,7 +3,7 @@
 // Implementation for main app
 App::App(const std::string& app_name) {
     window_ = std::make_unique<SWindow>();
-    window_->init(800, 600, app_name);
+    window_->init(1200, 900, app_name);
 }
 
 void App::loop() {

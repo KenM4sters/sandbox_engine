@@ -17,6 +17,7 @@ class UContext {
         virtual void Terminate() = 0;
         virtual void ProcessInput(GLFWwindow* window, float delta_time) = 0;
         virtual void Render(float delta_time) = 0;
+        PostProcessing* post_processing_;
         
     protected:
         virtual void PreRender() = 0;
@@ -29,7 +30,6 @@ class UContext {
         std::unique_ptr<Scene> scene_;
         CollisionHandler* collision_handler_;
         Shader* fbo_shader_; 
-        PostProcessing* post_processing_;
         SShaderResource* fbo_shader_res_;
         bool bPostProcessingEnabled;
 };

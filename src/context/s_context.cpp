@@ -146,8 +146,8 @@ void SContext::SceneRender(float delta_time) {
 }
 
 void SContext::PostRender() {
-    interface_->PostRender();
     glfwPollEvents();
+    interface_->PostRender();
     glfwSwapBuffers(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
 }
 

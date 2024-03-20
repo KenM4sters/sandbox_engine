@@ -44,6 +44,14 @@ void UserInterface::PreRender() {
 
     ImGui::Text("Application average %.3f ms/frame (%.1f FPS)", 1000.0f / io_.Framerate, io_.Framerate);
     ImGui::End();
+    if (bShowAnotherWindow_)
+    {
+        ImGui::Begin("Another Window", &bShowAnotherWindow_);   // Pass a pointer to our bool variable (the window will have a closing button that will clear the bool when clicked)
+        ImGui::Text("Hello from another window!");
+        if (ImGui::Button("Close Me"))
+            bShowAnotherWindow_ = false;
+        ImGui::End();
+    }
 }
 
 void UserInterface::PostRender() {
