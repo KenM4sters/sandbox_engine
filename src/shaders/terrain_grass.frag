@@ -25,10 +25,10 @@ uniform vec3 camera_pos;
 
 void main() {
     vec4 tex_color;
-    if(frag_pos.y > 12.0) 
-        tex_color = texture(material.diffuse_grass, tex_coord);
-    else
+    if(frag_pos.y > 17.0) 
         tex_color = texture(material.diffuse_wild_flower, tex_coord);
+    else
+        tex_color = texture(material.diffuse_grass, tex_coord);
     if(tex_color.a < 0.5)
         discard;
     // Ambient light

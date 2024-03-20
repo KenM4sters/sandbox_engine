@@ -1,8 +1,6 @@
 #include "s_context.h"
 
 
-// Implementation for rendering
-
 // Callback function for keyboard input which is only called when a key is pressed, rather than 
 // on each frame the key is held for - see Window::Camera::ProcessMouseMovement() for 
 // implementation of a function that is key called on every frame a key is held for. 
@@ -113,8 +111,6 @@ void SContext::Init(UWindow *window) {
     glfwSetCursorPosCallback(gl_window, on_mouse_move_callback);
     glfwSetFramebufferSizeCallback(gl_window, on_window_resize_callback);
     glfwMakeContextCurrent(gl_window);
-    // Locks mouse to the window screen and hides it - GLFW handles recentering the mouse, giving our
-    // camera 6 degrees of freedom with no threshold. 
     glfwSetInputMode(gl_window, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
 
     // In order to use modern OpenGL, we need to load a library that allows us to access the pointers
@@ -127,6 +123,11 @@ void SContext::Init(UWindow *window) {
 
 
     glEnable(GL_DEPTH_TEST);
+
+    // Imgui Window
+    interface_ = new UserInterface(gl_window);
+    interface_->Init();
+
     // *IMPORTANT - the following must be called after glad has been loaded, since they make calls to the 
     // OpenGL api.
     fbo_shader_res_ = new SShaderResource();
@@ -137,6 +138,7 @@ void SContext::Init(UWindow *window) {
 void SContext::PreRender() {
     glClearColor(0.1f, 0.1f, 0.1f, 1.0f);
     glClear(GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
+    interface_->PreRender();
 }
 
 void SContext::SceneRender(float delta_time) {
@@ -144,6 +146,7 @@ void SContext::SceneRender(float delta_time) {
 }
 
 void SContext::PostRender() {
+    interface_->PostRender();
     glfwPollEvents();
     glfwSwapBuffers(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
 }
@@ -159,6 +162,7 @@ void SContext::RenderWithPostProcessing(Shader* shader, PostProcessing* post_pro
     SceneRender(delta_time);
     post_processing->EndRender();
     post_processing->RenderQuad();
+    interface_->PreRender();
     PostRender();
 }
 
@@ -170,6 +174,7 @@ void SContext::Render(float delta_time) {
 
 void SContext::Terminate() {
     std::cout << "Terminating Window" << std::endl;
+    interface_->Terminate();
     glfwDestroyWindow(static_cast<GLFWwindow*>(window_->GetNativeWindow()));
     glfwTerminate();
 }

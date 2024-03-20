@@ -3,6 +3,10 @@
 #include "camera/camera.h"
 
 // Base class for window
+enum STATE {
+    PLAY,
+    PAUSE
+};
 
 class UWindow {
     public:
@@ -25,4 +29,5 @@ class UWindow {
         float prev_mouse_pos_y_;
         // Returns true when the mouse first enters the window
         bool bMouseIn_{true};
+        STATE window_state_;
 };

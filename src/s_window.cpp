@@ -23,6 +23,17 @@ void SWindow::HandleKeyInput(int key, int scancode, int action, int mods) {
                 break;
             case GLFW_KEY_SPACE:
                 std::cout << "KEY PRESSED : SPACE_BAR \n";
+                window_state_ == PLAY ? window_state_ = PAUSE : window_state_ = PLAY;
+                if(window_state_ == PLAY) {
+                    camera_->bMouseMovementEnabled_ = true;
+                    // Locks mouse to the window screen and hides it - GLFW handles recentering the mouse, giving our
+                    // camera 6 degrees of freedom with no threshold. 
+                    glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_DISABLED);
+                }
+                else {
+                    camera_->bMouseMovementEnabled_ = false;
+                    glfwSetInputMode(window_, GLFW_CURSOR, GLFW_CURSOR_NORMAL);
+                }
                 break;
         }
     }

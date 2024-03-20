@@ -2,6 +2,7 @@
 #include "../window.h"
 #include "../scene/scene.h"
 #include "post_processing.h"
+#include "interface.h"
 
 // Base class for rendering our scene based one whether PostProcessing is enabled or not. 
 
@@ -23,7 +24,8 @@ class UContext {
         virtual void PostRender() = 0;
         virtual void RenderWithPostProcessing(Shader* shader, PostProcessing* post_processing, float delta_time) = 0;
         virtual void RenderWithoutPostProcessing(float delta_time) = 0;
-        UWindow *window_;
+        UWindow* window_;
+        UserInterface* interface_;
         std::unique_ptr<Scene> scene_;
         CollisionHandler* collision_handler_;
         Shader* fbo_shader_; 

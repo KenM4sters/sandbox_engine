@@ -47,22 +47,23 @@ void Camera::ProcessKeyboard(Camera_Movement direction, float delta_time, bool s
 
 void Camera::ProcessMouseMovement(float x_offset, float y_offset, GLboolean constrain_pitch)
 {
-    x_offset *= mouse_sensitivity_;
-    y_offset *= mouse_sensitivity_;
+    if(bMouseMovementEnabled_) {
+        x_offset *= mouse_sensitivity_;
+        y_offset *= mouse_sensitivity_;
 
-    yaw_   += x_offset;
-    pitch_ += y_offset;
+        yaw_   += x_offset;
+        pitch_ += y_offset;
 
-    // make sure that when pitch is out of bounds, screen doesn't get flipped
-    if (constrain_pitch)
-    {
-        if (pitch_ > 89.0f)
-            pitch_ = 89.0f;
-        if (pitch_ < -89.0f)
-            pitch_ = -89.0f;
+        // make sure that when pitch is out of bounds, screen doesn't get flipped
+        if (constrain_pitch)
+        {
+            if (pitch_ > 89.0f)
+                pitch_ = 89.0f;
+            if (pitch_ < -89.0f)
+                pitch_ = -89.0f;
+        }
+        UpdateCameraVectors();
     }
-
-    UpdateCameraVectors();
 }
 
 void Camera::ProcessMouseScroll(float y_offset)
