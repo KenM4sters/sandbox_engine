@@ -76,4 +76,26 @@ void PostProcessing::EndRender() {
 }
 
 void PostProcessing::Resize(GLuint w, GLuint h) {
+    // shader_->Use();
+    // glDeleteFramebuffers(1, &FBO_);
+    // glDeleteRenderbuffers(1, &RBO_);
+
+    // glGenFramebuffers(1, &FBO_);
+    // glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
+    // glGenTextures(1, &tex_.ID_);
+    // glBindTexture(GL_TEXTURE_2D, tex_.ID_);
+    // glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2 * w, 2 * h, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    // glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    // glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_.ID_, 0);
+
+    // glGenRenderbuffers(1, &RBO_);
+    // glBindRenderbuffer(GL_RENDERBUFFER, RBO_);
+    // glRenderbufferStorage(GL_RENDERBUFFER, GL_DEPTH24_STENCIL8, 2 * width_, 2 * height_);
+    // glFramebufferRenderbuffer(GL_FRAMEBUFFER, GL_DEPTH_STENCIL_ATTACHMENT, GL_RENDERBUFFER, RBO_);
+
+    // if(glCheckFramebufferStatus(GL_FRAMEBUFFER) != GL_FRAMEBUFFER_COMPLETE) {
+    //     std::cout << "ERROR::Failed to create frame buffer!" << std::endl;
+    // }
+    // glBindFramebuffer(GL_FRAMEBUFFER, 0);
 }

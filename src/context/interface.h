@@ -1,3 +1,4 @@
+#pragma once
 #include "../utils/includes.h"
 #include "../../deps/ImGui/imgui.h"
 #include "../../deps/ImGui/imgui_impl_glfw.h"

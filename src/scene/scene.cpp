@@ -70,6 +70,7 @@ void Scene::Init() {
     auto cube_shader = shader_res_.AddResource("src/shaders/cube.vert", "src/shaders/cube.frag", nullptr, "cube", SANDBOX_OBJECT);
     auto floor_shader = shader_res_.AddResource("src/shaders/floor.vert", "src/shaders/floor.frag", nullptr, "floor", SANDBOX_OBJECT);
     auto skybox_shader = shader_res_.AddResource("src/shaders/skybox.vert", "src/shaders/skybox.frag", nullptr, "skybox", SANDBOX_OBJECT);
+    auto sky_sphere_shader = shader_res_.AddResource("src/shaders/sky_sphere.vert", "src/shaders/sky_sphere.frag", nullptr, "sky_sphere", SANDBOX_OBJECT);
     auto light_cube_shader = shader_res_.AddResource("src/shaders/light_cube.vert", "src/shaders/light_cube.frag", nullptr, "light_cube", SANDBOX_LIGHT);
     auto back_pack_shader = shader_res_.AddResource("src/shaders/model.vert", "src/shaders/model.frag", nullptr, "model", SANDBOX_OBJECT);
     auto terrain_shader = shader_res_.AddResource("src/shaders/terrain.vert", "src/shaders/terrain.frag", nullptr, "terrain", SANDBOX_OBJECT);

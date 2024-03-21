@@ -27,4 +27,5 @@ void StandardMesh::Draw(float &delta_time) {
     shader_->setMat4("model", transforms_.model);
     geometry_.DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
+    glUseProgram(0);
 }   
