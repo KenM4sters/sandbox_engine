@@ -4,19 +4,10 @@
 void SObjects::Init() {
 
     // Bounding Box - used for collision detection
-    Shader* bounding_box_shader = shaders_->GetResource("bounding_box");
-    Shader* sky_sphere_shader = shaders_->GetResource("sky_sphere");
-    Shader* model_shader = shaders_->GetResource("model");
     Shader* cube_shader = shaders_->GetResource("cube");
-
-    // Mario Cube
-    Texture2D* mario_tex = textures_->GetResource("mario");
-    Texture2D* test_tex = textures_->GetResource("sonic");
-    std::vector<Texture2D*> tex_vec = {mario_tex,test_tex };
-    BasicMesh* cube_mesh = new BasicMesh(new BufferGeometry(cube_vertices, SANDBOX_CUBE_VERTICES_COUNT), cube_shader, tex_vec);
-    cube_mesh->transforms_.position = glm::vec3(2.0f, 14.6f, 0.0f);
-    // cube_mesh->ComputeBoundingBox(bounding_box_shader);
-    children_["cube"] = cube_mesh;
+    Shader* bounding_box_shader = shaders_->GetResource("bounding_box");
+    Shader* model_shader = shaders_->GetResource("model");
+    Shader* sky_sphere_shader = shaders_->GetResource("sky");
 
     // Models 
     // p1
@@ -27,12 +18,27 @@ void SObjects::Init() {
     models_["m_p1"] = m_p1;
     // m_p1->ComputeBoundingBox();
 
+
     // backpack
     Model* back_pack = new Model("assets/models/backpack/backpack.obj", model_shader, bounding_box_shader);
     back_pack->transforms_->scale = glm::vec3(0.2f, 0.2f, 0.2f);
     back_pack->transforms_->position = glm::vec3(-2.0f, 14.5f, -4.0f);
     models_["backpack"] = back_pack;
     // back_pack->ComputeBoundingBox();
+
+    Model* sky = new Model("assets/models/sphere.obj", sky_sphere_shader, bounding_box_shader);
+    sky->transforms_->scale = glm::vec3(100.0f);
+    models_["sky"] = sky;
+
+    // Mario Cube
+    Texture2D* mario_tex = textures_->GetResource("mario");
+    Texture2D* test_tex = textures_->GetResource("sonic");
+    std::vector<Texture2D*> tex_vec = {mario_tex,test_tex };
+    BasicMesh* cube_mesh = new BasicMesh(new BufferGeometry(cube_vertices, SANDBOX_CUBE_VERTICES_COUNT), cube_shader, tex_vec);
+    cube_mesh->transforms_.scale = glm::vec3(2.0f);
+    cube_mesh->transforms_.position = glm::vec3(2.0f, 14.6f, 0.0f);
+    // cube_mesh->ComputeBoundingBox(bounding_box_shader);
+    children_["cube"] = cube_mesh;
 }
 
 void SObjects::Draw(float &delta_time) {
@@ -40,6 +46,12 @@ void SObjects::Draw(float &delta_time) {
         auto mesh = k.second;
         WorldPhysics::ApplyGravitationalAcceleration(mesh->transforms_.accelration);
         mesh->Draw(delta_time);
+        std::string name_x = k.first + " scaleX: ";
+        std::string name_y = k.first + " scaleY: ";
+        std::string name_z = k.first + " scaleZ: ";
+        ImGui::InputFloat(name_x.c_str(), &mesh->transforms_.scale.x, 0.1f, 100.0f);    
+        ImGui::InputFloat(name_y.c_str(), &mesh->transforms_.scale.y, 0.1f, 100.0f);    
+        ImGui::InputFloat(name_z.c_str(), &mesh->transforms_.scale.z, 0.1f, 100.0f);  
     }
     for(auto& m : models_) {
         auto model = m.second;

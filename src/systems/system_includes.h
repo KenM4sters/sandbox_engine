@@ -27,6 +27,12 @@ struct Material {
     glm::vec3 specular{0.1f, 0.1f, 0.1f};
     float shininess{10.0f};
 };
+struct BareMaterial {
+    glm::vec3 ambient{0.8f, 0.8f, 0.8f};
+    glm::vec3 diffuse{0.5f, 0.5f, 0.5f};
+    glm::vec3 specular{0.1f, 0.1f, 0.1f};
+    float shininess{10.0f};
+};
 
 struct Vertex {
     glm::vec3 position;

@@ -17,8 +17,8 @@ struct VertexRanges {
 
 class StandardMesh : public UMesh<VertexRanges> {
     public:
-        StandardMesh(BufferGeometry &geometry, Shader* shader, std::vector<Texture2D> &textures)
-            : geometry_(geometry), textures_(textures)
+        StandardMesh(BufferGeometry &geometry, Shader* shader, std::vector<Texture2D> &textures, BareMaterial mat = {})
+            : geometry_(geometry), textures_(textures), mat_(mat)
         {
             shader_ = shader;
         }
@@ -28,5 +28,6 @@ class StandardMesh : public UMesh<VertexRanges> {
     private:
         BufferGeometry geometry_;
         std::vector<Texture2D> textures_;
+        BareMaterial mat_;
 
 };

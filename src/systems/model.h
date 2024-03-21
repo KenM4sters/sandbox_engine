@@ -17,6 +17,7 @@ class Model {
         void LoadModel(const std::string &path);
         void ProcessNode(aiNode *node, const aiScene *scene);
         std::vector<Texture2D> LoadModelTextures(aiMaterial* mat, aiTextureType type, std::string type_name);
+        BareMaterial LoadMaterial(aiMaterial* mat);
         StandardMesh ProcessModelMesh(aiMesh *mesh, const aiScene *scene);
         std::vector<StandardMesh> GetMeshes() const {
             return meshes_;

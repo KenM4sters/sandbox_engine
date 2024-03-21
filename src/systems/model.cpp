@@ -96,7 +96,6 @@ StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
     }
 
     aiMaterial* material = scene->mMaterials[mesh->mMaterialIndex];
-
     std::vector<Texture2D> diffuseMaps = LoadModelTextures(material, aiTextureType_DIFFUSE, "texture_diffuse");
     textures.insert(textures.end(), diffuseMaps.begin(), diffuseMaps.end());
     // 2. specular maps
@@ -109,9 +108,11 @@ StandardMesh Model::ProcessModelMesh(aiMesh *mesh, const aiScene *scene) {
     std::vector<Texture2D> heightMaps = LoadModelTextures(material, aiTextureType_AMBIENT, "texture_height");
     textures.insert(textures.end(), heightMaps.begin(), heightMaps.end());
 
-
+    // Set the material to the material properties of each mesh (useful when no textures have been set).
     BufferGeometry geo = BufferGeometry(vertices, indices);
-    return StandardMesh(geo, shader_, textures);
+    
+    BareMaterial mat = LoadMaterial(material);
+    return StandardMesh(geo, shader_, textures, mat);
 }
 
 std::vector<Texture2D> Model::LoadModelTextures(aiMaterial* mat, aiTextureType type, std::string type_name) {
@@ -206,4 +207,24 @@ void Model::ComputeBoundingBox() {
     };
 
     bounding_box_ = new BoundingBox(bounding_box_shader_, transforms_, vertices, sizes);
+}
+
+BareMaterial Model::LoadMaterial(aiMaterial* mat) {
+    BareMaterial material;
+    aiColor3D color(0.f, 0.f, 0.f);
+    float shininess;
+
+    mat->Get(AI_MATKEY_COLOR_DIFFUSE, color);
+    material.diffuse = glm::vec3(color.r, color.b, color.g);
+
+    mat->Get(AI_MATKEY_COLOR_AMBIENT, color);
+    material.ambient = glm::vec3(color.r, color.b, color.g);
+
+    mat->Get(AI_MATKEY_COLOR_SPECULAR, color);
+    material.specular = glm::vec3(color.r, color.b, color.g);
+
+    mat->Get(AI_MATKEY_SHININESS, shininess);
+    material.shininess = shininess;
+
+    return material;
 }

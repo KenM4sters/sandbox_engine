@@ -23,7 +23,13 @@ void StandardMesh::Draw(float &delta_time) {
         textures_[i].Bind(i);
         shader_->setInteger(name + tex_index, i);
     };
+    shader_->Use();
     WorldPhysics::UpdateTransforms(transforms_, delta_time);
+    shader_->setVector3f("material.diffuse", mat_.diffuse);
+    shader_->setVector3f("material.ambient", mat_.ambient);
+    shader_->setVector3f("material.specular", mat_.specular);
+    shader_->setFloat("material.shininess", mat_.shininess);
+    shader_->setInteger("nTextures", textures_.size());
     shader_->setMat4("model", transforms_.model);
     geometry_.DrawGeometry();
     glActiveTexture(GL_TEXTURE0);
