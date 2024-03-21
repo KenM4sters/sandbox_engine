@@ -20,5 +20,4 @@ class SObjects : URenderSystem {
         // call Draw functions of each item in models_
         void Draw(float &delta_time) override;
     private:
-        std::unordered_map<std::string, Model*> models_;
 };

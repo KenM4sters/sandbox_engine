@@ -1,5 +1,6 @@
 #include "lights.h"
 #include "../../world_physics/physics.h"
+#include "../../context/interface.h"
 
 void SLights::Init() {
     // Bounding Box - used for collision detection
@@ -9,9 +10,14 @@ void SLights::Init() {
     Texture2D* light_tex = textures_->GetResource("glowstone");
     BasicMesh* light_mesh = new BasicMesh(new BufferGeometry(cube_vertices, SANDBOX_CUBE_VERTICES_COUNT), light_shader, light_tex);
     light_mesh->transforms_.scale = glm::vec3(40.0f, 40.0f, 40.0f);
-    light_mesh->transforms_.position = glm::vec3(-300.0f, 400.0f, 0.0f);
-    light_mesh->ComputeBoundingBox(bounding_box_shader);
+    light_mesh->transforms_.position = glm::vec3(500, 300, -500);
+    light_mesh->mat_.ambient = glm::vec3(0.4f);
+    // light_mesh->ComputeBoundingBox(bounding_box_shader);
     children_["light_cube"] = light_mesh;
+
+    Model* sun = new Model("assets/models/sphere.obj", light_shader, bounding_box_shader);
+    sun->transforms_->position = glm::vec3(500, 100, -500);
+    models_["sun"] = sun;
 }
 
 SShaderResource* SLights::SetLightData() {
@@ -50,5 +56,16 @@ void SLights::Draw(float &delta_time) {
         auto light = l.second;
         WorldPhysics::ApplyGravitationalAcceleration(light->transforms_.accelration);
         light->Draw(delta_time);
+    }
+    for(auto& m : models_) {
+        auto model = m.second;
+        WorldPhysics::ApplyGravitationalAcceleration(model->transforms_->accelration);
+        model->DrawModel(delta_time);
+        std::string name_x = m.first + " scaleX: ";
+        std::string name_y = m.first + " scaleY: ";
+        std::string name_z = m.first + " scaleZ: ";
+        ImGui::InputFloat(name_x.c_str(), &m.second->transforms_->scale.x, 0.1f, 100.0f);    
+        ImGui::InputFloat(name_y.c_str(), &m.second->transforms_->scale.y, 0.1f, 100.0f);    
+        ImGui::InputFloat(name_z.c_str(), &m.second->transforms_->scale.z, 0.1f, 100.0f);    
     }
 }

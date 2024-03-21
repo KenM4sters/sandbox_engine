@@ -21,5 +21,6 @@ class URenderSystem {
         STextureResource* textures_;
         std::unordered_map<std::string, BasicMesh*> children_;
         CollisionHandler* collision_handler_;
+        std::unordered_map<std::string, Model*> models_;
         
 };  

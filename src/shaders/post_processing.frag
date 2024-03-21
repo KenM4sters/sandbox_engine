@@ -1,11 +1,17 @@
 #version 330 core
 
 out vec4 FragColor;
-in vec2 tex_cord;
+in vec2 tex_coord;
 uniform sampler2D tex;
 
 void main() {
-    // FragColor = vec4(tex_cord, 0.0, 1.0);
-    FragColor = texture(tex, tex_cord);
-    // FragColor = vec4(vec3(1 - texture(tex, tex_cord)), 1.0);
+    const float gamma = 1.2;
+    vec3 hdr_color = texture(tex, tex_coord).rgb;
+  
+    // reinhard tone mapping
+    vec3 mapped = hdr_color / (hdr_color + vec3(1.0));
+    // gamma correction 
+    mapped = pow(mapped, vec3(1.0 / gamma));
+  
+    FragColor = vec4(mapped, 1.0);
 }

@@ -8,7 +8,7 @@ PostProcessing::PostProcessing(unsigned int width, unsigned int height, SShaderR
         glBindFramebuffer(GL_FRAMEBUFFER, FBO_);
         glGenTextures(1, &tex_.ID_);
         glBindTexture(GL_TEXTURE_2D, tex_.ID_);
-        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, 2 * width_, 2 * height_, 0, GL_RGB, GL_UNSIGNED_BYTE, NULL);
+        glTexImage2D(GL_TEXTURE_2D, 0, GL_RGBA16F, 2 * width_, 2 * height_, 0, GL_RGBA, GL_UNSIGNED_BYTE, NULL);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
         glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
         glFramebufferTexture2D(GL_FRAMEBUFFER, GL_COLOR_ATTACHMENT0, GL_TEXTURE_2D, tex_.ID_, 0);
